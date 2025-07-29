@@ -1,3 +1,8 @@
+# nhooey:
+# based on https://github.com/milahu/nur-packages/blob/master/pkgs/servers/sql/xtdb/default.nix
+#          https://github.com/milahu/nur-packages/blob/61e5142ecb0b61e2302627793b493fd848d12a64/pkgs/servers/sql/xtdb/default.nix
+
+# milahu:
 # based on https://github.com/milahu/nur-packages/blob/master/pkgs/development/tools/gumtree/default.nix
 # based on https://github.com/milahu/nur-packages/blob/master/pkgs/applications/blockchains/haveno/default.nix
 
@@ -5,7 +10,7 @@
   lib,
   callPackage,
   fetchFromGitHub,
-  gradle2nix,
+  buildGradlePackage,
   # protobuf_31,
   makeWrapper,
   jdk,
@@ -38,7 +43,7 @@ let
   */
 in
 
-gradle2nix.buildGradlePackage rec {
+buildGradlePackage rec {
   pname = "xtdb";
   version = "2.0.0";
 

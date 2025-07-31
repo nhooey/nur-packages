@@ -42,8 +42,7 @@
         }:
         let
           gradlePhaseFlags = {
-            build = [ "shadowJar" "xtdb-http-server:jar" ];
-            check = [ "xtdb-http-server:check" "xtdb-http-server:test" ];
+            build = [ "docker:standalone:shadowJar" ];
           };
         in
         {

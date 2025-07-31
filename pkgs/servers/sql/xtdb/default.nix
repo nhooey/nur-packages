@@ -11,7 +11,7 @@
   callPackage,
   fetchFromGitHub,
   buildGradlePackage,
-  # protobuf_31,
+  protobuf_31,
   makeWrapper,
   jdk,
 }:
@@ -39,19 +39,18 @@ let
     # Did not find version 4.31.1 in the output of the command protoc --version
     # libprotoc 31.1
     doInstallCheck = false;
-  });
+    });
   */
 in
-
 buildGradlePackage rec {
   pname = "xtdb";
   version = "2.0.0";
 
   src = fetchFromGitHub {
-    owner = "xtdb";
+    owner = "nhooey";
     repo = "xtdb";
-    rev = "v${version}";
-    hash = "sha256-MmgJCKxnX2cYX3zJFM82Wpagb2xdlScYP480wlAQ+50=";
+    rev = "v${version}_protobuf-include-from-system";
+    hash = "sha256-JEazksQNTYEV6l+RtOjfohXLJWfD/UaacH4z7pfn2mk=";
   };
 
   # https://github.com/xtdb/xtdb/blob/v2.0.0/.gitmodules

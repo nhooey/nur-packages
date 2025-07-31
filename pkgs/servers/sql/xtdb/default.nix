@@ -11,7 +11,7 @@
   callPackage,
   fetchFromGitHub,
   buildGradlePackage,
-  protobuf_31,
+  pkgs,
   makeWrapper,
   jdk,
 }:
@@ -26,21 +26,21 @@ let
   # no. building protobuf from source is 1000x slower
   # than fixing the com.google.protobuf:protoc jar file
   # no. protobuf_31 already is version 4.31.1
-  protobuf = protobuf_31.overrideAttrs (o: rec {
+  */
+
+  protobuf = pkgs.protobuf.overrideAttrs (oldAttrs: rec {
     version = "4.31.1";
-    # https://github.com/protocolbuffers/protobuf
-    src = fetchFromGitHub {
+    src = pkgs.fetchFromGitHub {
       owner = "protocolbuffers";
       repo = "protobuf";
       rev = "v${version}";
-      hash = "sha256-E8q8XupOXoCFpXyGNHArfBmVm6ebfDgaJlJyvMqpveU=";
+      sha256 = "sha256-E8q8XupOXoCFpXyGNHArfBmVm6ebfDgaJlJyvMqpveU=";
     };
     # fix:
     # Did not find version 4.31.1 in the output of the command protoc --version
     # libprotoc 31.1
-    doInstallCheck = false;
-    });
-  */
+    doInstallCheck = false; # Version check fails because it outputs only: `31.1`
+  });
 in
 buildGradlePackage rec {
   pname = "xtdb";
@@ -81,7 +81,7 @@ buildGradlePackage rec {
 
   nativeBuildInputs = [
     # no. protoc is not used by the gradle build
-    # protobuf
+    protobuf
     makeWrapper
   ];
 

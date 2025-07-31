@@ -57,17 +57,7 @@
                 buildGradlePackage = self.inputs.gradle2nix.builders.${system}.buildGradlePackage;
               in
               pkgs.callPackage ./default.nix {
-                inherit buildGradlePackage;
-                protobuf_31 = pkgs.protobuf.overrideAttrs (oldAttrs: rec {
-                  version = "4.31.1";
-                  src = pkgs.fetchFromGitHub {
-                    owner = "protocolbuffers";
-                    repo = "protobuf";
-                    rev = "v${version}";
-                    sha256 = "sha256-E8q8XupOXoCFpXyGNHArfBmVm6ebfDgaJlJyvMqpveU=";
-                  };
-                  doInstallCheck = false; # Version check fails because it outputs only: `31.1`
-                });
+                inherit pkgs buildGradlePackage;
               };
           };
 

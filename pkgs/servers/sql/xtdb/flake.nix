@@ -127,19 +127,18 @@
                       command =
                         let
                           gradleTasksAll = builtins.concatLists (builtins.attrValues gradlePhaseFlags);
-                          cmdLineOptionsTask = builtins.concatStringsSep " " (map (task: "--task \"${task}\"") gradleTasksAll);
+                          gradleOptionsTask = (map (task: "--task \"${task}\"") gradleTasksAll);
+                          gradleOptionsDebug = if debugMode then ["--dump-events" "--log debug"] else [];
+                          gradleOptions = builtins.concatStringsSep " " (gradleOptionsDebug ++ gradleOptionsTask);
                         in
-                        wrapCommand ''
-                          pushd '${xtdbGit.dir}'
-                          nix run ${gradle2nixUrl}#gradle2nix -- \
-                        '' + (if debugMode then ''
-                          --dump-events \
-                          --log debug \
-                        '' else "") + ''
-                          ${cmdLineOptionsTask}
-                          popd
-                          cp '${xtdbGit.dir}/gradle.lock "$PRJ_ROOT/"
-                        '';
+                        wrapCommand (
+                          ''
+                            pushd "${xtdbGit.dir}"
+                            nix run ${gradle2nixUrl}#gradle2nix -- ${gradleOptions}
+                            popd
+                            cp "${xtdbGit.dir}/gradle.lock" "$PRJ_ROOT/"
+                          ''
+                        );
                     }
                     {
                       name = "gradle-show-tasks";

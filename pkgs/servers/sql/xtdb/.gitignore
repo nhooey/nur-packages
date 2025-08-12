@@ -1,0 +1,10 @@
+# Nix
+/result
+
+# Gradle
+/project-log.txt
+/project-tree.txt
+/project-tree.json
+
+# Git repository
+/xtdb/

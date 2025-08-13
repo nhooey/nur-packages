@@ -1,0 +1,36 @@
+server:
+  # Port on which to start a read-write Postgres wire-compatible server.
+  #
+  # Default is 0, to have the server choose an available port.
+  # (In the XTDB Docker images, this is defaulted to 5432.)
+  # Set to -1 to not start a read-write server.
+  port: 5432
+
+  # Port on which to start a read-only Postgres wire-compatible server.
+  #
+  # The server on this port will reject any attempted DML/DDL,
+  # regardless of whether the user would otherwise have the permission to do so.
+  #
+  # Default is -1, to not start a read-only server.
+  # Set to 0 to have the server choose an available port.
+  readOnlyPort: -1
+
+compactor:
+  # Number of threads to use for compaction.
+
+  # Defaults to min(availableProcessors / 2, 1).
+  # Set to 0 to disable the compactor.
+  threads: 4
+
+modules:
+  # You can enable optional modules by specifying them under the `modules` key.
+  # For example:
+  - !HttpServer
+    # The HTTP server will listen on the specified port.
+    # Default is 3000.
+    port: 5433
+
+healthz:
+  # Port to run the Healthz Server on.
+  # Default: 8080 (can be set as an !Env value).
+  port: 5430

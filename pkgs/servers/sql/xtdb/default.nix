@@ -168,17 +168,23 @@ buildGradlePackage rec {
   ''
   else
   # based on https://github.com/xtdb/xtdb/blob/v2.0.0/docker/standalone/Dockerfile
+    let
+      xtdbConfigPath = "$out/opt/xtdb-config.yaml";
+    in
   ''
     mkdir -p $out/lib
+    mkdir -p "$(dirname ${xtdbConfigPath})"
     cp docker/standalone/build/libs/xtdb-standalone.jar $out/lib
+    cp "${./xtdb-config.yaml}" "${xtdbConfigPath}"
     mkdir -p $out/bin
     cat >$out/bin/xtdb <<EOF
+    set -x
     exec ${jdk}/bin/java \
       -cp $out/lib/xtdb-standalone.jar \
       -Dclojure.main.report=stderr \
       --add-opens=java.base/java.nio=ALL-UNNAMED \
       -Dio.netty.tryReflectionSetAccessible=true \
-      clojure.main -m xtdb.main
+      clojure.main -m xtdb.main --file "${xtdbConfigPath}"
     EOF
     chmod +x $out/bin/xtdb
   '';

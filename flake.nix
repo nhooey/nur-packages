@@ -65,14 +65,25 @@
           buildGradlePackage = gradle2nix.builders.${system}.buildGradlePackage;
         };
 
+      # Meta-keys every flake conventionally exports as aliases (`default` is
+      # how `nix run github:owner/repo` resolves without `#name`). Aggregating
+      # would have every input's `default` shadow the previous — silently —
+      # so we strip them before merging. Add other meta-keys here (e.g. `all`)
+      # if they start colliding in practice.
+      aggregatorMetaKeys = [ "default" ];
+
+      stripAggregatorMeta = attrs: builtins.removeAttrs attrs aggregatorMetaKeys;
+
       # Pulls one flake-output field (e.g. "packages") from every aggregated
       # input for `system`, with `{ }` if that input doesn't expose the field
-      # or doesn't support that system. Plain `//` merge — last input wins.
+      # or doesn't support that system. Plain `//` merge after stripping
+      # meta-keys; last input still wins on real-name collisions.
       aggregatedFor =
         field: system:
-        lib.foldl' (acc: input: acc // (input.${field}.${system} or { })) { } (
-          builtins.attrValues aggregatedInputs
-        );
+        lib.foldl'
+          (acc: input: acc // stripAggregatorMeta (input.${field}.${system} or { }))
+          { }
+          (builtins.attrValues aggregatedInputs);
     in
     {
       legacyPackages = forAllSystems (

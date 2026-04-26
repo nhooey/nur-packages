@@ -29,6 +29,16 @@
       url = "github:nhooey/gradle2nix/v2_bugfix-remove-param-console-plain";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    skills-git = {
+      url = "github:nhooey/skills-git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    skills-nix = {
+      url = "github:nhooey/skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

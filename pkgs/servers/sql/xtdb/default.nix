@@ -197,6 +197,12 @@ buildGradlePackage rec {
     };
   };
 
+  # Gradle's FileLockContentionHandler binds a UDP socket on loopback for
+  # inter-daemon coordination, which Darwin's default sandbox profile
+  # denies with EPERM ("Operation not permitted"). Whitelisting loopback
+  # lets the build start. No-op on Linux.
+  __darwinAllowLocalNetworking = true;
+
   meta = {
     description = "An immutable SQL database for application development, time-travel reporting and data compliance. Developed by @juxt";
     homepage = "https://github.com/xtdb/xtdb";

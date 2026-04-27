@@ -107,6 +107,14 @@ buildGradlePackage rec {
     # build all default targets
     # "build"
 
+    # Required on Garnix's Darwin sandbox: with daemon enabled, gradle
+    # successfully forks a daemon that binds 127.0.0.1 — but the client
+    # in the sandbox can't connect back to it ("Could not connect to the
+    # Gradle daemon"). Forcing in-process execution avoids the loopback
+    # round-trip entirely. No-op on Linux but keeping it cross-platform
+    # is simpler than splitting flags by host.
+    "--no-daemon"
+
     # based on docker/bin/build-standalone-image.sh
     # docker/standalone/build.gradle.kts
     ":docker:standalone:shadowJar"

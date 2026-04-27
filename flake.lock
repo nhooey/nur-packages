@@ -10,11 +10,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1777255391,
-        "narHash": "sha256-wb1S1yg5I9Lb/5ZlfRXcgVU9E09KAhFxL1G5MImkY2o=",
+        "lastModified": 1777295852,
+        "narHash": "sha256-OYQaBMqlPCiB8jUijyaPX3b0Hk2M+vUjt2eNC5R5Dcg=",
         "owner": "nhooey",
         "repo": "claffeinate",
-        "rev": "c436b2b851d5a68afe98a01cd935846b8efc2904",
+        "rev": "7594a321e43bf67a992bd4ad5f4de2bfb4440e03",
         "type": "github"
       },
       "original": {

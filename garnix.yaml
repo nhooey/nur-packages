@@ -10,4 +10,12 @@ builds:
     - "packages.aarch64-linux.*"
     - "packages.x86_64-darwin.*"
     - "packages.aarch64-darwin.*"
-  exclude: []
+  exclude:
+    # Gradle's daemon model is incompatible with Garnix's Darwin sandbox:
+    # the daemon binds 127.0.0.1 successfully but the client process
+    # can't CONNECT back to it ("Could not connect to the Gradle daemon"),
+    # and `--no-daemon` doesn't help because gradle 8 still forks a
+    # single-use daemon under the hood. xtdb is server-side software,
+    # so dropping macOS CI coverage costs little. Linux still builds it.
+    - "packages.x86_64-darwin.xtdb"
+    - "packages.aarch64-darwin.xtdb"

@@ -20,15 +20,13 @@ let
   # TODO upstream: this belongs to gradle2nix.mkOverride
   mkOverride = callPackage ./gradle2nix-mk-override.nix { };
 
-  # no. protoc is not used by the gradle build
-  # protobuf = protobuf_31;
-  /*
-  # no. building protobuf from source is 1000x slower
-  # than fixing the com.google.protobuf:protoc jar file
-  # no. protobuf_31 already is version 4.31.1
-  */
-
-  protobuf = pkgs.protobuf.overrideAttrs (oldAttrs: rec {
+  # Base on `pkgs.protobuf_31`, NOT `pkgs.protobuf`. The unversioned alias is
+  # protobuf 34.1 in current nixpkgs, and its inherited patch set targets
+  # the 34.x source layout — overriding only `src` back to 4.31.1 leaves
+  # those patches behind, and one of them (upb/wire/decode.c hunk) fails to
+  # apply to the older source. `pkgs.protobuf_31` already pins 4.31.1 with
+  # the matching patch set.
+  protobuf = pkgs.protobuf_31.overrideAttrs (oldAttrs: rec {
     version = "4.31.1";
     src = pkgs.fetchFromGitHub {
       owner = "protocolbuffers";

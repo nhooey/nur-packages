@@ -39,6 +39,11 @@
       url = "github:nhooey/skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claffeinate = {
+      url = "github:nhooey/claffeinate";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -78,12 +83,28 @@
       # input for `system`, with `{ }` if that input doesn't expose the field
       # or doesn't support that system. Plain `//` merge after stripping
       # meta-keys; last input still wins on real-name collisions.
+      #
+      # Single-package flakes (e.g. `claffeinate`) expose only `default`, so
+      # blind stripping would drop them entirely. When an input has *no*
+      # other named packages, promote its `default` to the input's name —
+      # `packages.<sys>.<input-name>`. Inputs that already expose proper
+      # names (skills-git, skills-nix) keep their `default` stripped to
+      # avoid noise aliases.
       aggregatedFor =
         field: system:
         lib.foldl'
-          (acc: input: acc // stripAggregatorMeta (input.${field}.${system} or { }))
+          (acc: name:
+            let
+              attrs = aggregatedInputs.${name}.${field}.${system} or { };
+              named = stripAggregatorMeta attrs;
+              promoted =
+                if attrs ? default && named == { }
+                then { ${name} = attrs.default; }
+                else { };
+            in acc // promoted // named
+          )
           { }
-          (builtins.attrValues aggregatedInputs);
+          (builtins.attrNames aggregatedInputs);
     in
     {
       legacyPackages = forAllSystems (

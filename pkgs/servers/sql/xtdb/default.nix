@@ -20,15 +20,13 @@ let
   # TODO upstream: this belongs to gradle2nix.mkOverride
   mkOverride = callPackage ./gradle2nix-mk-override.nix { };
 
-  # no. protoc is not used by the gradle build
-  # protobuf = protobuf_31;
-  /*
-  # no. building protobuf from source is 1000x slower
-  # than fixing the com.google.protobuf:protoc jar file
-  # no. protobuf_31 already is version 4.31.1
-  */
-
-  protobuf = pkgs.protobuf.overrideAttrs (oldAttrs: rec {
+  # Base on `pkgs.protobuf_31`, NOT `pkgs.protobuf`. The unversioned alias is
+  # protobuf 34.1 in current nixpkgs, and its inherited patch set targets
+  # the 34.x source layout — overriding only `src` back to 4.31.1 leaves
+  # those patches behind, and one of them (upb/wire/decode.c hunk) fails to
+  # apply to the older source. `pkgs.protobuf_31` already pins 4.31.1 with
+  # the matching patch set.
+  protobuf = pkgs.protobuf_31.overrideAttrs (oldAttrs: rec {
     version = "4.31.1";
     src = pkgs.fetchFromGitHub {
       owner = "protocolbuffers";
@@ -108,6 +106,14 @@ buildGradlePackage rec {
 
     # build all default targets
     # "build"
+
+    # Required on Garnix's Darwin sandbox: with daemon enabled, gradle
+    # successfully forks a daemon that binds 127.0.0.1 — but the client
+    # in the sandbox can't connect back to it ("Could not connect to the
+    # Gradle daemon"). Forcing in-process execution avoids the loopback
+    # round-trip entirely. No-op on Linux but keeping it cross-platform
+    # is simpler than splitting flags by host.
+    "--no-daemon"
 
     # based on docker/bin/build-standalone-image.sh
     # docker/standalone/build.gradle.kts
@@ -198,6 +204,12 @@ buildGradlePackage rec {
       "protoc-4.31.1-linux-x86_64.exe" = src: mkOverride src { };
     };
   };
+
+  # Gradle's FileLockContentionHandler binds a UDP socket on loopback for
+  # inter-daemon coordination, which Darwin's default sandbox profile
+  # denies with EPERM ("Operation not permitted"). Whitelisting loopback
+  # lets the build start. No-op on Linux.
+  __darwinAllowLocalNetworking = true;
 
   meta = {
     description = "An immutable SQL database for application development, time-travel reporting and data compliance. Developed by @juxt";

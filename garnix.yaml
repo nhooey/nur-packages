@@ -1,0 +1,13 @@
+# Garnix CI configuration. Default include set covers x86_64-linux only;
+# explicit patterns below opt into aarch64-linux + both Darwins so the
+# aggregated NUR packages are built/cached for every system the flake
+# exposes (forAllSystems iterates gradle2nix.builders, which covers all
+# four). Darwin builder coverage on Garnix's free tier is undocumented;
+# if these stop running, drop the two `*-darwin.*` lines.
+builds:
+  include:
+    - "packages.x86_64-linux.*"
+    - "packages.aarch64-linux.*"
+    - "packages.x86_64-darwin.*"
+    - "packages.aarch64-darwin.*"
+  exclude: []

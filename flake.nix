@@ -44,6 +44,11 @@
       url = "github:nhooey/claffeinate";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-gstack = {
+      url = "github:nhooey/nix-gstack";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

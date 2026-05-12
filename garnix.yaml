@@ -1,21 +1,19 @@
-# Garnix CI configuration. Default include set covers x86_64-linux only;
-# explicit patterns below opt into aarch64-linux + both Darwins so the
-# aggregated NUR packages are built/cached for every system the flake
-# exposes (forAllSystems iterates gradle2nix.builders, which covers all
-# four). Darwin builder coverage on Garnix's free tier is undocumented;
-# if these stop running, drop the two `*-darwin.*` lines.
+# Garnix CI configuration. Restricted to the host architecture
+# (aarch64-darwin) and to the master branch to keep Garnix minute usage
+# down — the flake still exposes packages for all four systems via
+# forAllSystems, but only the host system is built/cached in CI, and
+# only on master (plus pull requests, which Garnix surfaces as checks
+# on the PR head commit independently of the branch filter). Widen the
+# include list or drop the `branch` key below if you want broader
+# coverage back.
 builds:
   include:
-    - "packages.x86_64-linux.*"
-    - "packages.aarch64-linux.*"
-    - "packages.x86_64-darwin.*"
     - "packages.aarch64-darwin.*"
   exclude:
     # Gradle's daemon model is incompatible with Garnix's Darwin sandbox:
     # the daemon binds 127.0.0.1 successfully but the client process
     # can't CONNECT back to it ("Could not connect to the Gradle daemon"),
     # and `--no-daemon` doesn't help because gradle 8 still forks a
-    # single-use daemon under the hood. xtdb is server-side software,
-    # so dropping macOS CI coverage costs little. Linux still builds it.
-    - "packages.x86_64-darwin.xtdb"
+    # single-use daemon under the hood.
     - "packages.aarch64-darwin.xtdb"
+  branch: master

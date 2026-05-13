@@ -25,8 +25,23 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    claffeinate = {
+      url = "github:nhooey/claffeinate";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    cljfmt = {
+      url = "github:nhooey/nix-cljfmt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     gradle2nix = {
       url = "github:nhooey/gradle2nix/v2_bugfix-remove-param-console-plain";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-gstack = {
+      url = "github:nhooey/nix-gstack";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,21 +57,6 @@
 
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    claffeinate = {
-      url = "github:nhooey/claffeinate";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    cljfmt = {
-      url = "github:nhooey/nix-cljfmt";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-gstack = {
-      url = "github:nhooey/nix-gstack";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -40,8 +40,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    skillspkgs = {
+      url = "github:nhooey/skillspkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     claffeinate = {
       url = "github:nhooey/claffeinate";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    cljfmt = {
+      url = "github:nhooey/nix-cljfmt";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

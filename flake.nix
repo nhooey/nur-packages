@@ -35,6 +35,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Source of `darwinModules.default` below. Not aggregated as a package
+    # repo — it exposes `darwinModules` / `lib`, no `packages`.
+    flake-skills = {
+      url = "github:nhooey/flake-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     gradle2nix = {
       url = "github:nhooey/gradle2nix/v2_bugfix-remove-param-console-plain";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,13 +69,13 @@
   };
 
   outputs =
-    { self, nixpkgs, gradle2nix, ... }@inputs:
+    { self, nixpkgs, gradle2nix, flake-skills, ... }@inputs:
     let
       lib = nixpkgs.lib;
 
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
-      infrastructureInputs = [ "self" "nixpkgs" "gradle2nix" ];
+      infrastructureInputs = [ "self" "nixpkgs" "gradle2nix" "flake-skills" ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
 
@@ -131,5 +138,26 @@
         lib.filterAttrs (_: lib.isDerivation) (localAttrsFor system)
         // aggregatedFor "packages" system
       );
+
+      # Drop-in nix-darwin module: wires flake-skills' user-activation hook
+      # so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for
+      # every skill the consumer puts in `environment.systemPackages`. Pure
+      # enabler — installs nothing on its own. The consumer (e.g. a MyNixOS
+      # darwin module) lists which packages to install, just like any other
+      # package; flake-skills' auto-discovery picks up the ones carrying
+      # `passthru.isFlakeSkill` (set by `flake-skills.lib.mkSkillFlake`) and
+      # ignores the rest.
+      #
+      # Consume with:
+      #     imports = [ inputs.nur-packages.darwinModules.default ];
+      #     environment.systemPackages = with inputs.nur-packages.packages.${pkgs.system}; [
+      #       skill-git
+      #       skill-nix-flakes
+      #       # ...etc — listed explicitly, never auto-populated
+      #     ];
+      darwinModules.default = { lib, ... }: {
+        imports = [ flake-skills.darwinModules.default ];
+        services.flake-skills.enable = lib.mkDefault true;
+      };
     };
 }

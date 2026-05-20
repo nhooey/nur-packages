@@ -140,7 +140,7 @@
       #     imports = [ inputs.nur-packages.darwinModules.default ];
       #     environment.systemPackages = with inputs.nur-packages.packages.${pkgs.system}; [
       #       agent-skill-git-branch-naming
-      #       agent-skills-pack-nix-flakes
+      #       agent-skill-nix-flakes
       #       # ...etc — listed explicitly, never auto-populated
       #     ];
       darwinModules.default = { lib, ... }: {

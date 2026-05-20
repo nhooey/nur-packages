@@ -250,16 +250,15 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "humanizer",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1779249471,
-        "narHash": "sha256-QQYRo018q0vYJXgXRTqpAfPclvrJ8cN0Zu1RnHjAS4E=",
+        "lastModified": 1779286789,
+        "narHash": "sha256-fZet5n1mTOTR9L2dOX088jrhrOfBVdulZkMb0YvygO4=",
         "owner": "nhooey",
         "repo": "flake-skills",
-        "rev": "26b88a8e4af31a0867bdd815eca672d55c06708d",
+        "rev": "4d425104d763f1893a906dfbb4e86daab1c941ec",
         "type": "github"
       },
       "original": {
@@ -269,28 +268,6 @@
       }
     },
     "flake-skills_3": {
-      "inputs": {
-        "nixpkgs": [
-          "skillspkgs",
-          "skill-creator",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1779249471,
-        "narHash": "sha256-QQYRo018q0vYJXgXRTqpAfPclvrJ8cN0Zu1RnHjAS4E=",
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "rev": "26b88a8e4af31a0867bdd815eca672d55c06708d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "type": "github"
-      }
-    },
-    "flake-skills_4": {
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
@@ -312,7 +289,7 @@
         "type": "github"
       }
     },
-    "flake-skills_5": {
+    "flake-skills_4": {
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
@@ -409,27 +386,6 @@
         "repo": "gradle2nix",
         "type": "github"
       }
-    },
-    "humanizer": {
-      "inputs": {
-        "flake-skills": "flake-skills_2",
-        "humanizer-src": "humanizer-src",
-        "nixpkgs": [
-          "skillspkgs",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "./pkgs/humanizer",
-        "type": "path"
-      },
-      "original": {
-        "path": "./pkgs/humanizer",
-        "type": "path"
-      },
-      "parent": [
-        "skillspkgs"
-      ]
     },
     "humanizer-src": {
       "flake": false,
@@ -565,30 +521,9 @@
         "skillspkgs": "skillspkgs"
       }
     },
-    "skill-creator": {
-      "inputs": {
-        "anthropics-skills-src": "anthropics-skills-src",
-        "flake-skills": "flake-skills_3",
-        "nixpkgs": [
-          "skillspkgs",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "./pkgs/skill-creator",
-        "type": "path"
-      },
-      "original": {
-        "path": "./pkgs/skill-creator",
-        "type": "path"
-      },
-      "parent": [
-        "skillspkgs"
-      ]
-    },
     "skills-git": {
       "inputs": {
-        "flake-skills": "flake-skills_4",
+        "flake-skills": "flake-skills_3",
         "nixpkgs": [
           "skillspkgs",
           "nixpkgs"
@@ -610,18 +545,18 @@
     },
     "skills-nix": {
       "inputs": {
-        "flake-skills": "flake-skills_5",
+        "flake-skills": "flake-skills_4",
         "nixpkgs": [
           "skillspkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1779287619,
-        "narHash": "sha256-gfpM3A7tsr7bpeoHU8Bx8GECKjVXFoKQV/M7fXgQ2Rg=",
+        "lastModified": 1779295308,
+        "narHash": "sha256-WdnOhpglQtPbczv/I6r5ilArTZ6fgLA8AijtY2FmU6I=",
         "owner": "nhooey",
         "repo": "skills-nix",
-        "rev": "d422ae3b8a6a772a09f87d0cc41f4e57b8f32a9a",
+        "rev": "2602e6e9f5e58c684edc58d48ec73d10b31b522f",
         "type": "github"
       },
       "original": {
@@ -632,22 +567,23 @@
     },
     "skillspkgs": {
       "inputs": {
+        "anthropics-skills-src": "anthropics-skills-src",
+        "flake-skills": "flake-skills_2",
         "flake-utils": "flake-utils_3",
-        "humanizer": "humanizer",
+        "humanizer-src": "humanizer-src",
         "nix-gstack": "nix-gstack",
         "nixpkgs": [
           "nixpkgs"
         ],
-        "skill-creator": "skill-creator",
         "skills-git": "skills-git",
         "skills-nix": "skills-nix"
       },
       "locked": {
-        "lastModified": 1779290726,
-        "narHash": "sha256-6CmHOVkiay5YtAgpc7ZHRuzkKPOSclX0bXnn+GcASsk=",
+        "lastModified": 1779295536,
+        "narHash": "sha256-gv3S72S2Qa/fDa/nuGH0e3xXDXUOFoS5/fEJt7EHID8=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "1746d439515189f787e304813c6b8cb7009fe069",
+        "rev": "e51c4dd231ced384adc9e5678b6f504e913122f5",
         "type": "github"
       },
       "original": {

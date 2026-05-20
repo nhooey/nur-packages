@@ -139,8 +139,8 @@
       # Consume with:
       #     imports = [ inputs.nur-packages.darwinModules.default ];
       #     environment.systemPackages = with inputs.nur-packages.packages.${pkgs.system}; [
-      #       skill-git
-      #       skill-nix-flakes
+      #       agent-skill-git-branch-naming
+      #       agent-skills-pack-nix-flakes
       #       # ...etc — listed explicitly, never auto-populated
       #     ];
       darwinModules.default = { lib, ... }: {

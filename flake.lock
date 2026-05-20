@@ -130,6 +130,7 @@
     "devshell_4": {
       "inputs": {
         "nixpkgs": [
+          "skillspkgs",
           "nix-gstack",
           "nixpkgs"
         ]
@@ -190,6 +191,7 @@
     "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
+          "skillspkgs",
           "nix-gstack",
           "nixpkgs"
         ]
@@ -231,6 +233,7 @@
     "flake-skills_2": {
       "inputs": {
         "nixpkgs": [
+          "skillspkgs",
           "skills-git",
           "nixpkgs"
         ]
@@ -252,6 +255,7 @@
     "flake-skills_3": {
       "inputs": {
         "nixpkgs": [
+          "skillspkgs",
           "skills-nix",
           "nixpkgs"
         ]
@@ -308,7 +312,7 @@
     },
     "flake-utils_3": {
       "inputs": {
-        "systems": "systems_4"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -374,17 +378,18 @@
         "devshell": "devshell_4",
         "flake-parts": "flake-parts_3",
         "nixpkgs": [
+          "skillspkgs",
           "nixpkgs"
         ],
-        "systems": "systems_3",
+        "systems": "systems_4",
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1778662892,
-        "narHash": "sha256-+RXHTdZBiFVukLx52XOdKigPEI35icacgvureuBvPBQ=",
+        "lastModified": 1779252681,
+        "narHash": "sha256-KpLGBeC0SPw46Qit1GKJxoTCdhZoACU60c6ZGyrHGgQ=",
         "owner": "nhooey",
         "repo": "nix-gstack",
-        "rev": "b4d6f435c3bc6736da56eb8a8968e2c6865f2b92",
+        "rev": "a47bd25b624e17c0434b0aeb487ba29deda3f42b",
         "type": "github"
       },
       "original": {
@@ -459,10 +464,7 @@
         "cljfmt": "cljfmt",
         "flake-skills": "flake-skills",
         "gradle2nix": "gradle2nix",
-        "nix-gstack": "nix-gstack",
         "nixpkgs": "nixpkgs_3",
-        "skills-git": "skills-git",
-        "skills-nix": "skills-nix",
         "skillspkgs": "skillspkgs"
       }
     },
@@ -470,15 +472,16 @@
       "inputs": {
         "flake-skills": "flake-skills_2",
         "nixpkgs": [
+          "skillspkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1779197801,
-        "narHash": "sha256-KeTBnS+aOJINzq+s93F2Jk8+NsiTKLj6uFpCZVoCBjc=",
+        "lastModified": 1779282211,
+        "narHash": "sha256-rt1GLcta/LS8uDpFybUKdCMKn6xmn6dLi6N74zEPMhk=",
         "owner": "nhooey",
         "repo": "skills-git",
-        "rev": "d00dea0a670be122581a6ab64d2fc3d748e739e7",
+        "rev": "08a0289bd3ab1f3611be75b3be96ee05ef980b22",
         "type": "github"
       },
       "original": {
@@ -491,15 +494,16 @@
       "inputs": {
         "flake-skills": "flake-skills_3",
         "nixpkgs": [
+          "skillspkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1778663604,
-        "narHash": "sha256-dJAVG/2ukQ7+nl10Mg0oac+bshaH0MdfuwwOfxNHSFI=",
+        "lastModified": 1779282220,
+        "narHash": "sha256-AScBDoGJaPnQYYg2m5egCPjJnSXXzLXfCdKQnSgduCM=",
         "owner": "nhooey",
         "repo": "skills-nix",
-        "rev": "27149490cd17dd15c0760647e4f14029bb146f55",
+        "rev": "f88fb81f6c561c81f5f4df19f5e25b2564d64b1c",
         "type": "github"
       },
       "original": {
@@ -511,16 +515,19 @@
     "skillspkgs": {
       "inputs": {
         "flake-utils": "flake-utils_3",
+        "nix-gstack": "nix-gstack",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "skills-git": "skills-git",
+        "skills-nix": "skills-nix"
       },
       "locked": {
-        "lastModified": 1778359096,
-        "narHash": "sha256-7gUZZVGSD748a2wXfeLNZ+sdAsk3s3W1ZOj7fvDyeH0=",
+        "lastModified": 1779283970,
+        "narHash": "sha256-r270rA5Wk+wTyUxXRYs/4U19nLP+z5j+lSgXaLOdmPA=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "bde96bd2a8bccefe33ccc97f242a5443df824efc",
+        "rev": "769e6074c320790aefdb9676661bf09d1dff8b43",
         "type": "github"
       },
       "original": {
@@ -613,6 +620,7 @@
     "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
+          "skillspkgs",
           "nix-gstack",
           "nixpkgs"
         ]

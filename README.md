@@ -45,13 +45,11 @@ in your `nixpkgs` config.
 
 ## Aggregated repos
 
-| Input          | Source                                                                 |
-|----------------|------------------------------------------------------------------------|
-| `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)     |
-| `skills-git`   | [`nhooey/skills-git`](https://github.com/nhooey/skills-git)            |
-| `skills-nix`   | [`nhooey/skills-nix`](https://github.com/nhooey/skills-nix)            |
-| `claffeinate`  | [`nhooey/claffeinate`](https://github.com/nhooey/claffeinate) (Darwin) |
-| `nix-gstack`   | [`nhooey/nix-gstack`](https://github.com/nhooey/nix-gstack)            |
+| Input          | Source                                                                                 |
+|----------------|----------------------------------------------------------------------------------------|
+| `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)                     |
+| `claffeinate`  | [`nhooey/claffeinate`](https://github.com/nhooey/claffeinate) (Darwin)                 |
+| `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, skills-git, skills-nix, and third-party skill wrappers) |
 
 Adding another aggregated repo is a one-input edit to `flake.nix`; see the
 header comment there for the recipe. Last-write-wins on name collisions.

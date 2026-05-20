@@ -47,21 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-gstack = {
-      url = "github:nhooey/nix-gstack";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    skills-git = {
-      url = "github:nhooey/skills-git";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    skills-nix = {
-      url = "github:nhooey/skills-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # Aggregates nhooey/{nix-gstack, skills-git, skills-nix} and the
+    # third-party skill wrappers under `skillspkgs/pkgs/`. We rely on
+    # skillspkgs to forward those packages instead of importing each
+    # repo as a direct input here.
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -110,8 +99,7 @@
       # blind stripping would drop them entirely. When an input has *no*
       # other named packages, promote its `default` to the input's name —
       # `packages.<sys>.<input-name>`. Inputs that already expose proper
-      # names (skills-git, skills-nix) keep their `default` stripped to
-      # avoid noise aliases.
+      # names keep their `default` stripped to avoid noise aliases.
       aggregatedFor =
         field: system:
         lib.foldl'
@@ -151,8 +139,8 @@
       # Consume with:
       #     imports = [ inputs.nur-packages.darwinModules.default ];
       #     environment.systemPackages = with inputs.nur-packages.packages.${pkgs.system}; [
-      #       skill-git
-      #       skill-nix-flakes
+      #       agent-skill-git-branch-naming
+      #       agent-skill-nix-flakes
       #       # ...etc — listed explicitly, never auto-populated
       #     ];
       darwinModules.default = { lib, ... }: {

@@ -54,6 +54,13 @@
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
       inputs.nixpkgs.follows = "nixpkgs";
+      # Pin skillspkgs's flake-skills to the top-level one so the home-
+      # manager activation module (from top-level flake-skills) and the
+      # skill derivations (built under skillspkgs's flake-skills) share a
+      # single rev and agree on their `passthru` contract. skillspkgs
+      # itself follows its own flake-skills into skills-git / skills-nix,
+      # so this one override propagates through the whole tree.
+      inputs.flake-skills.follows = "flake-skills";
     };
   };
 

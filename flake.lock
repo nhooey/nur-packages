@@ -233,11 +233,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779286789,
-        "narHash": "sha256-fZet5n1mTOTR9L2dOX088jrhrOfBVdulZkMb0YvygO4=",
+        "lastModified": 1779335298,
+        "narHash": "sha256-yBcoPVBKXoONDPX9J49WWGjN6e9D1+/MEaexLyJXKpQ=",
         "owner": "nhooey",
         "repo": "flake-skills",
-        "rev": "4d425104d763f1893a906dfbb4e86daab1c941ec",
+        "rev": "2a9e837af11d1e22ff9ddaec6c33dc3ba7638dc5",
         "type": "github"
       },
       "original": {
@@ -468,11 +468,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779297470,
-        "narHash": "sha256-ghih6nwWDGZBaioNK13Ug4VPyxPwzHlTIdnJp+D4ALk=",
+        "lastModified": 1779335517,
+        "narHash": "sha256-9HqqvcanySvMgl5e23NtO+xP3oYU2lduvTKYUmab3Xc=",
         "owner": "nhooey",
         "repo": "skills-git",
-        "rev": "192fa2203fc6ed98878a31e68c51549e3430dc53",
+        "rev": "fc12c2f7d4b3d205c6bbbabf420bc62cf4e58c75",
         "type": "github"
       },
       "original": {
@@ -522,11 +522,11 @@
         "skills-nix": "skills-nix"
       },
       "locked": {
-        "lastModified": 1779330698,
-        "narHash": "sha256-dx4oDfDErYSxWs48JxjvejqjN3A3dJBzEBjkLeoFKf0=",
+        "lastModified": 1779335627,
+        "narHash": "sha256-bJSQ6ohyIc2gx4xfQCYY4tr3T+/7AXumh4LSBrK8IFQ=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "92f7353de0b481ae5f72a1e3df9e7407e6b17de7",
+        "rev": "3ac5092023bba5163bf7ba30ce0ff2c49ff6d8de",
         "type": "github"
       },
       "original": {

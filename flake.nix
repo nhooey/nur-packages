@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-in-nix-devshell = {
+      url = "github:nhooey/claude-in-nix-devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     cljfmt = {
       url = "github:nhooey/nix-cljfmt";
       inputs.nixpkgs.follows = "nixpkgs";

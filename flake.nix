@@ -135,8 +135,25 @@
 
       packages = forAllSystems (
         system:
-        lib.filterAttrs (_: lib.isDerivation) (localAttrsFor system)
-        // aggregatedFor "packages" system
+        let
+          base =
+            lib.filterAttrs (_: lib.isDerivation) (localAttrsFor system)
+            // aggregatedFor "packages" system;
+          # On Darwin, pin the shim's real-claude lookup to the Homebrew
+          # path so GUI-launched callers (JetBrains plugin, Dock, launchd)
+          # find a working `claude` without depending on the inherited
+          # PATH. Runtime `CLAUDE_NIX_EXECUTABLE=…` still wins.
+          homebrewClaude =
+            if system == "aarch64-darwin" then "/opt/homebrew/bin/claude"
+            else if system == "x86_64-darwin" then "/usr/local/bin/claude"
+            else null;
+        in
+        base
+        // lib.optionalAttrs (homebrewClaude != null && base ? claude-in-nix-devshell) {
+          claude-in-nix-devshell = base.claude-in-nix-devshell.override {
+            realClaude = homebrewClaude;
+          };
+        }
       );
 
       # Drop-in nix-darwin module: wires flake-skills' user-activation hook

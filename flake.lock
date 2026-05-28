@@ -50,11 +50,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1779917023,
-        "narHash": "sha256-nroSqS7UpO7oILSXfVjes1v5axyEBKpWtNbakH8iPsY=",
+        "lastModified": 1779967145,
+        "narHash": "sha256-bBvrleglqFr5Gst1/Bq+jOLPRHLvmmCVh3yxxNKqKKE=",
         "owner": "nhooey",
         "repo": "claude-in-nix-devshell",
-        "rev": "90856f84d636bf219d92f5d32a842d8c1573408f",
+        "rev": "7446f8c82ac062e2c0a26fdca4b85d17fc09f247",
         "type": "github"
       },
       "original": {

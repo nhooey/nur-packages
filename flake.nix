@@ -40,6 +40,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # numtide/devshell — hosts the dev-shell defined in `outputs.devShells`
+    # below. Infrastructure-only (no packages to aggregate).
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Source of `darwinModules.default` below. Not aggregated as a package
     # repo — it exposes `darwinModules` / `lib`, no `packages`.
     flake-skills = {
@@ -67,6 +74,31 @@
       # so this one override propagates through the whole tree.
       inputs.flake-skills.follows = "flake-skills";
     };
+
+    # The skills-git pack installed into this repo's dev shell at project
+    # scope. Listed as infrastructure (see `infrastructureInputs` below) so
+    # its packages are NOT auto-aggregated — they already reach this flake
+    # transitively via skillspkgs.
+    skills-git = {
+      url = "github:nhooey/skills-git";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-skills.follows = "flake-skills";
+      };
+    };
+
+    # skillspkgs' curated `authoring` combination (nix-*, humanizer,
+    # skill-creator, superpowers), pulled at `?dir=sources/combinations` so
+    # only the combination-builder eval is fetched. Infrastructure-only —
+    # combinations are deliberately kept out of `packages.<sys>` upstream
+    # and we don't want to aggregate the helper outputs either.
+    skillspkgs-combinations = {
+      url = "github:nhooey/skillspkgs?dir=sources/combinations";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-skills.follows = "flake-skills";
+      };
+    };
   };
 
   outputs =
@@ -76,7 +108,19 @@
 
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
-      infrastructureInputs = [ "self" "nixpkgs" "gradle2nix" "flake-skills" ];
+      # `devshell` / `skills-git` / `skillspkgs-combinations` power the dev
+      # shell only — skills-git's packages already reach us transitively via
+      # skillspkgs, and the combinations / mkShell helpers shouldn't appear
+      # under `packages.<sys>` anyway.
+      infrastructureInputs = [
+        "self"
+        "nixpkgs"
+        "devshell"
+        "gradle2nix"
+        "flake-skills"
+        "skills-git"
+        "skillspkgs-combinations"
+      ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
 
@@ -155,6 +199,26 @@
           };
         }
       );
+
+      # numtide/devshell-backed dev shell with two startup hooks that
+      # reconcile the skills-git pack and skillspkgs' curated `authoring`
+      # combination at project scope. Mirrors the canonical idiom in
+      # nhooey/skills-git's dev shell.
+      devShells = forAllSystems (system: {
+        default = inputs.devshell.legacyPackages.${system}.mkShell {
+          name = "nur-packages";
+          motd = ''
+            {bold}{14}🚀 Entering nur-packages dev shell{reset}
+            Run {bold}menu{reset} to list available commands.
+          '';
+          devshell.startup.install-git-skills.text = ''
+            ${inputs.skills-git.reconcileScript system}
+          '';
+          devshell.startup.install-authoring-skills.text = ''
+            ${inputs.skillspkgs-combinations.combinations.authoring.${system}.reconcileScript}
+          '';
+        };
+      });
 
       # Drop-in nix-darwin module: wires flake-skills' user-activation hook
       # so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for

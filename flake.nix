@@ -59,10 +59,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Aggregates nhooey/{nix-gstack, skills-git, skills-nix} and the
-    # third-party skill wrappers under `skillspkgs/pkgs/`. We rely on
-    # skillspkgs to forward those packages instead of importing each
-    # repo as a direct input here.
+    # The single conduit to every skills-* repo this flake consumes.
+    # skillspkgs aggregates nhooey/{nix-gstack, skills-git, skills-nix} and
+    # the third-party skill wrappers under `skillspkgs/pkgs/`, so we rely on
+    # it to forward those packages instead of importing each repo as a direct
+    # input here. The dev shell's three reconcile hooks are likewise drawn
+    # from this one input rather than separate direct inputs:
+    #   - skills-git pack    → `skillspkgs.inputs.skills-git.reconcileScript`
+    #   - authoring combo    → `skillspkgs.combinations.authoring`
+    #   - nix-bump skill src → `skillspkgs.inputs.skills-nix` (see
+    #                          `nixBumpSkills` in `outputs`)
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,34 +76,11 @@
       # manager activation module (from top-level flake-skills) and the
       # skill derivations (built under skillspkgs's flake-skills) share a
       # single rev and agree on their `passthru` contract. skillspkgs
-      # itself follows its own flake-skills into skills-git / skills-nix,
-      # so this one override propagates through the whole tree.
+      # itself follows its own flake-skills into skills-git / skills-nix and
+      # the authoring combination, so this one override propagates through
+      # the whole tree — keeping every reconcile script we draw from it on
+      # this flake's flake-skills rev.
       inputs.flake-skills.follows = "flake-skills";
-    };
-
-    # The skills-git pack installed into this repo's dev shell at project
-    # scope. Listed as infrastructure (see `infrastructureInputs` below) so
-    # its packages are NOT auto-aggregated — they already reach this flake
-    # transitively via skillspkgs.
-    skills-git = {
-      url = "github:nhooey/skills-git";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-skills.follows = "flake-skills";
-      };
-    };
-
-    # skillspkgs' curated `authoring` combination (nix-*, humanizer,
-    # skill-creator, superpowers), pulled at `?dir=sources/combinations` so
-    # only the combination-builder eval is fetched. Infrastructure-only —
-    # combinations are deliberately kept out of `packages.<sys>` upstream
-    # and we don't want to aggregate the helper outputs either.
-    skillspkgs-combinations = {
-      url = "github:nhooey/skillspkgs?dir=sources/combinations";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-skills.follows = "flake-skills";
-      };
     };
   };
 
@@ -108,18 +91,16 @@
 
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
-      # `devshell` / `skills-git` / `skillspkgs-combinations` power the dev
-      # shell only — skills-git's packages already reach us transitively via
-      # skillspkgs, and the combinations / mkShell helpers shouldn't appear
-      # under `packages.<sys>` anyway.
+      # `devshell` hosts the dev shell; `flake-skills` is the builder library
+      # used by `nixBumpSkills`. The skills-* reconcile sources are reached
+      # through the aggregated `skillspkgs` input (`.inputs.*` /
+      # `.combinations`), so they need no entry here.
       infrastructureInputs = [
         "self"
         "nixpkgs"
         "devshell"
         "gradle2nix"
         "flake-skills"
-        "skills-git"
-        "skillspkgs-combinations"
       ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
@@ -171,6 +152,33 @@
           )
           { }
           (builtins.attrNames aggregatedInputs);
+
+      # This dev shell's full skill set as one combination: skillspkgs'
+      # `authoring` combination spliced in as a source (now that mkCombination
+      # makes it re-composable), the whole skills-git pack, and the one
+      # `nix-flake-recursive-bump-input-versions` skill cherry-picked from
+      # skills-nix. A single reconcile hook converges the union under one owner
+      # — replacing three hooks with disjoint appNames.
+      #
+      # All three sources are reached through the aggregated `skillspkgs` input
+      # (`.combinations` / `.inputs.*`): `skillspkgs.inputs.flake-skills.follows
+      # = "flake-skills"` (above) pins its whole tree to this flake's
+      # flake-skills rev, so the `passthru` contract stays single-rev without
+      # duplicate input nodes.
+      devShellSkills = flake-skills.lib.mkCombination {
+        inherit nixpkgs;
+        systems = builtins.attrNames gradle2nix.builders;
+        name = "nur-packages-devshell";
+        packagePrefix = "agent-skill-";
+        sources = [
+          { source = inputs.skillspkgs.inputs.skills-git; }
+          { source = inputs.skillspkgs.combinations.authoring; }
+          {
+            source = inputs.skillspkgs.inputs.skills-nix;
+            skills = [ "nix-flake-recursive-bump-input-versions" ];
+          }
+        ];
+      };
     in
     {
       legacyPackages = forAllSystems (
@@ -200,10 +208,9 @@
         }
       );
 
-      # numtide/devshell-backed dev shell with two startup hooks that
-      # reconcile the skills-git pack and skillspkgs' curated `authoring`
-      # combination at project scope. Mirrors the canonical idiom in
-      # nhooey/skills-git's dev shell.
+      # numtide/devshell-backed dev shell with one startup hook that reconciles
+      # the whole `devShellSkills` combination (authoring + skills-git pack +
+      # the nix-bump skill) at project scope under a single owner.
       devShells = forAllSystems (system: {
         default = inputs.devshell.legacyPackages.${system}.mkShell {
           name = "nur-packages";
@@ -211,11 +218,8 @@
             {bold}{14}🚀 Entering nur-packages dev shell{reset}
             Run {bold}menu{reset} to list available commands.
           '';
-          devshell.startup.install-git-skills.text = ''
-            ${inputs.skills-git.reconcileScript system}
-          '';
-          devshell.startup.install-authoring-skills.text = ''
-            ${inputs.skillspkgs-combinations.combinations.authoring.${system}.reconcileScript}
+          devshell.startup.install-skills.text = ''
+            ${devShellSkills.reconcileScript system}
           '';
         };
       });

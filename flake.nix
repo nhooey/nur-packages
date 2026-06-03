@@ -75,12 +75,22 @@
       # Pin skillspkgs's flake-skills to the top-level one so the home-
       # manager activation module (from top-level flake-skills) and the
       # skill derivations (built under skillspkgs's flake-skills) share a
-      # single rev and agree on their `passthru` contract. skillspkgs
-      # itself follows its own flake-skills into skills-git / skills-nix and
-      # the authoring combination, so this one override propagates through
-      # the whole tree — keeping every reconcile script we draw from it on
-      # this flake's flake-skills rev.
+      # single rev and agree on their `passthru` contract.
       inputs.flake-skills.follows = "flake-skills";
+    };
+
+    # The dev-shell skill set (git/GitHub + skillspkgs' authoring combination +
+    # the nix-bump skill) as its own sub-flake, so its skill-source inputs stay
+    # isolated in `skills-devshell/flake.lock` rather than this flake's inputs.
+    # `flake-skills` follows the parent's so the whole tree resolves to one rev.
+    # Listed in `infrastructureInputs` so it is not treated as an aggregated
+    # package repo.
+    skills-devshell = {
+      url = "path:./skills-devshell";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-skills.follows = "flake-skills";
+      };
     };
   };
 
@@ -91,16 +101,16 @@
 
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
-      # `devshell` hosts the dev shell; `flake-skills` is the builder library
-      # used by `nixBumpSkills`. The skills-* reconcile sources are reached
-      # through the aggregated `skillspkgs` input (`.inputs.*` /
-      # `.combinations`), so they need no entry here.
+      # `devshell` hosts the dev shell; `flake-skills` is the builder library;
+      # `skills-devshell` is the dev-shell skill set sub-flake (its reconcile
+      # text is spliced into the dev shell, it is not a package source).
       infrastructureInputs = [
         "self"
         "nixpkgs"
         "devshell"
         "gradle2nix"
         "flake-skills"
+        "skills-devshell"
       ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
@@ -153,32 +163,6 @@
           { }
           (builtins.attrNames aggregatedInputs);
 
-      # This dev shell's full skill set as one combination: skillspkgs'
-      # `authoring` combination spliced in as a source (now that mkCombination
-      # makes it re-composable), the whole skills-git pack, and the one
-      # `nix-flake-recursive-bump-input-versions` skill cherry-picked from
-      # skills-nix. A single reconcile hook converges the union under one owner
-      # — replacing three hooks with disjoint appNames.
-      #
-      # All three sources are reached through the aggregated `skillspkgs` input
-      # (`.combinations` / `.inputs.*`): `skillspkgs.inputs.flake-skills.follows
-      # = "flake-skills"` (above) pins its whole tree to this flake's
-      # flake-skills rev, so the `passthru` contract stays single-rev without
-      # duplicate input nodes.
-      devShellSkills = flake-skills.lib.mkCombination {
-        inherit nixpkgs;
-        systems = builtins.attrNames gradle2nix.builders;
-        name = "nur-packages-devshell";
-        packagePrefix = "agent-skill-";
-        sources = [
-          { source = inputs.skillspkgs.inputs.skills-git; }
-          { source = inputs.skillspkgs.combinations.authoring; }
-          {
-            source = inputs.skillspkgs.inputs.skills-nix;
-            skills = [ "nix-flake-recursive-bump-input-versions" ];
-          }
-        ];
-      };
     in
     {
       legacyPackages = forAllSystems (
@@ -209,8 +193,10 @@
       );
 
       # numtide/devshell-backed dev shell with one startup hook that reconciles
-      # the whole `devShellSkills` combination (authoring + skills-git pack +
-      # the nix-bump skill) at project scope under a single owner.
+      # the dev-shell skill set (authoring + skills-git pack + the nix-bump
+      # skill) at project scope under a single owner. The skills-devshell
+      # sub-flake outputs the reconcile one-liner as text per system; this
+      # just splices it in.
       devShells = forAllSystems (system: {
         default = inputs.devshell.legacyPackages.${system}.mkShell {
           name = "nur-packages";
@@ -219,7 +205,7 @@
             Run {bold}menu{reset} to list available commands.
           '';
           devshell.startup.install-skills.text = ''
-            ${devShellSkills.reconcileScript system}
+            ${inputs.skills-devshell.reconcileScript.${system}}
           '';
         };
       });

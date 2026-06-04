@@ -79,18 +79,44 @@
       inputs.flake-skills.follows = "flake-skills";
     };
 
-    # The dev-shell skill set (git/GitHub + skillspkgs' authoring combination +
-    # the nix-bump skill) as its own sub-flake, so its skill-source inputs stay
-    # isolated in `skills-devshell/flake.lock` rather than this flake's inputs.
-    # `flake-skills` follows the parent's so the whole tree resolves to one rev.
-    # Listed in `infrastructureInputs` so it is not treated as an aggregated
-    # package repo.
-    skills-devshell = {
-      url = "path:./skills-devshell";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-skills.follows = "flake-skills";
-      };
+    # ---------------------------------------------------------------------
+    # Dev-shell skill sources (inlined — consumed only by `devShells` below)
+    # ---------------------------------------------------------------------
+    # The project dev shell installs one curated skill set: the git/GitHub
+    # pack, skillspkgs' `authoring` combination, and the nix-bump skill from
+    # skills-nix — combined via flake-skills' `mkCombination` in `outputs`
+    # (`devshellSkills`). These were previously isolated in a `skills-devshell/`
+    # sub-flake, but a same-repo sub-flake can only be addressed by a relative
+    # `path:` input (which sandboxed/transitive consumers reject) or a brittle
+    # self-URL (which breaks on any repo/owner/host rename), so they are inlined
+    # here instead, and all three are listed in `infrastructureInputs` so they
+    # are not aggregated as package repos.
+    #
+    # They follow the parent `nixpkgs` but NOT `flake-skills`: the root pins a
+    # newer owner-namespacing `flake-skills`, and forcing the `authoring`
+    # combination's transitive sources onto it surfaces an ownerless
+    # aggregate-key the strict namespace check rejects. Letting each source
+    # keep its own (compatible) `flake-skills` matches how the old sub-flake's
+    # isolated lock worked; `mkCombination` still runs from this flake's
+    # `flake-skills.lib`, so the combiner is the pinned root rev.
+
+    skills-git = {
+      url = "github:nhooey/skills-git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    skills-nix = {
+      url = "github:nhooey/skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # skillspkgs' curated `authoring` combination, surfaced through its own
+    # subdir flake (`mkCombination` keeps a combination re-composable). This is
+    # a `?dir=` into a *different* repo, which fetches cleanly for transitive
+    # consumers — unlike the self-referential `?dir=` we avoid above.
+    skillspkgs-combinations = {
+      url = "github:nhooey/skillspkgs?dir=sources/combinations";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -102,15 +128,18 @@
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
       # `devshell` hosts the dev shell; `flake-skills` is the builder library;
-      # `skills-devshell` is the dev-shell skill set sub-flake (its reconcile
-      # text is spliced into the dev shell, it is not a package source).
+      # `skills-git` / `skills-nix` / `skillspkgs-combinations` are the inlined
+      # dev-shell skill sources (combined into `devshellSkills` below and
+      # spliced into the dev shell — not package sources to aggregate).
       infrastructureInputs = [
         "self"
         "nixpkgs"
         "devshell"
         "gradle2nix"
         "flake-skills"
-        "skills-devshell"
+        "skills-git"
+        "skills-nix"
+        "skillspkgs-combinations"
       ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
@@ -163,6 +192,25 @@
           { }
           (builtins.attrNames aggregatedInputs);
 
+      # The project dev-shell skill set, combined from the inlined skill
+      # sources (git/GitHub pack + skillspkgs' `authoring` combination + the
+      # nix-bump skill from skills-nix). `reconcileScript` is a
+      # `system -> string` function the dev shell splices into a startup hook.
+      devshellSkills = flake-skills.lib.mkCombination {
+        inherit nixpkgs;
+        name = "nur-packages-devshell";
+        envName = "agent-skills-nur-packages-devshell";
+        packagePrefix = "agent-skill-";
+        sources = [
+          { source = inputs.skills-git; }
+          { source = inputs.skillspkgs-combinations.combinations.authoring; }
+          {
+            source = inputs.skills-nix;
+            skills = [ "nix-flake-recursive-bump-input-versions" ];
+          }
+        ];
+      };
+
     in
     {
       legacyPackages = forAllSystems (
@@ -194,9 +242,8 @@
 
       # numtide/devshell-backed dev shell with one startup hook that reconciles
       # the dev-shell skill set (authoring + skills-git pack + the nix-bump
-      # skill) at project scope under a single owner. The skills-devshell
-      # sub-flake outputs the reconcile one-liner as text per system; this
-      # just splices it in.
+      # skill) at project scope under a single owner. `devshellSkills`
+      # (above) yields the reconcile one-liner per system; this splices it in.
       devShells = forAllSystems (system: {
         default = inputs.devshell.legacyPackages.${system}.mkShell {
           name = "nur-packages";
@@ -205,7 +252,7 @@
             Run {bold}menu{reset} to list available commands.
           '';
           devshell.startup.install-skills.text = ''
-            ${inputs.skills-devshell.reconcileScript.${system}}
+            ${devshellSkills.reconcileScript system}
           '';
         };
       });

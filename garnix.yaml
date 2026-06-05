@@ -10,6 +10,15 @@ builds:
   include:
     - "packages.aarch64-darwin.*"
   exclude:
+    # The ~126 aggregated skill packages come from skillspkgs (re-exposed
+    # here for the NUR), and skillspkgs' own Garnix already builds them.
+    # Rebuilding them here is redundant and pushes the package count over
+    # Garnix's 100-package cap ("Number of packages too large. Maximum is
+    # 100, you have 130"). Exclude both the per-skill (`agent-skill-`) and
+    # the aggregate-env (`agent-skills-`) keys so CI builds only this
+    # repo's own packages.
+    - "packages.aarch64-darwin.agent-skill-*"
+    - "packages.aarch64-darwin.agent-skills-*"
     # Gradle's daemon model is incompatible with Garnix's Darwin sandbox:
     # the daemon binds 127.0.0.1 successfully but the client process
     # can't CONNECT back to it ("Could not connect to the Gradle daemon"),

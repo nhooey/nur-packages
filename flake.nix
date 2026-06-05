@@ -48,9 +48,13 @@
     };
 
     # Source of `darwinModules.default` below. Not aggregated as a package
-    # repo — it exposes `darwinModules` / `lib`, no `packages`.
-    flake-skills = {
-      url = "github:nhooey/flake-skills";
+    # repo — it exposes `darwinModules` / `lib`, no `packages`. The dev-shell
+    # skill set no longer lives here: it has moved to the runtime
+    # `skills-devshell/` sub-flake (invoked by the dev shell via
+    # `agent-skill-flake.lib.devshellSkillsHook`), so the skill mesh is kept out
+    # of this root's lock.
+    agent-skill-flake = {
+      url = "github:nhooey/agent-skill-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -59,87 +63,45 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # The single conduit to every skills-* repo this flake consumes.
-    # skillspkgs aggregates nhooey/{nix-gstack, skills-git, skills-nix} and
-    # the third-party skill wrappers under `skillspkgs/pkgs/`, so we rely on
-    # it to forward those packages instead of importing each repo as a direct
-    # input here. The dev shell's three reconcile hooks are likewise drawn
-    # from this one input rather than separate direct inputs:
-    #   - skills-git pack    → `skillspkgs.inputs.skills-git.reconcileScript`
-    #   - authoring combo    → `skillspkgs.combinations.authoring`
-    #   - nix-bump skill src → `skillspkgs.inputs.skills-nix` (see
-    #                          `nixBumpSkills` in `outputs`)
+    # The single conduit to every skills-* repo this flake aggregates as
+    # packages. skillspkgs aggregates nhooey/{nix-gstack, skills-git,
+    # skills-nix} and the third-party skill wrappers under `skillspkgs/pkgs/`,
+    # so we rely on it to forward those packages (merged into this flake's
+    # `packages.<system>`) instead of importing each repo as a direct input
+    # here. This stays a root input because it feeds a NON-dev-shell output
+    # (the aggregated package set), unlike the dev-shell-only skill sources now
+    # isolated in `skills-devshell/`.
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
       inputs.nixpkgs.follows = "nixpkgs";
-      # Pin skillspkgs's flake-skills to the top-level one so the home-
-      # manager activation module (from top-level flake-skills) and the
-      # skill derivations (built under skillspkgs's flake-skills) share a
-      # single rev and agree on their `passthru` contract.
-      inputs.flake-skills.follows = "flake-skills";
-    };
-
-    # ---------------------------------------------------------------------
-    # Dev-shell skill sources (inlined — consumed only by `devShells` below)
-    # ---------------------------------------------------------------------
-    # The project dev shell installs one curated skill set: the git/GitHub
-    # pack, skillspkgs' `authoring` combination, and the nix-bump skill from
-    # skills-nix — combined via flake-skills' `mkCombination` in `outputs`
-    # (`devshellSkills`). These were previously isolated in a `skills-devshell/`
-    # sub-flake, but a same-repo sub-flake can only be addressed by a relative
-    # `path:` input (which sandboxed/transitive consumers reject) or a brittle
-    # self-URL (which breaks on any repo/owner/host rename), so they are inlined
-    # here instead, and all three are listed in `infrastructureInputs` so they
-    # are not aggregated as package repos.
-    #
-    # They follow the parent `nixpkgs` but NOT `flake-skills`: the root pins a
-    # newer owner-namespacing `flake-skills`, and forcing the `authoring`
-    # combination's transitive sources onto it surfaces an ownerless
-    # aggregate-key the strict namespace check rejects. Letting each source
-    # keep its own (compatible) `flake-skills` matches how the old sub-flake's
-    # isolated lock worked; `mkCombination` still runs from this flake's
-    # `flake-skills.lib`, so the combiner is the pinned root rev.
-
-    skills-git = {
-      url = "github:nhooey/skills-git";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    skills-nix = {
-      url = "github:nhooey/skills-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # skillspkgs' curated `authoring` combination, surfaced through its own
-    # subdir flake (`mkCombination` keeps a combination re-composable). This is
-    # a `?dir=` into a *different* repo, which fetches cleanly for transitive
-    # consumers — unlike the self-referential `?dir=` we avoid above.
-    skillspkgs-combinations = {
-      url = "github:nhooey/skillspkgs?dir=sources/combinations";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # NOTE: skillspkgs's `flake-skills` is intentionally NOT followed onto the
+      # root `agent-skill-flake`. The root pins a newer builder-lib rev (for the
+      # dev-shell `devshellSkillsHook` and the `darwinModules` hook) whose
+      # stricter package-key namespace check rejects skillspkgs's vendored "all"
+      # skill (an ownerless aggregate key), which would break the aggregated
+      # `packages.<system>` output. Letting skillspkgs resolve its own compatible
+      # builder-lib pin keeps that output building; the two builder-lib revs
+      # coexist cleanly because nix does not auto-unify them.
     };
   };
 
   outputs =
-    { self, nixpkgs, gradle2nix, flake-skills, ... }@inputs:
+    { self, nixpkgs, gradle2nix, agent-skill-flake, ... }@inputs:
     let
       lib = nixpkgs.lib;
 
       # Inputs that power this flake itself, not downstream package repos.
       # Everything else in `inputs` is treated as an aggregated repo.
-      # `devshell` hosts the dev shell; `flake-skills` is the builder library;
-      # `skills-git` / `skills-nix` / `skillspkgs-combinations` are the inlined
-      # dev-shell skill sources (combined into `devshellSkills` below and
-      # spliced into the dev shell — not package sources to aggregate).
+      # `devshell` hosts the dev shell; `agent-skill-flake` is the builder
+      # library (it supplies the `darwinModules` hook and the dev shell's
+      # `devshellSkillsHook` wiring). The dev-shell skill sources are no longer
+      # listed here: they live in the runtime `skills-devshell/` sub-flake.
       infrastructureInputs = [
         "self"
         "nixpkgs"
         "devshell"
         "gradle2nix"
-        "flake-skills"
-        "skills-git"
-        "skills-nix"
-        "skillspkgs-combinations"
+        "agent-skill-flake"
       ];
 
       aggregatedInputs = builtins.removeAttrs inputs infrastructureInputs;
@@ -192,24 +154,14 @@
           { }
           (builtins.attrNames aggregatedInputs);
 
-      # The project dev-shell skill set, combined from the inlined skill
-      # sources (git/GitHub pack + skillspkgs' `authoring` combination + the
-      # nix-bump skill from skills-nix). `reconcileScript` is a
-      # `system -> string` function the dev shell splices into a startup hook.
-      devshellSkills = flake-skills.lib.mkCombination {
-        inherit nixpkgs;
-        name = "nur-packages-devshell";
-        envName = "agent-skills-nur-packages-devshell";
-        packagePrefix = "agent-skill-";
-        sources = [
-          { source = inputs.skills-git; }
-          { source = inputs.skillspkgs-combinations.combinations.authoring; }
-          {
-            source = inputs.skills-nix;
-            skills = [ "nix-flake-recursive-bump-input-versions" ];
-          }
-        ];
-      };
+      # Root-side wiring for the runtime `skills-devshell/` sub-flake. The skill
+      # set itself (git/GitHub pack + skillspkgs' `authoring` combination + the
+      # nix-bump skill from skills-nix) is defined in `skills-devshell/flake.nix`
+      # and invoked via `nix run "$PRJ_ROOT/skills-devshell#..."` at runtime, so
+      # the skill sources stay out of this root's lock. `devshellSkills.startup`
+      # is the reconcile snippet; `devshellSkills.commands` are the repo-agnostic
+      # `skills`-category dev-shell commands.
+      devshellSkills = agent-skill-flake.lib.devshellSkillsHook { };
 
     in
     {
@@ -240,10 +192,13 @@
         }
       );
 
-      # numtide/devshell-backed dev shell with one startup hook that reconciles
-      # the dev-shell skill set (authoring + skills-git pack + the nix-bump
-      # skill) at project scope under a single owner. `devshellSkills`
-      # (above) yields the reconcile one-liner per system; this splices it in.
+      # numtide/devshell-backed dev shell. Its install-skills startup hook
+      # reconciles the dev-shell skill set (authoring + skills-git pack + the
+      # nix-bump skill) at project scope under a single owner by invoking the
+      # runtime `skills-devshell/` sub-flake; the `skills`-category commands
+      # (purge / lock-bump) come from the same hook. `$PRJ_ROOT` is exported by
+      # numtide/devshell, so the system-agnostic `nix run "$PRJ_ROOT/..."`
+      # strings work regardless of CWD — no per-system splicing needed.
       devShells = forAllSystems (system: {
         default = inputs.devshell.legacyPackages.${system}.mkShell {
           name = "nur-packages";
@@ -251,20 +206,19 @@
             {bold}{14}🚀 Entering nur-packages dev shell{reset}
             Run {bold}menu{reset} to list available commands.
           '';
-          devshell.startup.install-skills.text = ''
-            ${devshellSkills.reconcileScript system}
-          '';
+          devshell.startup.install-skills.text = devshellSkills.startup;
+          commands = devshellSkills.commands;
         };
       });
 
-      # Drop-in nix-darwin module: wires flake-skills' user-activation hook
-      # so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for
+      # Drop-in nix-darwin module: wires agent-skill-flake's user-activation
+      # hook so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for
       # every skill the consumer puts in `environment.systemPackages`. Pure
       # enabler — installs nothing on its own. The consumer (e.g. a MyNixOS
       # darwin module) lists which packages to install, just like any other
-      # package; flake-skills' auto-discovery picks up the ones carrying
-      # `passthru.isFlakeSkill` (set by `flake-skills.lib.mkSkillFlake`) and
-      # ignores the rest.
+      # package; agent-skill-flake's auto-discovery picks up the ones carrying
+      # `passthru.isFlakeSkill` (set by `agent-skill-flake.lib.mkSkillFlake`)
+      # and ignores the rest.
       #
       # Consume with:
       #     imports = [ inputs.nur-packages.darwinModules.default ];
@@ -274,8 +228,8 @@
       #       # ...etc — listed explicitly, never auto-populated
       #     ];
       darwinModules.default = { lib, ... }: {
-        imports = [ flake-skills.darwinModules.default ];
-        services.flake-skills.enable = lib.mkDefault true;
+        imports = [ agent-skill-flake.darwinModules.default ];
+        services.agent-skill-flake.enable = lib.mkDefault true;
       };
     };
 }

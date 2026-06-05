@@ -9,6 +9,7 @@
 builds:
   include:
     - "packages.aarch64-darwin.*"
+    - "devShells.aarch64-darwin.default"
   exclude:
     # The ~126 aggregated skill packages come from skillspkgs (re-exposed
     # here for the NUR), and skillspkgs' own Garnix already builds them.

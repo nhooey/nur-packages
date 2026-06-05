@@ -25,14 +25,38 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Shared infrastructure inputs declared once at the root so every input
+    # below can `follows` them to a single node, collapsing the duplicated
+    # nix-systems / flake-parts / treefmt-nix subtrees that otherwise bloat
+    # flake.lock. Listed in `infrastructureInputs` below so they are not
+    # mistaken for aggregated package repos.
+    systems.url = "github:nix-systems/default";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     claffeinate = {
       url = "github:nhooey/claffeinate";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.devshell.follows = "devshell";
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 
     claude-in-nix-devshell = {
       url = "github:nhooey/claude-in-nix-devshell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.devshell.follows = "devshell";
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 
     cljfmt = {
@@ -56,6 +80,10 @@
     agent-skill-flake = {
       url = "github:nhooey/agent-skill-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.devshell.follows = "devshell";
     };
 
     gradle2nix = {
@@ -74,6 +102,10 @@
     skillspkgs = {
       url = "github:nhooey/skillspkgs";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.devshell.follows = "devshell";
       # NOTE: skillspkgs's `flake-skills` is intentionally NOT followed onto the
       # root `agent-skill-flake`. The root pins a newer builder-lib rev (for the
       # dev-shell `devshellSkillsHook` and the `darwinModules` hook) whose
@@ -99,6 +131,9 @@
       infrastructureInputs = [
         "self"
         "nixpkgs"
+        "systems"
+        "flake-parts"
+        "treefmt-nix"
         "devshell"
         "gradle2nix"
         "agent-skill-flake"

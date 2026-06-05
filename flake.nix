@@ -106,14 +106,15 @@
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
       inputs.devshell.follows = "devshell";
-      # NOTE: skillspkgs's `flake-skills` is intentionally NOT followed onto the
-      # root `agent-skill-flake`. The root pins a newer builder-lib rev (for the
-      # dev-shell `devshellSkillsHook` and the `darwinModules` hook) whose
-      # stricter package-key namespace check rejects skillspkgs's vendored "all"
-      # skill (an ownerless aggregate key), which would break the aggregated
-      # `packages.<system>` output. Letting skillspkgs resolve its own compatible
-      # builder-lib pin keeps that output building; the two builder-lib revs
-      # coexist cleanly because nix does not auto-unify them.
+      # Follow skillspkgs's builder lib onto the root's so the two share one
+      # agent-skill-flake node instead of locking a second builder subtree.
+      # This was previously avoided because skillspkgs pinned an older,
+      # incompatible builder rev whose strict package-key namespace check
+      # rejected its vendored aggregate "all" skill — but skillspkgs has since
+      # adopted the `agent-skill-flake` name, and that check was fixed upstream
+      # (discard store-path context from discovered skill names), so the shared
+      # rev now builds the aggregated `packages.<system>` output cleanly.
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
   };
 

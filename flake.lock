@@ -19,11 +19,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780687374,
-        "narHash": "sha256-Ku6wVVtaIuHTAeJASnFZ4xZON5Gp+N33H6QYbnAYr4w=",
+        "lastModified": 1780696327,
+        "narHash": "sha256-41aUE2NzTJvZ1OSAu3g1z0V+2l2lAB24MegJ5AACt9s=",
         "owner": "nhooey",
         "repo": "agent-skill-flake",
-        "rev": "c075c47d88f1c26d1479a5892d4edfd78ce208c8",
+        "rev": "271fb64920156edae2e0c3bb70f98f4464ed58a1",
         "type": "github"
       },
       "original": {
@@ -97,22 +97,6 @@
       }
     },
     "anthropics-skills-src_13": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779199866,
-        "narHash": "sha256-GMXFJSePrpEvhzMQ82YI9Z10BDkuFK/lXUDELclvQ4c=",
-        "owner": "anthropics",
-        "repo": "skills",
-        "rev": "690f15cac7f7b4c055c5ab109c79ed9259934081",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anthropics",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
-    "anthropics-skills-src_14": {
       "flake": false,
       "locked": {
         "lastModified": 1779199866,
@@ -370,17 +354,14 @@
       "inputs": {
         "devshell": "devshell_4",
         "flake-parts": "flake-parts_3",
-        "flake-skills": [
-          "skillspkgs",
-          "flake-skills"
-        ],
+        "flake-skills": "flake-skills",
         "nixpkgs": [
           "skillspkgs",
           "nixpkgs"
         ],
         "skills-git": "skills-git",
         "skillspkgs-combinations": "skillspkgs-combinations_4",
-        "systems": "systems_13",
+        "systems": "systems_14",
         "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
@@ -397,55 +378,7 @@
         "type": "github"
       }
     },
-    "daymade": {
-      "inputs": {
-        "daymade-skills-src": "daymade-skills-src_2",
-        "flake-skills": [
-          "skillspkgs",
-          "skills-git",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-git",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "pkgs/daymade",
-        "lastModified": 1780606768,
-        "narHash": "sha256-ECtSp03LzpnYqgwXryoCvdBfKOJLfiyzj0tYXxwrNrQ=",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "rev": "8677a86f04a7c94417bec3bedab2516d18fbe75d",
-        "type": "github"
-      },
-      "original": {
-        "dir": "pkgs/daymade",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "type": "github"
-      }
-    },
     "daymade-skills-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780231637,
-        "narHash": "sha256-aK4v1uJnYPh/QU4dSyku7nVNkWWwpQJ6q7cWhuzyq8M=",
-        "owner": "daymade",
-        "repo": "claude-code-skills",
-        "rev": "c09bac375fcd116469a218ecdea50a43a97657a9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "daymade",
-        "repo": "claude-code-skills",
-        "type": "github"
-      }
-    },
-    "daymade-skills-src_2": {
       "flake": false,
       "locked": {
         "lastModified": 1780231637,
@@ -487,6 +420,8 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "coding-agent-skills",
+          "skillspkgs-combinations",
           "flake-skills",
           "nixpkgs"
         ]
@@ -509,8 +444,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
+          "git-skills",
           "nixpkgs"
         ]
       },
@@ -532,9 +466,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
+          "nix-gstack",
           "nixpkgs"
         ]
       },
@@ -556,11 +488,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "flake-skills",
+          "nix-skills",
           "nixpkgs"
         ]
       },
@@ -582,6 +510,106 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "flake-skills",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768818222,
+        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_15": {
+      "inputs": {
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768818222,
+        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_16": {
+      "inputs": {
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768818222,
+        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_17": {
+      "inputs": {
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "flake-skills",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768818222,
+        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_18": {
+      "inputs": {
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -604,102 +632,14 @@
         "type": "github"
       }
     },
-    "devshell_15": {
-      "inputs": {
-        "nixpkgs": [
-          "skillspkgs",
-          "flake-skills",
-          "skillspkgs-combinations",
-          "flake-skills",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768818222,
-        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
-    "devshell_16": {
-      "inputs": {
-        "nixpkgs": [
-          "skillspkgs",
-          "nix-gstack",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768818222,
-        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
-    "devshell_17": {
-      "inputs": {
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-git",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768818222,
-        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
-    "devshell_18": {
-      "inputs": {
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768818222,
-        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
     "devshell_19": {
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
+          "flake-skills",
+          "skillspkgs-combinations",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -739,9 +679,8 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -763,10 +702,8 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "flake-skills",
           "nixpkgs"
         ]
@@ -789,11 +726,11 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -815,7 +752,33 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "skills-git",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768818222,
+        "narHash": "sha256-460jc0+CZfyaO8+w8JNtlClB2n4ui1RbHfPTLkpwhU8=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "255a2b1725a20d060f566e4755dbf571bbbb5f76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_24": {
+      "inputs": {
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills",
           "nixpkgs"
@@ -882,7 +845,7 @@
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -906,7 +869,6 @@
           "skillspkgs",
           "coding-agent-skills",
           "skills-git",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -930,8 +892,6 @@
           "skillspkgs",
           "coding-agent-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "flake-skills",
           "nixpkgs"
         ]
@@ -958,7 +918,7 @@
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -981,8 +941,10 @@
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
-          "skillspkgs-combinations",
+          "skills-git",
           "flake-skills",
+          "skills-devshell",
+          "skills-git",
           "nixpkgs"
         ]
       },
@@ -1022,6 +984,8 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
+          "coding-agent-skills",
+          "skillspkgs-combinations",
           "flake-skills",
           "nixpkgs"
         ]
@@ -1044,8 +1008,7 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
+          "git-skills",
           "nixpkgs"
         ]
       },
@@ -1067,18 +1030,16 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
+          "nix-gstack",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1778716662,
-        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
+        "lastModified": 1775087534,
+        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
         "type": "github"
       },
       "original": {
@@ -1091,10 +1052,7 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
+          "nix-skills",
           "nixpkgs"
         ]
       },
@@ -1116,10 +1074,7 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
+          "nix-skills",
           "flake-skills",
           "nixpkgs"
         ]
@@ -1142,10 +1097,8 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skills-git",
           "nixpkgs"
         ]
@@ -1168,8 +1121,9 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
-          "skillspkgs-combinations",
+          "skills-git",
           "flake-skills",
           "nixpkgs"
         ]
@@ -1192,16 +1146,20 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "nix-gstack",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1775087534,
-        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
+        "lastModified": 1778716662,
+        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
+        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
         "type": "github"
       },
       "original": {
@@ -1214,7 +1172,12 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
+          "nix-skills",
+          "flake-skills",
           "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1236,7 +1199,12 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "skills-git",
           "nixpkgs"
         ]
       },
@@ -1278,8 +1246,10 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
+          "flake-skills",
+          "skillspkgs-combinations",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1301,9 +1271,8 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1325,10 +1294,9 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
-          "skills-devshell",
           "nixpkgs"
         ]
       },
@@ -1350,11 +1318,10 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1376,11 +1343,11 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1402,7 +1369,33 @@
       "inputs": {
         "nixpkgs-lib": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "skills-git",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778716662,
+        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_26": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "skillspkgs",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills",
           "nixpkgs"
@@ -1449,7 +1442,7 @@
         "nixpkgs-lib": [
           "skillspkgs",
           "coding-agent-skills",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1473,7 +1466,6 @@
           "skillspkgs",
           "coding-agent-skills",
           "skills-git",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1498,7 +1490,6 @@
           "coding-agent-skills",
           "skills-git",
           "flake-skills",
-          "skills-devshell",
           "nixpkgs"
         ]
       },
@@ -1524,7 +1515,6 @@
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1550,7 +1540,7 @@
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -1573,8 +1563,10 @@
         "nixpkgs-lib": [
           "skillspkgs",
           "coding-agent-skills",
-          "skillspkgs-combinations",
+          "skills-git",
           "flake-skills",
+          "skills-devshell",
+          "skills-git",
           "nixpkgs"
         ]
       },
@@ -1594,24 +1586,26 @@
     },
     "flake-skills": {
       "inputs": {
-        "devshell": "devshell_6",
-        "flake-parts": "flake-parts_5",
+        "devshell": "devshell_5",
+        "flake-parts": "flake-parts_4",
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
-          "skills-git",
           "nixpkgs"
         ],
-        "skills-devshell": "skills-devshell",
-        "systems": "systems_8",
-        "treefmt-nix": "treefmt-nix_3"
+        "systems": "systems_3",
+        "treefmt-nix": [
+          "skillspkgs",
+          "coding-agent-skills",
+          "treefmt-nix"
+        ]
       },
       "locked": {
-        "lastModified": 1780595228,
-        "narHash": "sha256-Hn7yPhQP7yZZlH8fyRCXX3XI9DEuxJCs1SEZHouTmOs=",
+        "lastModified": 1780687374,
+        "narHash": "sha256-Ku6wVVtaIuHTAeJASnFZ4xZON5Gp+N33H6QYbnAYr4w=",
         "owner": "nhooey",
         "repo": "flake-skills",
-        "rev": "7622508efac93565b6e761f63a43d3964bb9ef7b",
+        "rev": "c075c47d88f1c26d1479a5892d4edfd78ce208c8",
         "type": "github"
       },
       "original": {
@@ -1622,11 +1616,40 @@
     },
     "flake-skills_10": {
       "inputs": {
-        "devshell": "devshell_23",
-        "flake-parts": "flake-parts_25",
+        "devshell": "devshell_22",
+        "flake-parts": "flake-parts_24",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "nixpkgs"
+        ],
+        "systems": "systems_28",
+        "treefmt-nix": "treefmt-nix_15"
+      },
+      "locked": {
+        "lastModified": 1780494642,
+        "narHash": "sha256-1rxLFvBT+u4rqTkd+yAmgMAP7IlGmOOgm+/t8x5fE4w=",
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "rev": "b265e22aca5fa5cbd529fe350bc6294d38cb1fa7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "type": "github"
+      }
+    },
+    "flake-skills_11": {
+      "inputs": {
+        "devshell": "devshell_24",
+        "flake-parts": "flake-parts_26",
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
           "skillspkgs-combinations",
           "nixpkgs"
         ],
@@ -1650,24 +1673,23 @@
     "flake-skills_2": {
       "inputs": {
         "devshell": "devshell_7",
-        "flake-parts": "flake-parts_7",
+        "flake-parts": "flake-parts_6",
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "nixpkgs"
         ],
-        "systems": "systems_3",
-        "treefmt-nix": "treefmt-nix"
+        "skills-devshell": "skills-devshell",
+        "systems": "systems_9",
+        "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1780494642,
-        "narHash": "sha256-1rxLFvBT+u4rqTkd+yAmgMAP7IlGmOOgm+/t8x5fE4w=",
+        "lastModified": 1780595228,
+        "narHash": "sha256-Hn7yPhQP7yZZlH8fyRCXX3XI9DEuxJCs1SEZHouTmOs=",
         "owner": "nhooey",
         "repo": "flake-skills",
-        "rev": "b265e22aca5fa5cbd529fe350bc6294d38cb1fa7",
+        "rev": "7622508efac93565b6e761f63a43d3964bb9ef7b",
         "type": "github"
       },
       "original": {
@@ -1678,16 +1700,18 @@
     },
     "flake-skills_3": {
       "inputs": {
-        "devshell": "devshell_9",
-        "flake-parts": "flake-parts_9",
+        "devshell": "devshell_8",
+        "flake-parts": "flake-parts_8",
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
-          "skillspkgs-combinations",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "nixpkgs"
         ],
-        "systems": "systems_11",
-        "treefmt-nix": "treefmt-nix_5"
+        "systems": "systems_4",
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
         "lastModified": 1780494642,
@@ -1709,69 +1733,12 @@
         "flake-parts": "flake-parts_10",
         "nixpkgs": [
           "skillspkgs",
+          "coding-agent-skills",
+          "skillspkgs-combinations",
           "nixpkgs"
         ],
-        "skills-git": "skills-git_3",
-        "skillspkgs-combinations": "skillspkgs-combinations_8",
-        "systems": "systems_24",
-        "treefmt-nix": "treefmt-nix_12"
-      },
-      "locked": {
-        "lastModified": 1780602689,
-        "narHash": "sha256-TNX9ktsD+0vvpiGISZH36Gsc8XmQBuO5YHYzm1/umqg=",
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "rev": "d2926f4fc4fe8455ff9d322d7fb3b30c081aa9b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "type": "github"
-      }
-    },
-    "flake-skills_5": {
-      "inputs": {
-        "devshell": "devshell_12",
-        "flake-parts": "flake-parts_12",
-        "nixpkgs": [
-          "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "nixpkgs"
-        ],
-        "skills-devshell": "skills-devshell_2",
-        "systems": "systems_19",
-        "treefmt-nix": "treefmt-nix_9"
-      },
-      "locked": {
-        "lastModified": 1780595228,
-        "narHash": "sha256-Hn7yPhQP7yZZlH8fyRCXX3XI9DEuxJCs1SEZHouTmOs=",
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "rev": "7622508efac93565b6e761f63a43d3964bb9ef7b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "type": "github"
-      }
-    },
-    "flake-skills_6": {
-      "inputs": {
-        "devshell": "devshell_13",
-        "flake-parts": "flake-parts_14",
-        "nixpkgs": [
-          "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "nixpkgs"
-        ],
-        "systems": "systems_14",
-        "treefmt-nix": "treefmt-nix_7"
+        "systems": "systems_12",
+        "treefmt-nix": "treefmt-nix_5"
       },
       "locked": {
         "lastModified": 1780494642,
@@ -1787,18 +1754,78 @@
         "type": "github"
       }
     },
-    "flake-skills_7": {
+    "flake-skills_5": {
       "inputs": {
-        "devshell": "devshell_15",
+        "devshell": "devshell_14",
+        "flake-parts": "flake-parts_14",
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
+          "nixpkgs"
+        ],
+        "skills-git": "skills-git_3",
+        "skillspkgs-combinations": "skillspkgs-combinations_8",
+        "systems": "systems_27",
+        "treefmt-nix": "treefmt-nix_14"
+      },
+      "locked": {
+        "lastModified": 1780602689,
+        "narHash": "sha256-TNX9ktsD+0vvpiGISZH36Gsc8XmQBuO5YHYzm1/umqg=",
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "rev": "d2926f4fc4fe8455ff9d322d7fb3b30c081aa9b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "type": "github"
+      }
+    },
+    "flake-skills_6": {
+      "inputs": {
+        "devshell": "devshell_16",
         "flake-parts": "flake-parts_16",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
-          "skillspkgs-combinations",
+          "skills-git",
           "nixpkgs"
         ],
+        "skills-devshell": "skills-devshell_2",
         "systems": "systems_22",
         "treefmt-nix": "treefmt-nix_11"
+      },
+      "locked": {
+        "lastModified": 1780595228,
+        "narHash": "sha256-Hn7yPhQP7yZZlH8fyRCXX3XI9DEuxJCs1SEZHouTmOs=",
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "rev": "7622508efac93565b6e761f63a43d3964bb9ef7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "type": "github"
+      }
+    },
+    "flake-skills_7": {
+      "inputs": {
+        "devshell": "devshell_17",
+        "flake-parts": "flake-parts_18",
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
+          "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "nixpkgs"
+        ],
+        "systems": "systems_17",
+        "treefmt-nix": "treefmt-nix_9"
       },
       "locked": {
         "lastModified": 1780494642,
@@ -1816,11 +1843,39 @@
     },
     "flake-skills_8": {
       "inputs": {
-        "devshell": "devshell_20",
-        "flake-parts": "flake-parts_21",
+        "devshell": "devshell_19",
+        "flake-parts": "flake-parts_20",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
+          "flake-skills",
+          "skillspkgs-combinations",
+          "nixpkgs"
+        ],
+        "systems": "systems_25",
+        "treefmt-nix": "treefmt-nix_13"
+      },
+      "locked": {
+        "lastModified": 1780494642,
+        "narHash": "sha256-1rxLFvBT+u4rqTkd+yAmgMAP7IlGmOOgm+/t8x5fE4w=",
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "rev": "b265e22aca5fa5cbd529fe350bc6294d38cb1fa7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "flake-skills",
+        "type": "github"
+      }
+    },
+    "flake-skills_9": {
+      "inputs": {
+        "devshell": "devshell_21",
+        "flake-parts": "flake-parts_22",
+        "nixpkgs": [
+          "skillspkgs",
+          "nix-skills",
           "skills-git",
           "nixpkgs"
         ],
@@ -1834,35 +1889,6 @@
         "owner": "nhooey",
         "repo": "flake-skills",
         "rev": "7622508efac93565b6e761f63a43d3964bb9ef7b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "type": "github"
-      }
-    },
-    "flake-skills_9": {
-      "inputs": {
-        "devshell": "devshell_21",
-        "flake-parts": "flake-parts_23",
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "nixpkgs"
-        ],
-        "systems": "systems_28",
-        "treefmt-nix": "treefmt-nix_15"
-      },
-      "locked": {
-        "lastModified": 1780494642,
-        "narHash": "sha256-1rxLFvBT+u4rqTkd+yAmgMAP7IlGmOOgm+/t8x5fE4w=",
-        "owner": "nhooey",
-        "repo": "flake-skills",
-        "rev": "b265e22aca5fa5cbd529fe350bc6294d38cb1fa7",
         "type": "github"
       },
       "original": {
@@ -1904,6 +1930,35 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "git-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "devshell": "devshell_11",
+        "flake-parts": "flake-parts_11",
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "systems": "systems_15",
+        "treefmt-nix": "treefmt-nix_7"
+      },
+      "locked": {
+        "lastModified": 1780694930,
+        "narHash": "sha256-u+4Aht2LimFqV3DXarcMHEL9w1ePDYusqZKSMGNEPz0=",
+        "owner": "nhooey",
+        "repo": "git-skills",
+        "rev": "ef0ae3bc22315ae7e6e8136500407624d271a804",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "git-skills",
         "type": "github"
       }
     },
@@ -2034,22 +2089,6 @@
       }
     },
     "humanizer-src_13": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1775020197,
-        "narHash": "sha256-3yO13MKUK/zF36Sq+CACMM401BhtmYz5cZmC5FX4VQw=",
-        "owner": "blader",
-        "repo": "humanizer",
-        "rev": "8b3a17889fbf12bedae20974a3c9f9de746ed754",
-        "type": "github"
-      },
-      "original": {
-        "owner": "blader",
-        "repo": "humanizer",
-        "type": "github"
-      }
-    },
-    "humanizer-src_14": {
       "flake": false,
       "locked": {
         "lastModified": 1775020197,
@@ -2197,22 +2236,20 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "humanizer-src": "humanizer-src_11",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -2237,20 +2274,16 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "humanizer-src": "humanizer-src_12",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -2275,48 +2308,14 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "humanizer-src": "humanizer-src_13",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "pkgs/humanizer",
-        "lastModified": 1780422651,
-        "narHash": "sha256-eurrcyASbFi4kqeBFYNSIxkeCjlI39L0Xqz2FYuld+c=",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "rev": "9c79a870e24957609fe97fcfffdd2ba06f36cc92",
-        "type": "github"
-      },
-      "original": {
-        "dir": "pkgs/humanizer",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "type": "github"
-      }
-    },
-    "humanizer_13": {
-      "inputs": {
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "humanizer-src": "humanizer-src_14",
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -2445,6 +2444,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -2453,9 +2453,10 @@
           "skillspkgs-combinations",
           "flake-skills"
         ],
-        "humanizer-src": "humanizer-src_5",
+        "humanizer-src": "humanizer-src_6",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -2485,6 +2486,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -2492,9 +2494,10 @@
           "skillspkgs-combinations",
           "flake-skills"
         ],
-        "humanizer-src": "humanizer-src_6",
+        "humanizer-src": "humanizer-src_7",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -2523,14 +2526,16 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
-        "humanizer-src": "humanizer-src_7",
+        "humanizer-src": "humanizer-src_8",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -2557,13 +2562,15 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
-        "humanizer-src": "humanizer-src_8",
+        "humanizer-src": "humanizer-src_9",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -2589,6 +2596,10 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
@@ -2596,6 +2607,10 @@
         "humanizer-src": "humanizer-src_10",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -2642,14 +2657,14 @@
     },
     "nix-gstack": {
       "inputs": {
-        "devshell": "devshell_16",
-        "flake-parts": "flake-parts_17",
+        "devshell": "devshell_12",
+        "flake-parts": "flake-parts_12",
         "nixpkgs": [
           "skillspkgs",
           "nixpkgs"
         ],
-        "systems": "systems_25",
-        "treefmt-nix": "treefmt-nix_13"
+        "systems": "systems_16",
+        "treefmt-nix": "treefmt-nix_8"
       },
       "locked": {
         "lastModified": 1779376585,
@@ -2662,6 +2677,34 @@
       "original": {
         "owner": "nhooey",
         "repo": "nix-gstack",
+        "type": "github"
+      }
+    },
+    "nix-skills": {
+      "inputs": {
+        "devshell": "devshell_13",
+        "flake-parts": "flake-parts_13",
+        "flake-skills": "flake-skills_5",
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "skills-git": "skills-git_5",
+        "skillspkgs-combinations": "skillspkgs-combinations_12",
+        "systems": "systems_38",
+        "treefmt-nix": "treefmt-nix_20"
+      },
+      "locked": {
+        "lastModified": 1780679117,
+        "narHash": "sha256-RfxeG8Gtvwr7ghE1Z8NgUMNdTBOfDwPZaXHfebKPlkY=",
+        "owner": "nhooey",
+        "repo": "nix-skills",
+        "rev": "237dca0d297d96981562607b2a43620cced07407",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "nix-skills",
         "type": "github"
       }
     },
@@ -2785,21 +2828,19 @@
         "anthropics-skills-src": "anthropics-skills-src_11",
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -2825,19 +2866,15 @@
         "anthropics-skills-src": "anthropics-skills-src_12",
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -2863,47 +2900,13 @@
         "anthropics-skills-src": "anthropics-skills-src_13",
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "pkgs/skill-creator",
-        "lastModified": 1780422651,
-        "narHash": "sha256-eurrcyASbFi4kqeBFYNSIxkeCjlI39L0Xqz2FYuld+c=",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "rev": "9c79a870e24957609fe97fcfffdd2ba06f36cc92",
-        "type": "github"
-      },
-      "original": {
-        "dir": "pkgs/skill-creator",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "type": "github"
-      }
-    },
-    "skill-creator_13": {
-      "inputs": {
-        "anthropics-skills-src": "anthropics-skills-src_14",
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -3033,6 +3036,7 @@
         "anthropics-skills-src": "anthropics-skills-src_6",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3043,6 +3047,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3073,6 +3078,7 @@
         "anthropics-skills-src": "anthropics-skills-src_7",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3082,6 +3088,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3111,6 +3118,7 @@
         "anthropics-skills-src": "anthropics-skills-src_8",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -3118,6 +3126,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -3145,12 +3154,14 @@
         "anthropics-skills-src": "anthropics-skills-src_9",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -3177,12 +3188,20 @@
         "anthropics-skills-src": "anthropics-skills-src_10",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -3206,8 +3225,8 @@
     },
     "skills-devshell": {
       "inputs": {
-        "flake-parts": "flake-parts_6",
-        "flake-skills": "flake-skills_2",
+        "flake-parts": "flake-parts_7",
+        "flake-skills": "flake-skills_3",
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
@@ -3217,7 +3236,7 @@
         ],
         "skills-git": "skills-git_2",
         "skillspkgs-combinations": "skillspkgs-combinations_2",
-        "systems": "systems_7"
+        "systems": "systems_8"
       },
       "locked": {
         "dir": "skills-devshell",
@@ -3237,10 +3256,11 @@
     },
     "skills-devshell_2": {
       "inputs": {
-        "flake-parts": "flake-parts_13",
-        "flake-skills": "flake-skills_6",
+        "flake-parts": "flake-parts_17",
+        "flake-skills": "flake-skills_7",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3248,7 +3268,7 @@
         ],
         "skills-git": "skills-git_4",
         "skillspkgs-combinations": "skillspkgs-combinations_6",
-        "systems": "systems_18"
+        "systems": "systems_21"
       },
       "locked": {
         "dir": "skills-devshell",
@@ -3268,17 +3288,17 @@
     },
     "skills-devshell_3": {
       "inputs": {
-        "flake-parts": "flake-parts_22",
-        "flake-skills": "flake-skills_9",
+        "flake-parts": "flake-parts_23",
+        "flake-skills": "flake-skills_10",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "nixpkgs"
         ],
-        "skills-git": "skills-git_7",
-        "skillspkgs-combinations": "skillspkgs-combinations_11",
+        "skills-git": "skills-git_6",
+        "skillspkgs-combinations": "skillspkgs-combinations_10",
         "systems": "systems_32"
       },
       "locked": {
@@ -3299,16 +3319,16 @@
     },
     "skills-git": {
       "inputs": {
-        "devshell": "devshell_5",
-        "flake-parts": "flake-parts_4",
-        "flake-skills": "flake-skills",
+        "devshell": "devshell_6",
+        "flake-parts": "flake-parts_5",
+        "flake-skills": "flake-skills_2",
         "nixpkgs": [
           "skillspkgs",
           "coding-agent-skills",
           "nixpkgs"
         ],
         "skillspkgs-combinations": "skillspkgs-combinations_3",
-        "systems": "systems_10",
+        "systems": "systems_11",
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
@@ -3327,8 +3347,8 @@
     },
     "skills-git_2": {
       "inputs": {
-        "devshell": "devshell_8",
-        "flake-parts": "flake-parts_8",
+        "devshell": "devshell_9",
+        "flake-parts": "flake-parts_9",
         "flake-skills": [
           "skillspkgs",
           "coding-agent-skills",
@@ -3346,7 +3366,7 @@
           "nixpkgs"
         ],
         "skillspkgs-combinations": "skillspkgs-combinations",
-        "systems": "systems_5",
+        "systems": "systems_6",
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
@@ -3365,17 +3385,18 @@
     },
     "skills-git_3": {
       "inputs": {
-        "devshell": "devshell_11",
-        "flake-parts": "flake-parts_11",
-        "flake-skills": "flake-skills_5",
+        "devshell": "devshell_15",
+        "flake-parts": "flake-parts_15",
+        "flake-skills": "flake-skills_6",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "nixpkgs"
         ],
         "skillspkgs-combinations": "skillspkgs-combinations_7",
-        "systems": "systems_21",
-        "treefmt-nix": "treefmt-nix_10"
+        "systems": "systems_24",
+        "treefmt-nix": "treefmt-nix_12"
       },
       "locked": {
         "lastModified": 1780596602,
@@ -3393,10 +3414,11 @@
     },
     "skills-git_4": {
       "inputs": {
-        "devshell": "devshell_14",
-        "flake-parts": "flake-parts_15",
+        "devshell": "devshell_18",
+        "flake-parts": "flake-parts_19",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3405,6 +3427,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3412,8 +3435,8 @@
           "nixpkgs"
         ],
         "skillspkgs-combinations": "skillspkgs-combinations_5",
-        "systems": "systems_16",
-        "treefmt-nix": "treefmt-nix_8"
+        "systems": "systems_19",
+        "treefmt-nix": "treefmt-nix_10"
       },
       "locked": {
         "lastModified": 1780490465,
@@ -3431,45 +3454,15 @@
     },
     "skills-git_5": {
       "inputs": {
-        "devshell": "devshell_17",
-        "flake-parts": "flake-parts_18",
-        "flake-skills": [
-          "skillspkgs",
-          "flake-skills"
-        ],
+        "devshell": "devshell_20",
+        "flake-parts": "flake-parts_21",
+        "flake-skills": "flake-skills_9",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "nixpkgs"
         ],
-        "skillspkgs-combinations": "skillspkgs-combinations_9",
-        "systems": "systems_27",
-        "treefmt-nix": "treefmt-nix_14"
-      },
-      "locked": {
-        "lastModified": 1780608659,
-        "narHash": "sha256-tap1t9I3pQtVzEvcvzegNgeYWbRSScPu+kFiVOklhnk=",
-        "owner": "nhooey",
-        "repo": "skills-git",
-        "rev": "1fe2f8c6d81bca69d81d362719457daf19aca8e7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "skills-git",
-        "type": "github"
-      }
-    },
-    "skills-git_6": {
-      "inputs": {
-        "devshell": "devshell_19",
-        "flake-parts": "flake-parts_20",
-        "flake-skills": "flake-skills_8",
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "nixpkgs"
-        ],
-        "skillspkgs-combinations": "skillspkgs-combinations_12",
+        "skillspkgs-combinations": "skillspkgs-combinations_11",
         "systems": "systems_35",
         "treefmt-nix": "treefmt-nix_18"
       },
@@ -3487,13 +3480,13 @@
         "type": "github"
       }
     },
-    "skills-git_7": {
+    "skills-git_6": {
       "inputs": {
-        "devshell": "devshell_22",
-        "flake-parts": "flake-parts_24",
+        "devshell": "devshell_23",
+        "flake-parts": "flake-parts_25",
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
@@ -3501,13 +3494,13 @@
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
           "nixpkgs"
         ],
-        "skillspkgs-combinations": "skillspkgs-combinations_10",
+        "skillspkgs-combinations": "skillspkgs-combinations_9",
         "systems": "systems_30",
         "treefmt-nix": "treefmt-nix_16"
       },
@@ -3564,27 +3557,31 @@
     },
     "skills-nix_10": {
       "inputs": {
-        "devshell": "devshell_18",
-        "flake-parts": "flake-parts_19",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
+          "skillspkgs-combinations",
           "nixpkgs"
-        ],
-        "skills-git": "skills-git_6",
-        "skillspkgs-combinations": "skillspkgs-combinations_13",
-        "systems": "systems_38",
-        "treefmt-nix": "treefmt-nix_20"
+        ]
       },
       "locked": {
-        "lastModified": 1780605651,
-        "narHash": "sha256-x/Lewgdc9GYZXJy6mBiHi7E488osKV3GSehKZ4MjeHY=",
+        "lastModified": 1779953558,
+        "narHash": "sha256-0A3eXvvvzJyW7KhDtPGk8WzcIyGPL0yxHhB/HpUv3Nc=",
         "owner": "nhooey",
         "repo": "skills-nix",
-        "rev": "e8e8e0956fb3b4fe78a865dea8135e1d396e8a25",
+        "rev": "e6492f5436e10dc36d057147e15cba579d15df8a",
         "type": "github"
       },
       "original": {
@@ -3597,20 +3594,14 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
+          "nix-skills",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
+          "nix-skills",
           "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -3634,79 +3625,13 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1779953558,
-        "narHash": "sha256-0A3eXvvvzJyW7KhDtPGk8WzcIyGPL0yxHhB/HpUv3Nc=",
-        "owner": "nhooey",
-        "repo": "skills-nix",
-        "rev": "e6492f5436e10dc36d057147e15cba579d15df8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "skills-nix",
-        "type": "github"
-      }
-    },
-    "skills-nix_13": {
-      "inputs": {
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1779953558,
-        "narHash": "sha256-0A3eXvvvzJyW7KhDtPGk8WzcIyGPL0yxHhB/HpUv3Nc=",
-        "owner": "nhooey",
-        "repo": "skills-nix",
-        "rev": "e6492f5436e10dc36d057147e15cba579d15df8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "skills-nix",
-        "type": "github"
-      }
-    },
-    "skills-nix_14": {
-      "inputs": {
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skillspkgs-combinations",
           "nixpkgs"
         ]
@@ -3824,6 +3749,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3834,6 +3760,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3861,6 +3788,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3870,6 +3798,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -3896,6 +3825,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -3903,6 +3833,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -3927,12 +3858,14 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -3956,12 +3889,20 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -3983,6 +3924,9 @@
     },
     "skillspkgs": {
       "inputs": {
+        "agent-skill-flake": [
+          "agent-skill-flake"
+        ],
         "anthropics-skills-src": "anthropics-skills-src",
         "coding-agent-skills": "coding-agent-skills",
         "daymade-skills-src": "daymade-skills-src",
@@ -3992,15 +3936,14 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "flake-skills": "flake-skills_4",
-        "humanizer-src": "humanizer-src_9",
+        "git-skills": "git-skills",
+        "humanizer-src": "humanizer-src_5",
         "nix-gstack": "nix-gstack",
+        "nix-skills": "nix-skills",
         "nixpkgs": [
           "nixpkgs"
         ],
-        "skills-git": "skills-git_5",
-        "skills-nix": "skills-nix_10",
-        "superpowers-src": "superpowers-src_14",
+        "superpowers-src": "superpowers-src_13",
         "systems": [
           "systems"
         ],
@@ -4009,11 +3952,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780618984,
-        "narHash": "sha256-BzvMiOSmCLlcjQpo2hckmVtUxAYKGv2wBbeiQWEYza0=",
+        "lastModified": 1780696603,
+        "narHash": "sha256-xdDX7kb/7lV5YY61iaZq7V6PtgDE2u+Dmc1FQYTjx/U=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "aaa812e2b6c6c472da1f97035c8c16bf28993e0f",
+        "rev": "712bba934de6b6c721c22937636eade33898a3d4",
         "type": "github"
       },
       "original": {
@@ -4046,7 +3989,7 @@
         "skill-creator": "skill-creator",
         "skills-nix": "skills-nix",
         "superpowers": "superpowers",
-        "systems": "systems_4"
+        "systems": "systems_5"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4068,35 +4011,33 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "flake-skills"
         ],
         "humanizer": "humanizer_10",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "nixpkgs"
         ],
         "skill-creator": "skill-creator_10",
-        "skills-nix": "skills-nix_11",
+        "skills-nix": "skills-nix_10",
         "superpowers": "superpowers_10",
-        "systems": "systems_29"
+        "systems": "systems_31"
       },
       "locked": {
         "dir": "sources/combinations",
-        "lastModified": 1780427625,
-        "narHash": "sha256-B9JWPXZ1+EutAj0OGQp6KNUGuf2dzP5Ua8vFn6NgJfo=",
+        "lastModified": 1780495770,
+        "narHash": "sha256-Y/jBCJJmnaZ6DnnP8ZeBPbPHLg7Sao3fKx4b5S8DxnM=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "b5b4e4d36f0e2bfc49eee31ffb9cca54d69c803a",
+        "rev": "a7648e7c56188c4d5ab59e48ae7185b9541f1fa2",
         "type": "github"
       },
       "original": {
@@ -4110,25 +4051,21 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "flake-skills"
         ],
         "humanizer": "humanizer_11",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "nixpkgs"
         ],
         "skill-creator": "skill-creator_11",
-        "skills-nix": "skills-nix_12",
+        "skills-nix": "skills-nix_11",
         "superpowers": "superpowers_11",
-        "systems": "systems_31"
+        "systems": "systems_34"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4148,52 +4085,16 @@
     },
     "skillspkgs-combinations_12": {
       "inputs": {
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skills-git",
-          "flake-skills"
-        ],
+        "flake-skills": "flake-skills_11",
         "humanizer": "humanizer_12",
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
           "nixpkgs"
         ],
         "skill-creator": "skill-creator_12",
-        "skills-nix": "skills-nix_13",
+        "skills-nix": "skills-nix_12",
         "superpowers": "superpowers_12",
-        "systems": "systems_34"
-      },
-      "locked": {
-        "dir": "sources/combinations",
-        "lastModified": 1780495770,
-        "narHash": "sha256-Y/jBCJJmnaZ6DnnP8ZeBPbPHLg7Sao3fKx4b5S8DxnM=",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "rev": "a7648e7c56188c4d5ab59e48ae7185b9541f1fa2",
-        "type": "github"
-      },
-      "original": {
-        "dir": "sources/combinations",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "type": "github"
-      }
-    },
-    "skillspkgs-combinations_13": {
-      "inputs": {
-        "flake-skills": "flake-skills_10",
-        "humanizer": "humanizer_13",
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "nixpkgs"
-        ],
-        "skill-creator": "skill-creator_13",
-        "skills-nix": "skills-nix_14",
-        "superpowers": "superpowers_13",
         "systems": "systems_37"
       },
       "locked": {
@@ -4234,7 +4135,7 @@
         "skill-creator": "skill-creator_2",
         "skills-nix": "skills-nix_2",
         "superpowers": "superpowers_2",
-        "systems": "systems_6"
+        "systems": "systems_7"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4270,7 +4171,7 @@
         "skill-creator": "skill-creator_3",
         "skills-nix": "skills-nix_3",
         "superpowers": "superpowers_3",
-        "systems": "systems_9"
+        "systems": "systems_10"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4290,7 +4191,7 @@
     },
     "skillspkgs-combinations_4": {
       "inputs": {
-        "flake-skills": "flake-skills_3",
+        "flake-skills": "flake-skills_4",
         "humanizer": "humanizer_4",
         "nixpkgs": [
           "skillspkgs",
@@ -4300,7 +4201,7 @@
         "skill-creator": "skill-creator_4",
         "skills-nix": "skills-nix_4",
         "superpowers": "superpowers_4",
-        "systems": "systems_12"
+        "systems": "systems_13"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4322,6 +4223,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -4332,6 +4234,7 @@
         "humanizer": "humanizer_5",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -4342,7 +4245,7 @@
         "skill-creator": "skill-creator_5",
         "skills-nix": "skills-nix_5",
         "superpowers": "superpowers_5",
-        "systems": "systems_15"
+        "systems": "systems_18"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4364,6 +4267,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -4373,6 +4277,7 @@
         "humanizer": "humanizer_6",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -4382,7 +4287,7 @@
         "skill-creator": "skill-creator_6",
         "skills-nix": "skills-nix_6",
         "superpowers": "superpowers_6",
-        "systems": "systems_17"
+        "systems": "systems_20"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4404,6 +4309,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills"
@@ -4411,6 +4317,7 @@
         "humanizer": "humanizer_7",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "nixpkgs"
@@ -4418,7 +4325,7 @@
         "skill-creator": "skill-creator_7",
         "skills-nix": "skills-nix_7",
         "superpowers": "superpowers_7",
-        "systems": "systems_20"
+        "systems": "systems_23"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4438,17 +4345,18 @@
     },
     "skillspkgs-combinations_8": {
       "inputs": {
-        "flake-skills": "flake-skills_7",
+        "flake-skills": "flake-skills_8",
         "humanizer": "humanizer_8",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "nixpkgs"
         ],
         "skill-creator": "skill-creator_8",
         "skills-nix": "skills-nix_8",
         "superpowers": "superpowers_8",
-        "systems": "systems_23"
+        "systems": "systems_26"
       },
       "locked": {
         "dir": "sources/combinations",
@@ -4468,30 +4376,37 @@
     },
     "skillspkgs-combinations_9": {
       "inputs": {
-        "daymade": "daymade",
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "flake-skills"
         ],
         "humanizer": "humanizer_9",
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "nixpkgs"
         ],
         "skill-creator": "skill-creator_9",
         "skills-nix": "skills-nix_9",
         "superpowers": "superpowers_9",
-        "systems": "systems_26"
+        "systems": "systems_29"
       },
       "locked": {
         "dir": "sources/combinations",
-        "lastModified": 1780606768,
-        "narHash": "sha256-ECtSp03LzpnYqgwXryoCvdBfKOJLfiyzj0tYXxwrNrQ=",
+        "lastModified": 1780427625,
+        "narHash": "sha256-B9JWPXZ1+EutAj0OGQp6KNUGuf2dzP5Ua8vFn6NgJfo=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "8677a86f04a7c94417bec3bedab2516d18fbe75d",
+        "rev": "b5b4e4d36f0e2bfc49eee31ffb9cca54d69c803a",
         "type": "github"
       },
       "original": {
@@ -4606,22 +4521,6 @@
       }
     },
     "superpowers-src_13": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1777932301,
-        "narHash": "sha256-3E3rO6hR87JUfS3XV1Eaoz6SDWOftleWvN9UPNFEMjw=",
-        "owner": "obra",
-        "repo": "superpowers",
-        "rev": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "obra",
-        "repo": "superpowers",
-        "type": "github"
-      }
-    },
-    "superpowers-src_14": {
       "flake": false,
       "locked": {
         "lastModified": 1780085125,
@@ -4769,21 +4668,19 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
-          "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
         ],
@@ -4809,19 +4706,15 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
-          "flake-skills",
-          "skills-devshell",
           "skillspkgs-combinations",
           "nixpkgs"
         ],
@@ -4847,51 +4740,17 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
-          "skills-git",
+          "nix-skills",
           "skillspkgs-combinations",
           "nixpkgs"
         ],
         "superpowers-src": "superpowers-src_12"
-      },
-      "locked": {
-        "dir": "pkgs/superpowers",
-        "lastModified": 1780422651,
-        "narHash": "sha256-eurrcyASbFi4kqeBFYNSIxkeCjlI39L0Xqz2FYuld+c=",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "rev": "9c79a870e24957609fe97fcfffdd2ba06f36cc92",
-        "type": "github"
-      },
-      "original": {
-        "dir": "pkgs/superpowers",
-        "owner": "nhooey",
-        "repo": "skillspkgs",
-        "type": "github"
-      }
-    },
-    "superpowers_13": {
-      "inputs": {
-        "flake-skills": [
-          "skillspkgs",
-          "skills-nix",
-          "skillspkgs-combinations",
-          "flake-skills"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "skills-nix",
-          "skillspkgs-combinations",
-          "nixpkgs"
-        ],
-        "superpowers-src": "superpowers-src_13"
       },
       "locked": {
         "dir": "pkgs/superpowers",
@@ -5017,6 +4876,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -5027,6 +4887,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -5057,6 +4918,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -5066,6 +4928,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "flake-skills",
@@ -5095,6 +4958,7 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -5102,6 +4966,7 @@
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
           "skillspkgs-combinations",
@@ -5129,12 +4994,14 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -5161,12 +5028,20 @@
       "inputs": {
         "flake-skills": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "flake-skills"
         ],
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "skillspkgs-combinations",
           "nixpkgs"
@@ -5804,7 +5679,11 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
+          "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "skills-git",
           "nixpkgs"
         ]
@@ -5827,8 +5706,9 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
-          "skillspkgs-combinations",
+          "skills-git",
           "flake-skills",
           "nixpkgs"
         ]
@@ -5851,7 +5731,9 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
+          "skills-git",
           "nixpkgs"
         ]
       },
@@ -5873,16 +5755,19 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "nix-gstack",
+          "nix-skills",
+          "flake-skills",
+          "skillspkgs-combinations",
+          "flake-skills",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1775636079,
-        "narHash": "sha256-pc20NRoMdiar8oPQceQT47UUZMBTiMdUuWrYu2obUP0=",
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "790751ff7fd3801feeaf96d7dc416a8d581265ba",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
         "type": "github"
       },
       "original": {
@@ -5895,7 +5780,8 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-git",
+          "nix-skills",
+          "flake-skills",
           "nixpkgs"
         ]
       },
@@ -5917,7 +5803,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
@@ -5943,7 +5829,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "skills-devshell",
@@ -5969,7 +5855,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "flake-skills",
           "nixpkgs"
@@ -5993,7 +5879,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skills-git",
           "nixpkgs"
         ]
@@ -6016,7 +5902,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "skillspkgs-combinations",
           "flake-skills",
           "nixpkgs"
@@ -6066,7 +5952,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "skills-nix",
+          "nix-skills",
           "nixpkgs"
         ]
       },
@@ -6201,11 +6087,7 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "flake-skills",
+          "git-skills",
           "nixpkgs"
         ]
       },
@@ -6227,20 +6109,16 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
-          "flake-skills",
-          "skills-git",
-          "flake-skills",
-          "skills-devshell",
-          "skills-git",
+          "nix-gstack",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1780220602,
-        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "lastModified": 1775636079,
+        "narHash": "sha256-pc20NRoMdiar8oPQceQT47UUZMBTiMdUuWrYu2obUP0=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "rev": "790751ff7fd3801feeaf96d7dc416a8d581265ba",
         "type": "github"
       },
       "original": {
@@ -6253,8 +6131,11 @@
       "inputs": {
         "nixpkgs": [
           "skillspkgs",
+          "nix-skills",
           "flake-skills",
           "skills-git",
+          "flake-skills",
+          "skills-devshell",
           "flake-skills",
           "nixpkgs"
         ]

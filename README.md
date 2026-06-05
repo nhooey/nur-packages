@@ -49,7 +49,7 @@ in your `nixpkgs` config.
 |----------------|----------------------------------------------------------------------------------------|
 | `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)                     |
 | `claffeinate`  | [`nhooey/claffeinate`](https://github.com/nhooey/claffeinate) (Darwin)                 |
-| `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, skills-git, skills-nix, and third-party skill wrappers) |
+| `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, git-skills, nix-skills, and third-party skill wrappers) |
 
 Adding another aggregated repo is a one-input edit to `flake.nix`; see the
 header comment there for the recipe. Last-write-wins on name collisions.

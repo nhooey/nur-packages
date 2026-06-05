@@ -15,8 +15,8 @@
   #
   # Example (commented out — uncomment / add when ready):
   #
-  #     skills-nix = {
-  #       url = "github:nhooey/skills-nix";
+  #     nix-skills = {
+  #       url = "github:nhooey/nix-skills";
   #       inputs.nixpkgs.follows = "nixpkgs";
   #     };
   #
@@ -92,8 +92,8 @@
     };
 
     # The single conduit to every skills-* repo this flake aggregates as
-    # packages. skillspkgs aggregates nhooey/{nix-gstack, skills-git,
-    # skills-nix} and the third-party skill wrappers under `skillspkgs/pkgs/`,
+    # packages. skillspkgs aggregates nhooey/{nix-gstack, git-skills,
+    # nix-skills} and the third-party skill wrappers under `skillspkgs/pkgs/`,
     # so we rely on it to forward those packages (merged into this flake's
     # `packages.<system>`) instead of importing each repo as a direct input
     # here. This stays a root input because it feeds a NON-dev-shell output
@@ -192,7 +192,7 @@
 
       # Root-side wiring for the runtime `skills-devshell/` sub-flake. The skill
       # set itself (git/GitHub pack + skillspkgs' `authoring` combination + the
-      # nix-bump skill from skills-nix) is defined in `skills-devshell/flake.nix`
+      # nix-bump skill from nix-skills) is defined in `skills-devshell/flake.nix`
       # and invoked via `nix run "$PRJ_ROOT/skills-devshell#..."` at runtime, so
       # the skill sources stay out of this root's lock. `devshellSkills.startup`
       # is the reconcile snippet; `devshellSkills.commands` are the repo-agnostic
@@ -229,7 +229,7 @@
       );
 
       # numtide/devshell-backed dev shell. Its install-skills startup hook
-      # reconciles the dev-shell skill set (authoring + skills-git pack + the
+      # reconciles the dev-shell skill set (authoring + git-skills pack + the
       # nix-bump skill) at project scope under a single owner by invoking the
       # runtime `skills-devshell/` sub-flake; the `skills`-category commands
       # (purge / lock-bump) come from the same hook. `$PRJ_ROOT` is exported by

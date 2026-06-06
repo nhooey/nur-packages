@@ -45,7 +45,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.devshell.follows = "devshell";
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 
@@ -55,7 +54,6 @@
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.devshell.follows = "devshell";
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 

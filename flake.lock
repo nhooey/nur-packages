@@ -19,11 +19,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780696327,
-        "narHash": "sha256-41aUE2NzTJvZ1OSAu3g1z0V+2l2lAB24MegJ5AACt9s=",
+        "lastModified": 1780702215,
+        "narHash": "sha256-iWITVu86QtmiFwlpxfKmrxaWayWGBAaeOdYOvOXdzQY=",
         "owner": "nhooey",
         "repo": "agent-skill-flake",
-        "rev": "271fb64920156edae2e0c3bb70f98f4464ed58a1",
+        "rev": "e603a9deb58941a821c6b3f613e9d28d40d97126",
         "type": "github"
       },
       "original": {
@@ -45,6 +45,22 @@
       "original": {
         "owner": "anthropics",
         "repo": "skills",
+        "type": "github"
+      }
+    },
+    "caveman-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779273824,
+        "narHash": "sha256-BydREt/vai3j7kO5+e1OxsjXf6Vy+jSY1yA/yyxjHbI=",
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "rev": "655b7d9c5431f822264b7732e9901c5578ac84cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
         "type": "github"
       }
     },
@@ -377,11 +393,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780694930,
-        "narHash": "sha256-u+4Aht2LimFqV3DXarcMHEL9w1ePDYusqZKSMGNEPz0=",
+        "lastModified": 1780697167,
+        "narHash": "sha256-aXkuHqAeGEnL1RVuo8WOJfsGNQIoogU0nFzHZts9vQI=",
         "owner": "nhooey",
         "repo": "git-skills",
-        "rev": "ef0ae3bc22315ae7e6e8136500407624d271a804",
+        "rev": "1ea1fd28b25ac560a8e74d7fcddb76b322069eb9",
         "type": "github"
       },
       "original": {
@@ -453,6 +469,10 @@
     },
     "nix-gstack": {
       "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
         "devshell": [
           "skillspkgs",
           "devshell"
@@ -475,11 +495,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779376585,
-        "narHash": "sha256-qYRgyQICFdxwDoHG3dsCZsYWRHbC+RYJ3KmkqztVPOA=",
+        "lastModified": 1780693186,
+        "narHash": "sha256-BcEK9uzC3Uocs/hq8IKep/UlkPuzIXOnhRTw3aIbu5k=",
         "owner": "nhooey",
         "repo": "nix-gstack",
-        "rev": "e5b3522dddd8996c1b991a0c72ad73c7982396fd",
+        "rev": "c8a953d9b87792d14c4e07c4f7c00c90ae16e7eb",
         "type": "github"
       },
       "original": {
@@ -516,11 +536,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780699787,
-        "narHash": "sha256-juOGFt4OeJpNKuOOUvngm9HyrnFLnmZqpMzDY/sE//c=",
+        "lastModified": 1780703303,
+        "narHash": "sha256-5zRM0htOaafs+gu9kOv6hf6+xfZ6IpX9F6Z4QdLkA0Y=",
         "owner": "nhooey",
         "repo": "nix-microsoft-skills",
-        "rev": "81217635d96a45c68f255e2aaa893a390ebaaf04",
+        "rev": "6094ce8eee2316637e1e6bdcd9df9321b1d48714",
         "type": "github"
       },
       "original": {
@@ -651,6 +671,7 @@
           "agent-skill-flake"
         ],
         "anthropics-skills-src": "anthropics-skills-src",
+        "caveman-src": "caveman-src",
         "coding-agent-skills": "coding-agent-skills",
         "daymade-skills-src": "daymade-skills-src",
         "devshell": [
@@ -671,16 +692,17 @@
         "systems": [
           "systems"
         ],
+        "trailofbits-skills-src": "trailofbits-skills-src",
         "treefmt-nix": [
           "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1780700369,
-        "narHash": "sha256-HIc8TCyMFVEjlwSGWY+KWZ2eMCmd4xj1UOU03zwAYSA=",
+        "lastModified": 1780741753,
+        "narHash": "sha256-5yLONJaZ7RdayGQLKkM4oTT7KP7X+Z2l//90JKh+tGQ=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "6c2ebe253d10e80b977bb141a46c2a95c5c72763",
+        "rev": "75ffb736e9a3ac0a7a7723a45fc1ba4688190491",
         "type": "github"
       },
       "original": {
@@ -747,6 +769,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "trailofbits-skills-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780676921,
+        "narHash": "sha256-VCIy7AaKLHD4paZUDpuAKkchRbGyaw3KY/khS55ypw0=",
+        "owner": "trailofbits",
+        "repo": "skills",
+        "rev": "d5fe2e6a7896236c3102fd5477e833623ad70298",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trailofbits",
+        "repo": "skills",
         "type": "github"
       }
     },

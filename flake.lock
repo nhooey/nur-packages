@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780698908,
-        "narHash": "sha256-dU/SkK7SuwzwnPM6GUVnBwl6alOce+eBYRclZb48PJw=",
+        "lastModified": 1780766752,
+        "narHash": "sha256-YuWFnOkY68ro9GiShQ6ZMIX79gyuMChka3+lIESGTR0=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "1479d2dd146f180163b0c3eb052acdfef9598699",
+        "rev": "9d4f6f11b70911ddbaa564b80b2ebd529db0c054",
         "type": "github"
       },
       "original": {
@@ -393,11 +393,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780697167,
-        "narHash": "sha256-aXkuHqAeGEnL1RVuo8WOJfsGNQIoogU0nFzHZts9vQI=",
+        "lastModified": 1780766745,
+        "narHash": "sha256-MRH05D8uspasWtVbZVDMPoUlO2IzhOHcCa3sh+0G1e4=",
         "owner": "nhooey",
         "repo": "git-skills",
-        "rev": "1ea1fd28b25ac560a8e74d7fcddb76b322069eb9",
+        "rev": "d975b61ec94c47e1b7037d31eb4cb6518251a06b",
         "type": "github"
       },
       "original": {
@@ -536,11 +536,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780703303,
-        "narHash": "sha256-5zRM0htOaafs+gu9kOv6hf6+xfZ6IpX9F6Z4QdLkA0Y=",
+        "lastModified": 1780766756,
+        "narHash": "sha256-1fHgAfyBMi6CnTBPqRoyr5FyuPmxyjRps/6R1aqm3KA=",
         "owner": "nhooey",
         "repo": "nix-microsoft-skills",
-        "rev": "6094ce8eee2316637e1e6bdcd9df9321b1d48714",
+        "rev": "b5c29bafd6021c27e457bdf360d3e184525b476d",
         "type": "github"
       },
       "original": {
@@ -577,11 +577,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780698654,
-        "narHash": "sha256-fyipCqBfKd/dycz4+zozhbte35SLI96VO1+AOwXUs+8=",
+        "lastModified": 1780766749,
+        "narHash": "sha256-OSAUN9hGUHzlxYX7co/4YUgEideTw1nJNInpUXQErwA=",
         "owner": "nhooey",
         "repo": "nix-skills",
-        "rev": "a6e96498dfe1a683fc144cc8ae317956e361ed00",
+        "rev": "053ea97bf73c63df0c29fae668dd659e4e1a99a5",
         "type": "github"
       },
       "original": {
@@ -698,11 +698,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780741753,
-        "narHash": "sha256-5yLONJaZ7RdayGQLKkM4oTT7KP7X+Z2l//90JKh+tGQ=",
+        "lastModified": 1780767014,
+        "narHash": "sha256-jcj7CLCqOoC/2GUBzndr+soD/orNa6kxJsO6If5zSWg=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "75ffb736e9a3ac0a7a7723a45fc1ba4688190491",
+        "rev": "b42b33b2f8fcb94e03e18861b62b4eef68e7daf8",
         "type": "github"
       },
       "original": {

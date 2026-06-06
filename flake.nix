@@ -64,6 +64,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nhooey's data-skills repo — a standalone skill flake (not routed through
+    # skillspkgs), so it's a direct input here. Aggregated for its
+    # `agent-skill-nhooey-data-comparison-tables` skill and the
+    # `agent-skills-nhooey-data-all` bundle.
+    data-skills = {
+      url = "github:nhooey/data-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
+    };
+
     # numtide/devshell — hosts the dev-shell defined in `outputs.devShells`
     # below. Infrastructure-only (no packages to aggregate).
     devshell = {

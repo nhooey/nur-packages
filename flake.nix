@@ -243,7 +243,7 @@
             Run {bold}menu{reset} to list available commands.
           '';
           devshell.startup.install-skills.text = devshellSkills.startup;
-          commands = devshellSkills.commands;
+          commands = devshellSkills.standardCommands ++ devshellSkills.commands;
         };
       });
 

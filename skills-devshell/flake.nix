@@ -58,8 +58,6 @@
       inherit nixpkgs;
       systems = import inputs.systems;
       name = "nur-packages-devshell";
-      envName = "agent-skills-nur-packages-devshell";
-      packagePrefix = "agent-skill-";
       sources = [
         { source = git-skills; }
         { source = skillspkgs-combinations.combinations.authoring; }

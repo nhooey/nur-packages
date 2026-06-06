@@ -208,18 +208,23 @@
     "data-skills": {
       "inputs": {
         "agent-skill-flake": [
+          "skillspkgs",
           "agent-skill-flake"
         ],
         "flake-parts": [
+          "skillspkgs",
           "flake-parts"
         ],
         "nixpkgs": [
+          "skillspkgs",
           "nixpkgs"
         ],
         "systems": [
+          "skillspkgs",
           "systems"
         ],
         "treefmt-nix": [
+          "skillspkgs",
           "treefmt-nix"
         ]
       },
@@ -662,7 +667,6 @@
         "claffeinate": "claffeinate",
         "claude-in-nix-devshell": "claude-in-nix-devshell",
         "cljfmt": "cljfmt",
-        "data-skills": "data-skills",
         "devshell": "devshell_3",
         "flake-parts": "flake-parts_2",
         "gradle2nix": "gradle2nix",
@@ -680,6 +684,7 @@
         "anthropics-skills-src": "anthropics-skills-src",
         "caveman-src": "caveman-src",
         "coding-agent-skills": "coding-agent-skills",
+        "data-skills": "data-skills",
         "daymade-skills-src": "daymade-skills-src",
         "devshell": [
           "devshell"
@@ -705,11 +710,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780772739,
-        "narHash": "sha256-MGYIVeQtJj1BYMld1B3vY2vwl0I0mQCRyLurYW3ctBE=",
+        "lastModified": 1780786902,
+        "narHash": "sha256-Qqn2eKsxjhuucp44pwgRyMstqwW0k6mgSgDsDGkxo9Q=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "70f180fb74c1e6895a4b43414bdb619dfc8a1aba",
+        "rev": "b2f3f01f600c8914b3825b95f18ab833322dcbfe",
         "type": "github"
       },
       "original": {

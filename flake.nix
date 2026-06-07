@@ -264,6 +264,11 @@
       darwinModules.default = { lib, ... }: {
         imports = [ agent-skill-flake.darwinModules.default ];
         services.agent-skill-flake.enable = lib.mkDefault true;
+        # `scope` is a required, default-less enum upstream; default it to
+        # `personal` ($HOME/<agent suffix>) — the value home-manager
+        # activations almost always want — so this drop-in module evaluates
+        # without forcing every consumer to set it. Still overridable.
+        services.agent-skill-flake.scope = lib.mkDefault "personal";
       };
     };
 }

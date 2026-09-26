@@ -467,6 +467,38 @@
         "type": "github"
       }
     },
+    "nix-devshell-cached-exports": {
+      "inputs": {
+        "agent-skill-flake": [
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790462621,
+        "narHash": "sha256-0KfFngvnfx3RoPhmCClMV+e2sASvhF7nUzNwPJ1MtDI=",
+        "owner": "nhooey",
+        "repo": "nix-devshell-cached-exports",
+        "rev": "685a81d60b7ea72c4503c51ddfe847b39dfef746",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "nix-devshell-cached-exports",
+        "type": "github"
+      }
+    },
     "nix-fetcher-data": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -670,6 +702,7 @@
         "devshell": "devshell_3",
         "flake-parts": "flake-parts_2",
         "gradle2nix": "gradle2nix",
+        "nix-devshell-cached-exports": "nix-devshell-cached-exports",
         "nixpkgs": "nixpkgs_3",
         "skillspkgs": "skillspkgs",
         "systems": "systems_3",

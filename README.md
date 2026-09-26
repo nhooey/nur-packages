@@ -1,7 +1,5 @@
 # nhooey/nur-packages
 
-[![built with garnix](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fnhooey%2Fnur-packages)](https://garnix.io/repo/nhooey/nur-packages)
-
 Personal [NUR](https://github.com/nix-community/NUR) repository. Layout follows
 the [`nur-packages-template`](https://github.com/nix-community/nur-packages-template)
 conventions: `default.nix` exposes the NUR-style attrset, `ci.nix` filters it
@@ -53,14 +51,3 @@ in your `nixpkgs` config.
 
 Adding another aggregated repo is a one-input edit to `flake.nix`; see the
 header comment there for the recipe. Last-write-wins on name collisions.
-
-## CI
-
-Builds run on [Garnix](https://garnix.io), restricted to the host
-architecture (`aarch64-darwin`) and to pushes on `master` plus pull
-requests to keep CI minute usage down — the flake itself still exposes
-packages for all four systems
-(`x86_64-linux`, `aarch64-linux`, `x86_64-darwin`, `aarch64-darwin`).
-Outputs are cached at `https://cache.garnix.io` (public key
-`cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=`); add it as a
-substituter to pull binaries instead of rebuilding locally.

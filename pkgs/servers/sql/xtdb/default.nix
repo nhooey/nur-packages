@@ -107,7 +107,7 @@ buildGradlePackage rec {
     # build all default targets
     # "build"
 
-    # Required on Garnix's Darwin sandbox: with daemon enabled, gradle
+    # Required in sandboxed Darwin builds: with daemon enabled, gradle
     # successfully forks a daemon that binds 127.0.0.1 — but the client
     # in the sandbox can't connect back to it ("Could not connect to the
     # Gradle daemon"). Forcing in-process execution avoids the loopback

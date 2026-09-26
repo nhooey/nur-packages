@@ -89,6 +89,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-devshell-cached-exports = {
+      url = "github:nhooey/nix-devshell-cached-exports";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
+    };
+
     # The single conduit to every skills-* repo this flake aggregates as
     # packages. skillspkgs aggregates nhooey/{nix-gstack, git-skills,
     # nix-skills} and the third-party skill wrappers under `skillspkgs/pkgs/`,

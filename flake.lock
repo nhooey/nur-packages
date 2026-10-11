@@ -486,11 +486,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790462621,
-        "narHash": "sha256-0KfFngvnfx3RoPhmCClMV+e2sASvhF7nUzNwPJ1MtDI=",
+        "lastModified": 1791052042,
+        "narHash": "sha256-N/G7BqW0t/+wozYFvMMeXyIQhM4aelvxUcIDM29nTSc=",
         "owner": "nhooey",
         "repo": "nix-devshell-cached-exports",
-        "rev": "685a81d60b7ea72c4503c51ddfe847b39dfef746",
+        "rev": "7101900992a28c26fb80dbb2e4168c56808f777c",
         "type": "github"
       },
       "original": {

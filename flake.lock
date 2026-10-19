@@ -80,11 +80,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780790303,
-        "narHash": "sha256-TRUiiMA9/n46gkb4uUvDag/DooVtZS5nJIApwnu/NSk=",
+        "lastModified": 1792387920,
+        "narHash": "sha256-Lh0w2AcCu4sv3Nc9k0ZnXbPGWFZFDIbfuzVn50C4qw8=",
         "owner": "nhooey",
         "repo": "claffeinate",
-        "rev": "5c219ff59dc2a307a7405567e69c9b1ad2c8bbf7",
+        "rev": "3d4cd2eac05d51eff0a857aa7302d06130258146",
         "type": "github"
       },
       "original": {

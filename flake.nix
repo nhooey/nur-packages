@@ -40,14 +40,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    claffeinate = {
-      url = "github:nhooey/claffeinate";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.agent-skill-flake.follows = "agent-skill-flake";
-    };
-
     claude-in-nix-devshell = {
       url = "github:nhooey/claude-in-nix-devshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -176,7 +168,7 @@
       # or doesn't support that system. Plain `//` merge after stripping
       # meta-keys; last input still wins on real-name collisions.
       #
-      # Single-package flakes (e.g. `claffeinate`) expose only `default`, so
+      # Single-package flakes expose only `default`, so
       # blind stripping would drop them entirely. When an input has *no*
       # other named packages, promote its `default` to the input's name —
       # `packages.<sys>.<input-name>`. Inputs that already expose proper

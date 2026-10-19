@@ -64,35 +64,6 @@
         "type": "github"
       }
     },
-    "claffeinate": {
-      "inputs": {
-        "agent-skill-flake": [
-          "agent-skill-flake"
-        ],
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1792387920,
-        "narHash": "sha256-Lh0w2AcCu4sv3Nc9k0ZnXbPGWFZFDIbfuzVn50C4qw8=",
-        "owner": "nhooey",
-        "repo": "claffeinate",
-        "rev": "3d4cd2eac05d51eff0a857aa7302d06130258146",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "claffeinate",
-        "type": "github"
-      }
-    },
     "claude-in-nix-devshell": {
       "inputs": {
         "agent-skill-flake": [
@@ -712,7 +683,6 @@
     "root": {
       "inputs": {
         "agent-skill-flake": "agent-skill-flake",
-        "claffeinate": "claffeinate",
         "claude-in-nix-devshell": "claude-in-nix-devshell",
         "cljfmt": "cljfmt",
         "devshell": "devshell_3",

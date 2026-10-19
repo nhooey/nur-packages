@@ -46,7 +46,6 @@ in your `nixpkgs` config.
 | Input          | Source                                                                                 |
 |----------------|----------------------------------------------------------------------------------------|
 | `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)                     |
-| `claffeinate`  | [`nhooey/claffeinate`](https://github.com/nhooey/claffeinate) (Darwin)                 |
 | `nix-devshell-cached-exports` | [`nhooey/nix-devshell-cached-exports`](https://github.com/nhooey/nix-devshell-cached-exports) |
 | `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, git-skills, nix-skills, and third-party skill wrappers) |
 

@@ -567,6 +567,35 @@
         "type": "github"
       }
     },
+    "nix-jetbrains-project-setup": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793270465,
+        "narHash": "sha256-MN+FiZcAJ4KgOF7Lp8XqS3oCYQY/l8nx40Enec7a0d4=",
+        "owner": "nhooey",
+        "repo": "nix-jetbrains-project-setup",
+        "rev": "ad2d52da7c9a760fdd991fb570ae0f64251275c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "nix-jetbrains-project-setup",
+        "type": "github"
+      }
+    },
     "nix-microsoft-skills": {
       "inputs": {
         "agent-skill-flake": [
@@ -726,6 +755,7 @@
         "flake-parts": "flake-parts_2",
         "gradle2nix": "gradle2nix",
         "nix-devshell-cached-exports": "nix-devshell-cached-exports",
+        "nix-jetbrains-project-setup": "nix-jetbrains-project-setup",
         "nixpkgs": "nixpkgs_3",
         "skillspkgs": "skillspkgs",
         "systems": "systems_3",

@@ -90,6 +90,14 @@
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 
+    nix-jetbrains-project-setup = {
+      url = "github:nhooey/nix-jetbrains-project-setup";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     # The single conduit to every skills-* repo this flake aggregates as
     # packages. skillspkgs aggregates nhooey/{nix-gstack, git-skills,
     # nix-skills} and the third-party skill wrappers under `skillspkgs/pkgs/`,
@@ -245,6 +253,12 @@
           commands = devshellSkills.standardCommands ++ devshellSkills.commands;
         };
       });
+
+      # Home Manager modules re-exported from aggregated repos, so a
+      # consumer of this flake needs no extra input to use them:
+      #     imports = [ inputs.nur-packages.homeModules.nix-jetbrains-project-setup ];
+      homeModules.nix-jetbrains-project-setup =
+        inputs.nix-jetbrains-project-setup.homeModules.default;
 
       # Drop-in nix-darwin module: wires agent-skill-flake's user-activation
       # hook so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for

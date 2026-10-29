@@ -47,6 +47,7 @@ in your `nixpkgs` config.
 |----------------|----------------------------------------------------------------------------------------|
 | `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)                     |
 | `nix-devshell-cached-exports` | [`nhooey/nix-devshell-cached-exports`](https://github.com/nhooey/nix-devshell-cached-exports) |
+| `nix-jetbrains-project-setup` | [`nhooey/nix-jetbrains-project-setup`](https://github.com/nhooey/nix-jetbrains-project-setup) (also re-exports its Home Manager module as `homeModules.nix-jetbrains-project-setup`) |
 | `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, git-skills, nix-skills, and third-party skill wrappers) |
 
 Adding another aggregated repo is a one-input edit to `flake.nix`; see the

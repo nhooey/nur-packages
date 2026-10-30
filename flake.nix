@@ -206,6 +206,16 @@
       # `skills`-category dev-shell commands.
       devshellSkills = agent-skill-flake.lib.devshellSkillsHook { };
 
+      # `background-items`, the command behind darwinModules.background-items,
+      # exposed on Darwin so `nix run .#background-items -- --check` works
+      # without the module.
+      isDarwin = lib.hasSuffix "-darwin";
+      backgroundItemsPackageFor =
+        system:
+        lib.optionalAttrs (isDarwin system) {
+          background-items = (pkgsFor system).callPackage ./modules/background-items/package.nix { };
+        };
+
     in
     {
       legacyPackages = forAllSystems (
@@ -217,7 +227,8 @@
         let
           base =
             lib.filterAttrs (_: lib.isDerivation) (localAttrsFor system)
-            // aggregatedFor "packages" system;
+            // aggregatedFor "packages" system
+            // backgroundItemsPackageFor system;
           # On Darwin, pin the shim's real-claude lookup to the Homebrew
           # path so GUI-launched callers (JetBrains plugin, Dock, launchd)
           # find a working `claude` without depending on the inherited
@@ -267,6 +278,63 @@
       #     services.nix-devshell-cached-exports.prune = { enable = true; user = "<name>"; };
       darwinModules.nix-devshell-cached-exports =
         inputs.nix-devshell-cached-exports.darwinModules.default;
+
+      # services.background-items: keeps the launchd jobs it lists on, off or
+      # absent (and nothing else), keeps a list of apps open at login, and
+      # names nix-darwin's own jobs in System Settings' Login Items list:
+      #     imports = [ inputs.nur-packages.darwinModules.background-items ];
+      #     services.background-items = { enable = true; items = { ... }; };
+      darwinModules.background-items = ./modules/background-items;
+
+      # Checks for darwinModules.background-items (Darwin only: the command
+      # drives launchctl and osascript). `nix flake check` runs them.
+      checks = lib.genAttrs (builtins.filter isDarwin (builtins.attrNames gradle2nix.builders)) (
+        system:
+        let
+          pkgs = pkgsFor system;
+          package = self.packages.${system}.background-items;
+        in
+        {
+          background-items = package;
+
+          background-items-shellcheck =
+            pkgs.runCommand "background-items-shellcheck" { nativeBuildInputs = [ pkgs.shellcheck ]; }
+              ''
+                cd ${./.}
+                shellcheck modules/background-items/*.sh tests/background-items/stubs/*
+                touch $out
+              '';
+
+          # The command, built, against stubs of launchctl, osascript, sudo
+          # and sfltool, in a temporary HOME and root folder.
+          background-items-unit =
+            pkgs.runCommand "background-items-unit"
+              {
+                nativeBuildInputs = [
+                  pkgs.bash
+                  pkgs.bats
+                  pkgs.coreutils
+                  pkgs.jq
+                ];
+              }
+              ''
+                cp -r ${./.} src
+                chmod -R u+w src
+                cd src
+                patchShebangs tests/background-items
+                export HOME=$TMPDIR/home
+                mkdir -p "$HOME"
+                BI_SCRIPT=${lib.getExe package} bats tests/background-items/unit.bats
+                touch $out
+              '';
+
+          # The module evaluated against stubs of the nix-darwin options it
+          # reads and sets; see tests/background-items/darwin-module.nix.
+          background-items-darwin-module = import ./tests/background-items/darwin-module.nix {
+            inherit pkgs package;
+          };
+        }
+      );
 
       # Drop-in nix-darwin module: wires agent-skill-flake's user-activation
       # hook so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for

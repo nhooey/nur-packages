@@ -52,3 +52,14 @@ in your `nixpkgs` config.
 
 Adding another aggregated repo is a one-input edit to `flake.nix`; see the
 header comment there for the recipe. Last-write-wins on name collisions.
+
+## nix-darwin modules
+
+| Module                             | What it does                                                                                     |
+|------------------------------------|--------------------------------------------------------------------------------------------------|
+| `darwinModules.default`            | Wires agent-skill-flake's skill reconcile into activation                                        |
+| `darwinModules.nix-devshell-cached-exports` | Weekly `nix-devshell-cached-exports --prune` (re-exported)                              |
+| `darwinModules.background-items`   | `services.background-items` ([`modules/background-items`](modules/background-items/default.nix)): keeps the launchd jobs it lists on, off or absent and leaves every other job alone; keeps a list of apps open at login; names nix-darwin's own jobs in System Settings' Login Items list. `background-items --check` reports drift. |
+
+`nix flake check` runs the `background-items` checks (module evaluation,
+shellcheck, and a bats suite against stubbed `launchctl`/`osascript`) on Darwin.

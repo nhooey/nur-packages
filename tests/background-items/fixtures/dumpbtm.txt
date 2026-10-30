@@ -1,0 +1,44 @@
+========================
+ Records for UID 501 : 00000000-0000-0000-0000-000000000000
+========================
+
+ ServiceManagement migrated: true
+ SharedFileList migrated: true
+
+ Items:
+
+ #1:
+                 UUID: 11111111-1111-1111-1111-111111111111
+                 Name: Google Updater
+       Developer Name: Google LLC
+      Team Identifier: EQHXZ8M8AV
+                 Type: legacy agent (0x10008)
+          Disposition: [enabled, allowed, visible, notified] (0xb)
+           Identifier: com.google.keystone.agent
+                  URL: file:///Library/LaunchAgents/com.google.keystone.agent.plist
+      Executable Path: /Users/alice/Library/Application Support/Google/GoogleUpdater/Current/GoogleUpdater.app/Contents/MacOS/GoogleUpdater
+           Generation: 1
+    Parent Identifier: Google LLC
+
+ #2:
+                 UUID: 22222222-2222-2222-2222-222222222222
+                 Name: iStat Menus
+       Developer Name: Bjango Pty Ltd
+      Team Identifier: Y93TK974AT
+                 Type: app (0x2)
+          Disposition: [enabled, allowed, visible, notified] (0xb)
+           Identifier: 2.com.bjango.istatmenus
+                  URL: file:///Applications/iStat%20Menus.app/
+           Generation: 1
+    Embedded Item Identifiers:
+        #1: 16.com.bjango.istatmenus.agent
+
+ #3:
+                 UUID: 33333333-3333-3333-3333-333333333333
+                 Name: sh
+                 Type: legacy daemon (0x10010)
+          Disposition: [enabled, allowed, visible, notified] (0xb)
+           Identifier: org.nixos.nix-gc
+                  URL: file:///Library/LaunchDaemons/org.nixos.nix-gc.plist
+      Executable Path: /bin/sh
+           Generation: 1

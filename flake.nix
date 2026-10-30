@@ -260,6 +260,14 @@
       homeModules.nix-jetbrains-project-setup =
         inputs.nix-jetbrains-project-setup.homeModules.default;
 
+      # nix-darwin modules re-exported the same way. This one schedules
+      # `nix-devshell-cached-exports --prune` from a launchd user agent,
+      # Sunday 03:00 by default, ahead of nix-darwin's 03:15 `nix.gc`:
+      #     imports = [ inputs.nur-packages.darwinModules.nix-devshell-cached-exports ];
+      #     services.nix-devshell-cached-exports.prune = { enable = true; user = "<name>"; };
+      darwinModules.nix-devshell-cached-exports =
+        inputs.nix-devshell-cached-exports.darwinModules.default;
+
       # Drop-in nix-darwin module: wires agent-skill-flake's user-activation
       # hook so `darwin-rebuild switch` reconciles `~/.claude/skills/<name>` for
       # every skill the consumer puts in `environment.systemPackages`. Pure

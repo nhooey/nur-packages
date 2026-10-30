@@ -96,10 +96,8 @@ let
                 type = types.nullOr types.path;
                 default = null;
               };
-              options.uid = mkOption {
-                type = types.nullOr types.int;
-                default = null;
-              };
+              # As in nix-darwin: no default, so reading it unset throws.
+              options.uid = mkOption { type = types.int; };
             }
           );
           default = { };
@@ -145,8 +143,11 @@ let
     ];
   };
 
-  evalWith =
-    settings:
+  # alice is declared, as in most nix-darwin configurations, but without a
+  # uid, which nix-darwin only needs for its knownUsers.
+  evalWith = evalWithUsers { alice.home = "/Users/alice"; };
+  evalWithUsers =
+    users: settings:
     (lib.evalModules {
       modules = [
         darwinStub
@@ -155,6 +156,7 @@ let
         {
           _module.args.pkgs = pkgs;
           system.primaryUser = "alice";
+          users.users = users;
           services.background-items = {
             inherit package;
           }
@@ -204,6 +206,10 @@ let
     };
   };
   config = builtins.fromJSON (full.environment.etc."background-items/config.json".text);
+  configWithUid = builtins.fromJSON (
+    (evalWithUsers { alice.uid = 501; } { enable = true; })
+    .environment.etc."background-items/config.json".text
+  );
   itemOf = label: lib.findFirst (i: i.label == label) null config.items;
 
   onlyOnAndOff = evalWith {
@@ -252,6 +258,9 @@ assert failedAssertions full == [ ];
 # The config file the scripts read.
 assert config.user == "alice";
 assert config.home == "/Users/alice";
+# With no uid set, the scripts look it up with `id -u`.
+assert config.uid == null;
+assert configWithUid.uid == 501;
 assert
   (itemOf "com.google.keystone.agent").plists == [
     "/Users/alice/Library/LaunchAgents/com.google.keystone.agent.plist"

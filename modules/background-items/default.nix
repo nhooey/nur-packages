@@ -23,7 +23,11 @@ let
   # unquoted), else the macOS default.
   declaredHome = config.users.users.${user}.home or null;
   home = if declaredHome == null then "/Users/${user}" else toString declaredHome;
-  uid = config.users.users.${user}.uid or null;
+  # users.users.<user>.uid when set, else null, and the scripts run `id -u`.
+  # nix-darwin's uid option has no default, so reading it unset throws rather
+  # than being caught by `or`.
+  declaredUid = builtins.tryEval (config.users.users.${user}.uid or null);
+  uid = if declaredUid.success then declaredUid.value else null;
 
   dirsOf = {
     gui = [

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# sfltool stand-in for tests/background-items/unit.bats: `dumpbtm` prints the
+# fixture recorded from macOS 15.
+set -euo pipefail
+[ "$1" = dumpbtm ]
+cat "$BI_TEST_FIXTURES/dumpbtm.txt"

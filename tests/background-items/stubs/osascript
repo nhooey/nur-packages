@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# osascript stand-in for tests/background-items/unit.bats. The login items are
+# the lines of $STUB_STATE/login-items; the AppleScript on stdin says whether
+# to list, add or delete, and the path is the argument after `-`.
+set -euo pipefail
+items=$STUB_STATE/login-items
+touch "$items"
+script=$(cat)
+path=${2:-}
+case $script in
+*"repeat with i in login items"*) cat "$items" ;;
+*"make login item"*)
+  printf 'osascript add %s\n' "$path" >>"$STUB_LOG"
+  echo "$path" >>"$items"
+  ;;
+*"delete (every login item"*)
+  printf 'osascript delete %s\n' "$path" >>"$STUB_LOG"
+  { grep -vxF -- "$path" "$items" || true; } >"$items.new"
+  mv "$items.new" "$items"
+  ;;
+*) exit 1 ;;
+esac

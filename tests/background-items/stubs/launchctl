@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# launchctl stand-in for tests/background-items/unit.bats. Logs each call to
+# $STUB_LOG and keeps launchd's state in $STUB_STATE:
+#   loaded         one `<domain>/<label>` per loaded job
+#   disabled       one `<domain>/<label>` per disabled job
+#   gui-session    exists while the user has a GUI session
+set -euo pipefail
+printf 'launchctl %s\n' "$*" >>"$STUB_LOG"
+state=$STUB_STATE
+touch "$state/loaded" "$state/disabled"
+
+remove_line() {
+  grep -vxF -- "$2" "$1" >"$1.new" || true
+  mv "$1.new" "$1"
+}
+
+case $1 in
+print)
+  case $2 in
+  gui/*/* | system/*) grep -qxF -- "$2" "$state/loaded" ;;
+  gui/*) [ -e "$state/gui-session" ] ;;
+  *) exit 1 ;;
+  esac
+  ;;
+print-disabled)
+  printf '\tdisabled services = {\n'
+  while IFS= read -r line; do
+    case $line in
+    "$2"/*) printf '\t\t"%s" => disabled\n' "${line#"$2"/}" ;;
+    esac
+  done <"$state/disabled"
+  printf '\t\t"com.example.enabled-elsewhere" => enabled\n\t}\n'
+  ;;
+enable) remove_line "$state/disabled" "$2" ;;
+disable) echo "$2" >>"$state/disabled" ;;
+bootout) grep -qxF -- "$2" "$state/loaded" && remove_line "$state/loaded" "$2" ;;
+bootstrap)
+  label=$(basename "$3" .plist)
+  echo "$2/$label" >>"$state/loaded"
+  ;;
+asuser)
+  shift 2
+  exec "$@"
+  ;;
+*) exit 64 ;;
+esac

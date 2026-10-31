@@ -139,6 +139,54 @@
         "type": "github"
       }
     },
+    "clojure-malli-skill-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777410631,
+        "narHash": "sha256-zoyhXayrIfVkLdYCwvN0+ZX0Cfv4zHG7tZfw1e+4RJg=",
+        "owner": "stoating",
+        "repo": "clojure-malli-skill",
+        "rev": "4724d10a1c6fa97854932e5496c46e257223e84e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "stoating",
+        "repo": "clojure-malli-skill",
+        "type": "github"
+      }
+    },
+    "clojure-shadow-cljs-skill-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777410680,
+        "narHash": "sha256-I+uWr3GVbE01wlVzfy6t6HEUNnGoCQ86pY/5OgY9x6Q=",
+        "owner": "stoating",
+        "repo": "clojure-shadow-cljs-skill",
+        "rev": "ba817b2759466132215472eb6cb704990369a48a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "stoating",
+        "repo": "clojure-shadow-cljs-skill",
+        "type": "github"
+      }
+    },
+    "clojure-skills-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792595291,
+        "narHash": "sha256-NQIlMJaFkPqLmmrrzHvURd0YaixcH/a6T76ZQSTF/LU=",
+        "owner": "chaploud",
+        "repo": "clojure-skills",
+        "rev": "75e51ea7fcfceff83a01824eb704bcf87a953582",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chaploud",
+        "repo": "clojure-skills",
+        "type": "github"
+      }
+    },
     "coding-agent-skills": {
       "inputs": {
         "agent-skill-flake": [
@@ -424,11 +472,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792407088,
-        "narHash": "sha256-1i6XiQz2UZxXuJnX4f8gD/1lS9tpRFPJPjLieL1/CDE=",
+        "lastModified": 1793372099,
+        "narHash": "sha256-ZsoP6Ra5R4ZedAaBWEm/IkBW1jzHoDkFKM9jGapmgdk=",
         "owner": "nhooey",
         "repo": "git-skills",
-        "rev": "5e038ebb23ee3573666d388de4e35771711fd2a9",
+        "rev": "83394de2c9cf5adcba0efd233a299dae18b95268",
         "type": "github"
       },
       "original": {
@@ -628,11 +676,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792403054,
-        "narHash": "sha256-u6Pp8j5Ha4xYCUdUAlJ9pxSKqKHqZVkJWbIKfh9dyuE=",
+        "lastModified": 1793454338,
+        "narHash": "sha256-sFhOpCUfYf54IDKmIaWxhEmBXNpnH2LTYSEgxMWuvjc=",
         "owner": "nhooey",
         "repo": "nix-gstack",
-        "rev": "8a3cb4e64e69c1db64cacafd7e0dd0131ea22587",
+        "rev": "d5a7f0014c6d10ffef894061cd71508e7dfd3288",
         "type": "github"
       },
       "original": {
@@ -880,6 +928,9 @@
         ],
         "anthropics-skills-src": "anthropics-skills-src",
         "caveman-src": "caveman-src",
+        "clojure-malli-skill-src": "clojure-malli-skill-src",
+        "clojure-shadow-cljs-skill-src": "clojure-shadow-cljs-skill-src",
+        "clojure-skills-src": "clojure-skills-src",
         "coding-agent-skills": "coding-agent-skills",
         "data-skills": "data-skills",
         "daymade-skills-src": "daymade-skills-src",
@@ -913,11 +964,11 @@
         "writing-skills": "writing-skills"
       },
       "locked": {
-        "lastModified": 1793452428,
-        "narHash": "sha256-k1h7nn79OpPevDmXTz6dhKE8za7QbFPljV+UBWeme04=",
+        "lastModified": 1793457612,
+        "narHash": "sha256-6xqIyG7q79vUn2l6Bz8jSRYsLcr3WkEyrXk23UkAz04=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "c5760bcded75f67f2fd97124914de2ffcf6a4fda",
+        "rev": "035177d426d01c04b04dcb59e35c0c5a3ed070d3",
         "type": "github"
       },
       "original": {

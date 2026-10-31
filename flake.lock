@@ -163,11 +163,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793269059,
-        "narHash": "sha256-+iANjJ4DEDoyH16Kv2I6JiJK0nrKKiykXl1G5wuEB/4=",
+        "lastModified": 1793452329,
+        "narHash": "sha256-Ag1jI7nshrbaRIeAtG4b//mChBFocQj+izWsNQhAuzQ=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "db755ce01c0649af43a5689f4f403effa608a246",
+        "rev": "6fe40743b5edd227a873d59e723948ad42f984ab",
         "type": "github"
       },
       "original": {
@@ -472,6 +472,43 @@
       "original": {
         "owner": "blader",
         "repo": "humanizer",
+        "type": "github"
+      }
+    },
+    "macos-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "skillspkgs",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "systems": [
+          "skillspkgs",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "skillspkgs",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793375568,
+        "narHash": "sha256-LXMWP1GiLS3kaAa37lSqh9ZeN9BwuPlODwGlozfQTHs=",
+        "owner": "nhooey",
+        "repo": "macos-skills",
+        "rev": "987f1790d31380beb6a3767d7612893e7f7363cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "macos-skills",
         "type": "github"
       }
     },
@@ -855,6 +892,7 @@
         ],
         "git-skills": "git-skills",
         "humanizer-src": "humanizer-src",
+        "macos-skills": "macos-skills",
         "mynixos-skills": "mynixos-skills",
         "nix-gstack": "nix-gstack",
         "nix-microsoft-skills": "nix-microsoft-skills",
@@ -875,11 +913,11 @@
         "writing-skills": "writing-skills"
       },
       "locked": {
-        "lastModified": 1793373104,
-        "narHash": "sha256-3emaRnEg437LFYce5+t9Bj7OHjRpppxG48hbmISA3Go=",
+        "lastModified": 1793452428,
+        "narHash": "sha256-k1h7nn79OpPevDmXTz6dhKE8za7QbFPljV+UBWeme04=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "7f6bc3a4841c223dd0b6dddd0674a630d8d42aa2",
+        "rev": "c5760bcded75f67f2fd97124914de2ffcf6a4fda",
         "type": "github"
       },
       "original": {

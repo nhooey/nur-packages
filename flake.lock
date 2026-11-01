@@ -921,6 +921,44 @@
         "type": "github"
       }
     },
+    "skill-authoring-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "skillspkgs",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "skillspkgs",
+          "xtdb-skills",
+          "nixpkgs"
+        ],
+        "systems": [
+          "skillspkgs",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "skillspkgs",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793221802,
+        "narHash": "sha256-z+NB1zTR3F1UjEu+GDseywxs1VmZLNMZYU76X6ySxzk=",
+        "owner": "nhooey",
+        "repo": "skill-authoring-skills",
+        "rev": "e34ce477c03247a1dc5617caa15db26543ef4d9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "skill-authoring-skills",
+        "type": "github"
+      }
+    },
     "skillspkgs": {
       "inputs": {
         "agent-skill-flake": [
@@ -961,14 +999,15 @@
         "treefmt-nix": [
           "treefmt-nix"
         ],
-        "writing-skills": "writing-skills"
+        "writing-skills": "writing-skills",
+        "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1793526414,
-        "narHash": "sha256-2N3wUhBypVPYjceqirjvJ1pgtda0zpkR0Z5zch7tQ6E=",
+        "lastModified": 1793535335,
+        "narHash": "sha256-EXmYCx9d6vTbf7AyedGlgItCY6aD5raVSn0CmnYUfZg=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "985d60d16159bbec290e900bde8bf3cde22c717b",
+        "rev": "a9f3d88e206edea16b74af9ac1be8574f0c8ff82",
         "type": "github"
       },
       "original": {
@@ -1108,6 +1147,44 @@
       "original": {
         "owner": "nhooey",
         "repo": "writing-skills",
+        "type": "github"
+      }
+    },
+    "xtdb-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "skillspkgs",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "skill-authoring-skills": "skill-authoring-skills",
+        "systems": [
+          "skillspkgs",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "skillspkgs",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793438905,
+        "narHash": "sha256-HPuelTQzrJoiKN+c5XzjJ9EpggBO0FIbMr1XNSyf0t4=",
+        "owner": "nhooey",
+        "repo": "xtdb-skills",
+        "rev": "9c32800cd12d8fcb48213344d4940614dd0ac736",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "xtdb-skills",
         "type": "github"
       }
     }

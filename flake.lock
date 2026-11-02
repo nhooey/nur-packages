@@ -560,43 +560,6 @@
         "type": "github"
       }
     },
-    "mynixos-skills": {
-      "inputs": {
-        "agent-skill-flake": [
-          "skillspkgs",
-          "agent-skill-flake"
-        ],
-        "flake-parts": [
-          "skillspkgs",
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "skillspkgs",
-          "nixpkgs"
-        ],
-        "systems": [
-          "skillspkgs",
-          "systems"
-        ],
-        "treefmt-nix": [
-          "skillspkgs",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793372699,
-        "narHash": "sha256-TkrTBQ+2qM0/tdyZTGLTB9lqQJ2rvO4+2A1qtdaKyWI=",
-        "owner": "nhooey",
-        "repo": "mynixos-skills",
-        "rev": "2a621b318c325000bad31d1efcd167ee7b6a0b6e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nhooey",
-        "repo": "mynixos-skills",
-        "type": "github"
-      }
-    },
     "nix-devshell-cached-exports": {
       "inputs": {
         "agent-skill-flake": [
@@ -982,7 +945,6 @@
         "git-skills": "git-skills",
         "humanizer-src": "humanizer-src",
         "macos-skills": "macos-skills",
-        "mynixos-skills": "mynixos-skills",
         "nix-gstack": "nix-gstack",
         "nix-microsoft-skills": "nix-microsoft-skills",
         "nix-skills": "nix-skills",
@@ -1003,11 +965,11 @@
         "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1793535335,
-        "narHash": "sha256-EXmYCx9d6vTbf7AyedGlgItCY6aD5raVSn0CmnYUfZg=",
+        "lastModified": 1793596735,
+        "narHash": "sha256-/0P9NXmBX7JiB+jEfWdnGNyKqoKqtU7uXqFf24G4EyA=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "a9f3d88e206edea16b74af9ac1be8574f0c8ff82",
+        "rev": "529b1817329780300ce8b4e3a4cb77c4ec6417d5",
         "type": "github"
       },
       "original": {

@@ -228,7 +228,13 @@
           base =
             lib.filterAttrs (_: lib.isDerivation) (localAttrsFor system)
             // aggregatedFor "packages" system
-            // backgroundItemsPackageFor system;
+            // backgroundItemsPackageFor system
+            // {
+              # The command behind homeModules.jellyfin-settings, so
+              # `nix run .#jellyfin-apply-settings -- <settings.json> --diff`
+              # works without the module.
+              jellyfin-apply-settings = (pkgsFor system).callPackage ./modules/jellyfin-settings/package.nix { };
+            };
           # On Darwin, pin the shim's real-claude lookup to the Homebrew
           # path so GUI-launched callers (JetBrains plugin, Dock, launchd)
           # find a working `claude` without depending on the inherited
@@ -271,6 +277,14 @@
       homeModules.nix-jetbrains-project-setup =
         inputs.nix-jetbrains-project-setup.homeModules.default;
 
+      # services.jellyfin-settings: declares Jellyfin's encoding settings,
+      # per-user settings and libraries, and applies them through its REST
+      # API on activation when they change, with the API key read through
+      # SecretSpec:
+      #     imports = [ inputs.nur-packages.homeModules.jellyfin-settings ];
+      #     services.jellyfin-settings = { enable = true; apiKey.item = "<id>"; ... };
+      homeModules.jellyfin-settings = ./modules/jellyfin-settings;
+
       # nix-darwin modules re-exported the same way. This one schedules
       # `nix-devshell-cached-exports --prune` from a launchd user agent,
       # Sunday 03:00 by default, ahead of nix-darwin's 03:15 `nix.gc`:
@@ -296,6 +310,36 @@
         in
         {
           background-items = package;
+
+          # The pure planning: what Jellyfin holds and what is declared,
+          # mapped to drift and requests, with no Jellyfin.
+          jellyfin-apply-settings-unit =
+            pkgs.runCommand "jellyfin-apply-settings-unit" { nativeBuildInputs = [ pkgs.python3 ]; } ''
+              python3 -I ${./tests/jellyfin-settings/test_plan.py} \
+                ${./modules/jellyfin-settings/jellyfin-apply-settings.py}
+              touch $out
+            '';
+
+          # The command builds (flake8 runs as part of the build), exits 0
+          # with a note when Jellyfin doesn't answer, and does nothing when
+          # --if-changed's stamp already holds the settings' hash.
+          jellyfin-apply-settings =
+            let
+              cmd = lib.getExe self.packages.${system}.jellyfin-apply-settings;
+              settings = pkgs.writeText "settings.json" (builtins.toJSON {
+                url = "http://127.0.0.1:9";
+                encoding.H264Crf = 20;
+              });
+            in
+            pkgs.runCommand "jellyfin-apply-settings-check" { } ''
+              ${cmd} ${settings} 2> err.txt
+              grep -q "doesn't answer" err.txt
+              mkdir -p stamp
+              sha256sum ${settings} | cut -d" " -f1 > stamp/applied.sha256
+              ${cmd} ${settings} --if-changed stamp/applied.sha256 2> err2.txt
+              test ! -s err2.txt
+              touch $out
+            '';
 
           background-items-shellcheck =
             pkgs.runCommand "background-items-shellcheck" { nativeBuildInputs = [ pkgs.shellcheck ]; }

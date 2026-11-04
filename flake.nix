@@ -90,6 +90,15 @@
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
 
+    jellyfin-settings = {
+      url = "github:nhooey/jellyfin-settings";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.agent-skill-flake.follows = "agent-skill-flake";
+    };
+
     nix-jetbrains-project-setup = {
       url = "github:nhooey/nix-jetbrains-project-setup";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -270,6 +279,11 @@
       #     imports = [ inputs.nur-packages.homeModules.nix-jetbrains-project-setup ];
       homeModules.nix-jetbrains-project-setup =
         inputs.nix-jetbrains-project-setup.homeModules.default;
+
+      # services.jellyfin-settings: declares Jellyfin's settings and applies
+      # them through its REST API from a background job:
+      #     imports = [ inputs.nur-packages.homeModules.jellyfin-settings ];
+      homeModules.jellyfin-settings = inputs.jellyfin-settings.homeModules.default;
 
       # nix-darwin modules re-exported the same way. This one schedules
       # `nix-devshell-cached-exports --prune` from a launchd user agent,

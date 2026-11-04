@@ -621,6 +621,38 @@
         "type": "github"
       }
     },
+    "jellyfin-settings": {
+      "inputs": {
+        "agent-skill-flake": [
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793749925,
+        "narHash": "sha256-ppAp/1WcgO57FlhyMcST5+QpDZHluDvOiP1oLbQ2Oww=",
+        "owner": "nhooey",
+        "repo": "jellyfin-settings",
+        "rev": "584ad79c3f6fe54fecf0a754ddd817b992d26ddc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "jellyfin-settings",
+        "type": "github"
+      }
+    },
     "macos-skills": {
       "inputs": {
         "agent-skill-flake": [
@@ -937,6 +969,7 @@
         "devshell": "devshell_3",
         "flake-parts": "flake-parts_2",
         "gradle2nix": "gradle2nix",
+        "jellyfin-settings": "jellyfin-settings",
         "nix-devshell-cached-exports": "nix-devshell-cached-exports",
         "nix-jetbrains-project-setup": "nix-jetbrains-project-setup",
         "nixpkgs": "nixpkgs_3",

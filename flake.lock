@@ -238,11 +238,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793795907,
-        "narHash": "sha256-cTPlCUCLjbLwwzUAaMgzwVBL+FiM/Sj+B2+RyLu3dPM=",
+        "lastModified": 1793886298,
+        "narHash": "sha256-zOaoNLqS1M0Vwc3x1qjR1nov5D+POfMgRmC0v7N5mHQ=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "85a742d0e756f8110ee332a21e90e172aef381d7",
+        "rev": "e8d909b0f1d411c9217e0b3fa271bb20eb99ee71",
         "type": "github"
       },
       "original": {
@@ -1123,11 +1123,11 @@
         "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1793797260,
-        "narHash": "sha256-OWvPAySQyvvbvaaeH7duJpjyD4IyViYiO3nP3uqPdWw=",
+        "lastModified": 1793886555,
+        "narHash": "sha256-nX/epQnHfiBgF0psQS8XOgSG4Czenw1LfGeVBq5rxGg=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "008c6871d3af6f4e28068b673ac75794b35b3e47",
+        "rev": "b99d41699d1ab64d861c7b06172da8dd5f4b82c8",
         "type": "github"
       },
       "original": {

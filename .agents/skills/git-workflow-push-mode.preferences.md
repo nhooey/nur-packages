@@ -1,0 +1,1 @@
+- Mode: 2 (pull requests always, never push the default branch)

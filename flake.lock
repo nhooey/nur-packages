@@ -238,11 +238,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794042208,
-        "narHash": "sha256-Urh9A4/qm2fJJbw0ofrf83UlrgsAw2l02RWQQEqv5oI=",
+        "lastModified": 1794768137,
+        "narHash": "sha256-QzbSjLm1lFQbstx4MWwqnCpHsa/18iXLwGNbF9HZF+8=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "cdbe9b69acbbc5a365d2a73b10956c1b1b452937",
+        "rev": "96618415df61509b0968a78abce2baec432df90d",
         "type": "github"
       },
       "original": {
@@ -961,6 +961,43 @@
         "type": "github"
       }
     },
+    "python-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "skillspkgs",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "systems": [
+          "skillspkgs",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "skillspkgs",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794764782,
+        "narHash": "sha256-INmLyu/9ZU6EX9oxu/4qP2w1BxPluY1RNr9RO5hR+VE=",
+        "owner": "nhooey",
+        "repo": "python-skills",
+        "rev": "963e75fcaad332d008089ec4da432dc5f6d1d931",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "python-skills",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agent-skill-flake": "agent-skill-flake",
@@ -1110,7 +1147,9 @@
           "nixpkgs"
         ],
         "opinionated-claude-skills-src": "opinionated-claude-skills-src",
+        "python-skills": "python-skills",
         "shell-skills": "shell-skills",
+        "software-design-skills": "software-design-skills",
         "superpowers-src": "superpowers-src",
         "systems": [
           "systems"
@@ -1123,16 +1162,53 @@
         "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1794146306,
-        "narHash": "sha256-AovTw6NY8iOqgOREmMBIp4gbkx9htZuIZxOTZu/Sryg=",
+        "lastModified": 1794768585,
+        "narHash": "sha256-HM8EUl3eX8JHBOKPaWNku/8eNCDxu48kSv2U6ETWBJU=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "3e8eacd6550bffe7ace8b246cf27c49b7d365f30",
+        "rev": "76284f2c8341f7e13a7a2caae8c45bf1a47049b3",
         "type": "github"
       },
       "original": {
         "owner": "nhooey",
         "repo": "skillspkgs",
+        "type": "github"
+      }
+    },
+    "software-design-skills": {
+      "inputs": {
+        "agent-skill-flake": [
+          "skillspkgs",
+          "agent-skill-flake"
+        ],
+        "flake-parts": [
+          "skillspkgs",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "skillspkgs",
+          "nixpkgs"
+        ],
+        "systems": [
+          "skillspkgs",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "skillspkgs",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794761134,
+        "narHash": "sha256-Bq+053jhbCWS+rM8WrmLcjUXpl1b//H8e0mEqDVkqlU=",
+        "owner": "nhooey",
+        "repo": "software-design-skills",
+        "rev": "75a594a02fdb79f002ba52fd6c3be39ac71f72a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nhooey",
+        "repo": "software-design-skills",
         "type": "github"
       }
     },

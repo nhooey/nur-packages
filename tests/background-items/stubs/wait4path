@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# wait4path stand-in for tests/background-items/unit.bats: logs the call and
+# returns at once, as if the path were already mounted.
+set -euo pipefail
+printf 'wait4path %s\n' "$*" >>"$STUB_LOG"

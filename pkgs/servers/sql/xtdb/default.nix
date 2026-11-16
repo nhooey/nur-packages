@@ -85,16 +85,16 @@ buildGradlePackage rec {
 
   gradleBuildFlags = [
     /*
-    # There were failing tests. See the report at: file:///build/source/http-server/build/reports/tests/test/index.html
-    "--exclude-task=:xtdb-http-server:test"
-    "--exclude-task=:modules:xtdb-flight-sql:test"
-    "--exclude-task=:modules:xtdb-kafka-connect:test"
-    "--exclude-task=:xtdb-core:test"
-    "--exclude-task=:test"
-    # FIXME this is not implemented in gradle
-    # https://github.com/gradle/gradle/issues/34433
-    # "--exclude-task=*:test"
-    "build"
+      # There were failing tests. See the report at: file:///build/source/http-server/build/reports/tests/test/index.html
+      "--exclude-task=:xtdb-http-server:test"
+      "--exclude-task=:modules:xtdb-flight-sql:test"
+      "--exclude-task=:modules:xtdb-kafka-connect:test"
+      "--exclude-task=:xtdb-core:test"
+      "--exclude-task=:test"
+      # FIXME this is not implemented in gradle
+      # https://github.com/gradle/gradle/issues/34433
+      # "--exclude-task=*:test"
+      "build"
     */
 
     # "--scan" # debug # no. this creates new errors
@@ -121,19 +121,19 @@ buildGradlePackage rec {
 
     # TODO build more shadowJar targets?
     /*
-    $ find xtdb/ -name 'build.gradle*' | xargs grep -Hn shadowJar
-    xtdb/cloud-benchmark/aws/build.gradle.kts:23:tasks.shadowJar {
-    xtdb/cloud-benchmark/azure/build.gradle.kts:23:tasks.shadowJar {
-    xtdb/cloud-benchmark/local/build.gradle.kts:19:tasks.shadowJar {
-    xtdb/cloud-benchmark/google-cloud/build.gradle.kts:23:tasks.shadowJar {
-    xtdb/modules/bench/build.gradle.kts:32:tasks.shadowJar {
-    xtdb/modules/kafka-connect/build.gradle.kts:44:tasks.shadowJar {
-    xtdb/buildSrc/build.gradle.kts:20:tasks.shadowJar {
-    xtdb/monitoring/docker-image/build.gradle.kts:21:tasks.shadowJar {
-    xtdb/docker/aws/build.gradle.kts:33:tasks.shadowJar {
-    xtdb/docker/azure/build.gradle.kts:33:tasks.shadowJar {
-    xtdb/docker/standalone/build.gradle.kts:31:tasks.shadowJar {
-    xtdb/docker/google-cloud/build.gradle.kts:33:tasks.shadowJar {
+      $ find xtdb/ -name 'build.gradle*' | xargs grep -Hn shadowJar
+      xtdb/cloud-benchmark/aws/build.gradle.kts:23:tasks.shadowJar {
+      xtdb/cloud-benchmark/azure/build.gradle.kts:23:tasks.shadowJar {
+      xtdb/cloud-benchmark/local/build.gradle.kts:19:tasks.shadowJar {
+      xtdb/cloud-benchmark/google-cloud/build.gradle.kts:23:tasks.shadowJar {
+      xtdb/modules/bench/build.gradle.kts:32:tasks.shadowJar {
+      xtdb/modules/kafka-connect/build.gradle.kts:44:tasks.shadowJar {
+      xtdb/buildSrc/build.gradle.kts:20:tasks.shadowJar {
+      xtdb/monitoring/docker-image/build.gradle.kts:21:tasks.shadowJar {
+      xtdb/docker/aws/build.gradle.kts:33:tasks.shadowJar {
+      xtdb/docker/azure/build.gradle.kts:33:tasks.shadowJar {
+      xtdb/docker/standalone/build.gradle.kts:31:tasks.shadowJar {
+      xtdb/docker/google-cloud/build.gradle.kts:33:tasks.shadowJar {
     */
     # ":modules:kafka-connect:shadowJar"
     # ":buildSrc:shadowJar"
@@ -145,55 +145,56 @@ buildGradlePackage rec {
   # error: builder failed to produce output path for output 'out'
   # https://github.com/xtdb/xtdb/issues/4637
   /*
-  gradleInstallFlags = [
-    "installDist"
-  ];
+    gradleInstallFlags = [
+      "installDist"
+    ];
   */
 
   installPhase =
-  if false then ''
-    # debug: install all files
-    mkdir -p $out/opt
-    cp -r . $out/opt/xtdb
-    # remove broken symlinks
-    # fix: ERROR: noBrokenSymlinks: the symlink x points to a missing target y
-    find $out -xtype l -delete
-    mkdir -p $out/bin
-    # TODO gradle2nix should set offlineRepo
-    offlineRepo=$(grep -F -m1 "repo.url 'file:" $gradleInitScript | sed -E "s|.*'file:(.*)'.*|\1|")
-    echo "offlineRepo: $offlineRepo"
-    find $out -path '*/build/scripts/*' | grep -v '\.bat$' |
-    while read script; do
-      echo "script: $script"
-      # patch classpath in script
-      classpath=$(find $offlineRepo $out -false $(printf ' -or -name %s' $(grep -m1 ^CLASSPATH= "$script" | tr : $'\n' | sed 's|\$APP_HOME/lib/||')) | tr $'\n' :)
-      sed -i "s|^CLASSPATH=.*|CLASSPATH=$classpath|" "$script"
-      n=$(echo "$script" | sed -E 's|.*/(xtdb/.*)/build/scripts/.*|\1|' | tr / -)
-      ln -svr "$script" $out/bin/$n
-    done
-  ''
-  else
-  # based on https://github.com/xtdb/xtdb/blob/v2.0.0/docker/standalone/Dockerfile
-    let
-      xtdbConfigPath = "$out/opt/xtdb-config.yaml";
-    in
-  ''
-    mkdir -p $out/lib
-    mkdir -p "$(dirname ${xtdbConfigPath})"
-    cp docker/standalone/build/libs/xtdb-standalone.jar $out/lib
-    cp "${./xtdb-config.yaml}" "${xtdbConfigPath}"
-    mkdir -p $out/bin
-    cat >$out/bin/xtdb <<EOF
-    set -x
-    exec ${jdk}/bin/java \
-      -cp $out/lib/xtdb-standalone.jar \
-      -Dclojure.main.report=stderr \
-      --add-opens=java.base/java.nio=ALL-UNNAMED \
-      -Dio.netty.tryReflectionSetAccessible=true \
-      clojure.main -m xtdb.main --file "${xtdbConfigPath}"
-    EOF
-    chmod +x $out/bin/xtdb
-  '';
+    if false then
+      ''
+        # debug: install all files
+        mkdir -p $out/opt
+        cp -r . $out/opt/xtdb
+        # remove broken symlinks
+        # fix: ERROR: noBrokenSymlinks: the symlink x points to a missing target y
+        find $out -xtype l -delete
+        mkdir -p $out/bin
+        # TODO gradle2nix should set offlineRepo
+        offlineRepo=$(grep -F -m1 "repo.url 'file:" $gradleInitScript | sed -E "s|.*'file:(.*)'.*|\1|")
+        echo "offlineRepo: $offlineRepo"
+        find $out -path '*/build/scripts/*' | grep -v '\.bat$' |
+        while read script; do
+          echo "script: $script"
+          # patch classpath in script
+          classpath=$(find $offlineRepo $out -false $(printf ' -or -name %s' $(grep -m1 ^CLASSPATH= "$script" | tr : $'\n' | sed 's|\$APP_HOME/lib/||')) | tr $'\n' :)
+          sed -i "s|^CLASSPATH=.*|CLASSPATH=$classpath|" "$script"
+          n=$(echo "$script" | sed -E 's|.*/(xtdb/.*)/build/scripts/.*|\1|' | tr / -)
+          ln -svr "$script" $out/bin/$n
+        done
+      ''
+    else
+      # based on https://github.com/xtdb/xtdb/blob/v2.0.0/docker/standalone/Dockerfile
+      let
+        xtdbConfigPath = "$out/opt/xtdb-config.yaml";
+      in
+      ''
+        mkdir -p $out/lib
+        mkdir -p "$(dirname ${xtdbConfigPath})"
+        cp docker/standalone/build/libs/xtdb-standalone.jar $out/lib
+        cp "${./xtdb-config.yaml}" "${xtdbConfigPath}"
+        mkdir -p $out/bin
+        cat >$out/bin/xtdb <<EOF
+        set -x
+        exec ${jdk}/bin/java \
+          -cp $out/lib/xtdb-standalone.jar \
+          -Dclojure.main.report=stderr \
+          --add-opens=java.base/java.nio=ALL-UNNAMED \
+          -Dio.netty.tryReflectionSetAccessible=true \
+          clojure.main -m xtdb.main --file "${xtdbConfigPath}"
+        EOF
+        chmod +x $out/bin/xtdb
+      '';
 
   # TODO keep names in sync with gradle.lock
   # or use overridesGlob

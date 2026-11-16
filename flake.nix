@@ -128,7 +128,13 @@
   };
 
   outputs =
-    { self, nixpkgs, gradle2nix, agent-skill-flake, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      gradle2nix,
+      agent-skill-flake,
+      ...
+    }@inputs:
     let
       lib = nixpkgs.lib;
 
@@ -185,19 +191,15 @@
       # names keep their `default` stripped to avoid noise aliases.
       aggregatedFor =
         field: system:
-        lib.foldl'
-          (acc: name:
-            let
-              attrs = aggregatedInputs.${name}.${field}.${system} or { };
-              named = stripAggregatorMeta attrs;
-              promoted =
-                if attrs ? default && named == { }
-                then { ${name} = attrs.default; }
-                else { };
-            in acc // promoted // named
-          )
-          { }
-          (builtins.attrNames aggregatedInputs);
+        lib.foldl' (
+          acc: name:
+          let
+            attrs = aggregatedInputs.${name}.${field}.${system} or { };
+            named = stripAggregatorMeta attrs;
+            promoted = if attrs ? default && named == { } then { ${name} = attrs.default; } else { };
+          in
+          acc // promoted // named
+        ) { } (builtins.attrNames aggregatedInputs);
 
       # Root-side wiring for the runtime `skills-devshell/` sub-flake. The skill
       # set itself (git/GitHub pack + skillspkgs' `authoring` combination + the
@@ -257,9 +259,12 @@
           # find a working `claude` without depending on the inherited
           # PATH. Runtime `CLAUDE_NIX_EXECUTABLE=…` still wins.
           homebrewClaude =
-            if system == "aarch64-darwin" then "/opt/homebrew/bin/claude"
-            else if system == "x86_64-darwin" then "/usr/local/bin/claude"
-            else null;
+            if system == "aarch64-darwin" then
+              "/opt/homebrew/bin/claude"
+            else if system == "x86_64-darwin" then
+              "/usr/local/bin/claude"
+            else
+              null;
         in
         base
         // lib.optionalAttrs (homebrewClaude != null && base ? claude-in-nix-devshell) {
@@ -291,8 +296,7 @@
       # Home Manager modules re-exported from aggregated repos, so a
       # consumer of this flake needs no extra input to use them:
       #     imports = [ inputs.nur-packages.homeModules.nix-jetbrains-project-setup ];
-      homeModules.nix-jetbrains-project-setup =
-        inputs.nix-jetbrains-project-setup.homeModules.default;
+      homeModules.nix-jetbrains-project-setup = inputs.nix-jetbrains-project-setup.homeModules.default;
 
       # services.jellyfin-settings: declares Jellyfin's settings and applies
       # them through its REST API from a background job:

@@ -742,11 +742,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794812254,
-        "narHash": "sha256-sssiS+60QZ066H2q6JqlPYgZSqz9FGoNylrsl7YEAHo=",
+        "lastModified": 1794852318,
+        "narHash": "sha256-FeQfjde0y8Zw/FWB9QzhUPlUISFclCKstWCPaSSHwk4=",
         "owner": "nhooey",
         "repo": "macos-skills",
-        "rev": "a49c9f227f50d5e48307f929129bdcd661b10524",
+        "rev": "f991fe68f9a63d76e71dd8df5510bd851dc0e94a",
         "type": "github"
       },
       "original": {
@@ -1231,11 +1231,11 @@
         "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1794836803,
-        "narHash": "sha256-wQNI5MYOBZBmBvEmvisTIBXhXbtmLphBhFtbTvzHHeI=",
+        "lastModified": 1794855416,
+        "narHash": "sha256-alHEuWX6AHXI0qiGyMLVV3uTpv2m5WggwaLx2kO4jhQ=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "382b4275bbe324af52307705cd4413237dcbd3b3",
+        "rev": "b4abd4790fa203f1be7a6d94692c81537b9eebf5",
         "type": "github"
       },
       "original": {

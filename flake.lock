@@ -59,6 +59,22 @@
         "type": "github"
       }
     },
+    "agent-stuff-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790543438,
+        "narHash": "sha256-tIKtwPCXCYhYza7BgRQiRK+Lv9YrI+xpDtfSPrzR3w4=",
+        "owner": "mitsuhiko",
+        "repo": "agent-stuff",
+        "rev": "0865c849befd2021490679f96a8dee58c84ac857",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mitsuhiko",
+        "repo": "agent-stuff",
+        "type": "github"
+      }
+    },
     "anthropics-skills-src": {
       "flake": false,
       "locked": {
@@ -71,6 +87,22 @@
       },
       "original": {
         "owner": "anthropics",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
+    "apollographql-skills-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793390587,
+        "narHash": "sha256-TSGowC+gRHxPqhSvT1ySu+/yZPp4R2rbYWZ3V4IadcU=",
+        "owner": "apollographql",
+        "repo": "skills",
+        "rev": "9dda1397730370aeb8df4ff8f2015c34c86b5003",
+        "type": "github"
+      },
+      "original": {
+        "owner": "apollographql",
         "repo": "skills",
         "type": "github"
       }
@@ -88,6 +120,39 @@
       "original": {
         "owner": "JuliusBrussee",
         "repo": "caveman",
+        "type": "github"
+      }
+    },
+    "cc-safety-net": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792213229,
+        "narHash": "sha256-OdAUAfHcnUI4OyF4ixUni26Cw1n2XbJ7o7nrMr4teCU=",
+        "owner": "kenryu42",
+        "repo": "cc-safety-net",
+        "rev": "7d94f342c2c2a1d42299d26c060eac8c651b07c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kenryu42",
+        "ref": "plugin",
+        "repo": "cc-safety-net",
+        "type": "github"
+      }
+    },
+    "citypaul-dotfiles-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790978103,
+        "narHash": "sha256-QX4KsgD6ZmB3JSnWrDJFCuVAKVPD/pNMIMTmo8G2zMg=",
+        "owner": "citypaul",
+        "repo": ".dotfiles",
+        "rev": "cd4028d57d6e4e95814f7b8ee55ca13c23a9c2f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "citypaul",
+        "repo": ".dotfiles",
         "type": "github"
       }
     },
@@ -238,11 +303,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794768137,
-        "narHash": "sha256-QzbSjLm1lFQbstx4MWwqnCpHsa/18iXLwGNbF9HZF+8=",
+        "lastModified": 1794835805,
+        "narHash": "sha256-RdXBW11Ohs1rWb2LuwyuL7tfZ+25GDTPWWslDBI+ykE=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "96618415df61509b0968a78abce2baec432df90d",
+        "rev": "a8d03e69c170765b7f8ff66853c3618e67f5206e",
         "type": "github"
       },
       "original": {
@@ -275,11 +340,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792403039,
-        "narHash": "sha256-7mrZC60KFb9Zpe5/cs75mBeb9Jfpb140Q28ztvl+kPw=",
+        "lastModified": 1794812216,
+        "narHash": "sha256-UMqU7eqLqKubUKjEz1JnnryfLbcbv1n664ZAjoFPHxA=",
         "owner": "nhooey",
         "repo": "data-skills",
-        "rev": "1751aca37f557d696e02dce2f43b5c72bebf6aff",
+        "rev": "831b7cc7c5cc566cff86668f22d994a407ab1a2e",
         "type": "github"
       },
       "original": {
@@ -412,11 +477,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794042196,
-        "narHash": "sha256-JLubHzWEuKhg4Ov+oN+8c5GWh3wQ8GgkgOaAL55bui4=",
+        "lastModified": 1794812226,
+        "narHash": "sha256-i+RXy1HLsFKHfB1PlEY4dD8/S0EmdSbciuEFOG1+vh8=",
         "owner": "nhooey",
         "repo": "document-skills",
-        "rev": "ea83bf2b92c971b911af96dc81bf7785d94a5ac8",
+        "rev": "cd8fbae594fa1e2ab23c7d597483127ee62881f6",
         "type": "github"
       },
       "original": {
@@ -570,11 +635,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794145370,
-        "narHash": "sha256-FwNn1aMZI3CO7Wgjvf57F+j03kudkUAGeDsLvtb5juA=",
+        "lastModified": 1794824992,
+        "narHash": "sha256-71i3iPpufuxf0mXgNoaU3V6EGqxesY2D7PARpVzgs0k=",
         "owner": "nhooey",
         "repo": "git-skills",
-        "rev": "f6d1df8de12b898b1b6678f012a8942820139b1e",
+        "rev": "1855be006cedad493a0557f15263e6233b192936",
         "type": "github"
       },
       "original": {
@@ -677,11 +742,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794144895,
-        "narHash": "sha256-+0e3JJmX6Xq0axriB225wfaIgPhkR23oU41g6g8pP1k=",
+        "lastModified": 1794812254,
+        "narHash": "sha256-sssiS+60QZ066H2q6JqlPYgZSqz9FGoNylrsl7YEAHo=",
         "owner": "nhooey",
         "repo": "macos-skills",
-        "rev": "146768fe09fd925fbc78f3c2e8176ef8cf984198",
+        "rev": "a49c9f227f50d5e48307f929129bdcd661b10524",
         "type": "github"
       },
       "original": {
@@ -835,11 +900,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792575294,
-        "narHash": "sha256-0aSJaIMr00vZHzLyj8HHNeXuvMdAqA1bYa0QQYi57QM=",
+        "lastModified": 1794760501,
+        "narHash": "sha256-aFDHYkwji2ve3q5Ar+PbZC+KtjZDJt1GZTgq0NPKQGI=",
         "owner": "nhooey",
         "repo": "nix-microsoft-skills",
-        "rev": "c01584b24bfd2a2a5b180c107df1ef251b8fd253",
+        "rev": "a288faac126519b7dbec8933b2bea478b10c8eea",
         "type": "github"
       },
       "original": {
@@ -872,11 +937,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793694390,
-        "narHash": "sha256-hVokHZ8CPGzOJNvXBsMOQpTswZQQlPAeWNuwRc6kC54=",
+        "lastModified": 1794812272,
+        "narHash": "sha256-xzXOC7tuLvOqXF0XprZ93VB9vZhB9QIEabTKS3uvyHI=",
         "owner": "nhooey",
         "repo": "nix-skills",
-        "rev": "bb57f90bc8f69f2d1894dcb7c13c917a4923bd07",
+        "rev": "c7dc8249320a370952555a33748d7d23f6852734",
         "type": "github"
       },
       "original": {
@@ -1021,6 +1086,7 @@
           "skillspkgs",
           "agent-skill-flake"
         ],
+        "cc-safety-net": "cc-safety-net",
         "flake-parts": [
           "skillspkgs",
           "flake-parts"
@@ -1040,11 +1106,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793736568,
-        "narHash": "sha256-hNfyAM3aOo2asJMuZxYLIA2dsyUe+ULHjCNZbnAFMuc=",
+        "lastModified": 1794835949,
+        "narHash": "sha256-cJpnSj0MEjxo4HWl7m6XoAhnG2tSSKvbRIniFa3cTSI=",
         "owner": "nhooey",
         "repo": "shell-skills",
-        "rev": "39c1327872617b77d58de791cbc1e8135c52f7dc",
+        "rev": "0001d245bf4aeab943efb91247e714a398ef2b91",
         "type": "github"
       },
       "original": {
@@ -1122,8 +1188,11 @@
         "agent-skill-flake": [
           "agent-skill-flake"
         ],
+        "agent-stuff-src": "agent-stuff-src",
         "anthropics-skills-src": "anthropics-skills-src",
+        "apollographql-skills-src": "apollographql-skills-src",
         "caveman-src": "caveman-src",
+        "citypaul-dotfiles-src": "citypaul-dotfiles-src",
         "clojure-malli-skill-src": "clojure-malli-skill-src",
         "clojure-shadow-cljs-skill-src": "clojure-shadow-cljs-skill-src",
         "clojure-skills-src": "clojure-skills-src",
@@ -1162,11 +1231,11 @@
         "xtdb-skills": "xtdb-skills"
       },
       "locked": {
-        "lastModified": 1794768585,
-        "narHash": "sha256-HM8EUl3eX8JHBOKPaWNku/8eNCDxu48kSv2U6ETWBJU=",
+        "lastModified": 1794836803,
+        "narHash": "sha256-wQNI5MYOBZBmBvEmvisTIBXhXbtmLphBhFtbTvzHHeI=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "76284f2c8341f7e13a7a2caae8c45bf1a47049b3",
+        "rev": "382b4275bbe324af52307705cd4413237dcbd3b3",
         "type": "github"
       },
       "original": {
@@ -1410,11 +1479,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794042170,
-        "narHash": "sha256-+2O0MDGxxQr4fo4p8LsnpzEdiINUIWjRewEkcFxzcF4=",
+        "lastModified": 1794812282,
+        "narHash": "sha256-GRVUVsChKe8oj1PrrIMAPcKuMa9yPB0lMXHCV7oo38g=",
         "owner": "nhooey",
         "repo": "writing-skills",
-        "rev": "3699c68cbe9a9390eea06e5eb464b01c34e2c35d",
+        "rev": "0d61b84cea52d0f5351cd1c5a17867bb0087a1ba",
         "type": "github"
       },
       "original": {
@@ -1448,11 +1517,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793538824,
-        "narHash": "sha256-HCXLFnJCHWHjER0v3skV9jSe3T+danzZrRxMPq/3NaA=",
+        "lastModified": 1794812291,
+        "narHash": "sha256-UhzSocJEKZIr38SCn5lwCcWXN/AXZQgRdLZd2MhvaFU=",
         "owner": "nhooey",
         "repo": "xtdb-skills",
-        "rev": "d5fb0271796b740170ba777683b4956a0f3f72b9",
+        "rev": "df42c6ace37d7d23dd3b764e60214ff835635cc7",
         "type": "github"
       },
       "original": {

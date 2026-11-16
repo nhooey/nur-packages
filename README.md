@@ -64,8 +64,11 @@ header comment there for the recipe. Last-write-wins on name collisions.
 | `darwinModules.nix-devshell-cached-exports` | Weekly `nix-devshell-cached-exports --prune` (re-exported)                              |
 | `darwinModules.background-items`   | `services.background-items` ([`modules/background-items`](modules/background-items/default.nix)): keeps the launchd jobs it lists on, off or absent and leaves every other job alone; keeps a list of apps open at login; names nix-darwin's own jobs in System Settings' Login Items list. `background-items --check` reports drift. |
 
-`nix flake check` runs the `background-items` checks (module evaluation,
-shellcheck, and a bats suite against stubbed `launchctl`/`osascript`) on Darwin.
+`nix flake check` runs the formatting check, the aggregation merge-rule check
+(`lib/aggregated-for.nix`) and the `nur-packages` command's shellcheck and bats
+checks on every system, and on Darwin also the `background-items` checks
+(module evaluation with its activation scripts run, shellcheck, and a bats
+suite against stubbed `launchctl`/`osascript`).
 
 ## Development
 

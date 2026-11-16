@@ -170,36 +170,13 @@
           buildGradlePackage = gradle2nix.builders.${system}.buildGradlePackage;
         };
 
-      # Meta-keys every flake conventionally exports as aliases (`default` is
-      # how `nix run github:owner/repo` resolves without `#name`). Aggregating
-      # would have every input's `default` shadow the previous — silently —
-      # so we strip them before merging. Add other meta-keys here (e.g. `all`)
-      # if they start colliding in practice.
-      aggregatorMetaKeys = [ "default" ];
-
-      stripAggregatorMeta = attrs: builtins.removeAttrs attrs aggregatorMetaKeys;
-
-      # Pulls one flake-output field (e.g. "packages") from every aggregated
-      # input for `system`, with `{ }` if that input doesn't expose the field
-      # or doesn't support that system. Plain `//` merge after stripping
-      # meta-keys; last input still wins on real-name collisions.
-      #
-      # Single-package flakes expose only `default`, so
-      # blind stripping would drop them entirely. When an input has *no*
-      # other named packages, promote its `default` to the input's name —
-      # `packages.<sys>.<input-name>`. Inputs that already expose proper
-      # names keep their `default` stripped to avoid noise aliases.
-      aggregatedFor =
-        field: system:
-        lib.foldl' (
-          acc: name:
-          let
-            attrs = aggregatedInputs.${name}.${field}.${system} or { };
-            named = stripAggregatorMeta attrs;
-            promoted = if attrs ? default && named == { } then { ${name} = attrs.default; } else { };
-          in
-          acc // promoted // named
-        ) { } (builtins.attrNames aggregatedInputs);
+      # Every aggregated input's `field` for `system`, merged, with the
+      # `default` alias each flake exports stripped (or promoted to the
+      # input's name when it is the only one); see lib/aggregated-for.nix.
+      aggregatedFor = import ./lib/aggregated-for.nix {
+        inherit lib;
+        metaKeys = [ "default" ];
+      } aggregatedInputs;
 
       # Root-side wiring for the runtime `skills-devshell/` sub-flake. The skill
       # set itself (git/GitHub pack + skillspkgs' `authoring` combination + the
@@ -320,9 +297,9 @@
 
       formatter = forAllSystems (system: (treefmtFor system).config.build.wrapper);
 
-      # `formatting` on every system; the darwinModules.background-items
-      # checks on Darwin only, since the command drives launchctl and
-      # osascript. `nix flake check` runs them.
+      # `formatting` and `aggregated-for` on every system; the
+      # darwinModules.background-items checks on Darwin only, since the
+      # command drives launchctl and osascript. `nix flake check` runs them.
       checks = forAllSystems (
         system:
         let
@@ -331,6 +308,7 @@
         in
         {
           formatting = (treefmtFor system).config.build.check self;
+          aggregated-for = import ./tests/aggregated-for { inherit pkgs; };
         }
         // lib.optionalAttrs (isDarwin system) {
           background-items = package;

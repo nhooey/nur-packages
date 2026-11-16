@@ -369,7 +369,7 @@
           # The module evaluated against stubs of the nix-darwin options it
           # reads and sets; see tests/background-items/darwin-module.nix.
           background-items-darwin-module = import ./tests/background-items/darwin-module.nix {
-            inherit pkgs package;
+            inherit pkgs;
           };
         }
       );

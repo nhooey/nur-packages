@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# nix stand-in for tests/nur-packages/unit.bats: logs each call to $STUB_LOG
+# as one line of space-separated arguments; answers
+# `builtins.currentSystem` with $STUB_SYSTEM and any other `nix eval` with
+# $STUB_EVAL; exits with $STUB_STATUS.
+set -euo pipefail
+echo "$*" >>"$STUB_LOG"
+if [ "$1" = eval ]; then
+  case " $* " in
+  *" builtins.currentSystem "*) printf '%s' "$STUB_SYSTEM" ;;
+  *) printf '%s' "${STUB_EVAL:-}" ;;
+  esac
+fi
+exit "${STUB_STATUS:-0}"

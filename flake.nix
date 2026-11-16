@@ -200,13 +200,20 @@
               indent_size = 2;
             };
           };
-          settings.formatter.shfmt.includes = [ "tests/background-items/stubs/*" ];
+          settings.formatter.shfmt.includes = [
+            "tests/background-items/stubs/*"
+            "tests/nur-packages/stubs/*"
+          ];
           settings.global.excludes = [
             ".agents/**"
             ".claude/**"
             "*.bats"
           ];
         };
+
+      # `nur-packages`, the dev shell's command for listing and building
+      # this flake's packages; see tools/nur-packages.
+      nurPackagesToolFor = system: (pkgsFor system).callPackage ./tools/nur-packages/package.nix { };
 
       # `background-items`, the command behind darwinModules.background-items,
       # exposed on Darwin so `nix run .#background-items -- --check` works
@@ -266,7 +273,15 @@
             Run {bold}menu{reset} to list available commands.
           '';
           devshell.startup.install-skills.text = devshellSkills.startup;
-          commands = devshellSkills.standardCommands ++ devshellSkills.commands;
+          commands = [
+            {
+              category = "dev";
+              package = nurPackagesToolFor system;
+              help = "List (`list`) and build (`build <package>...`) this flake's packages";
+            }
+          ]
+          ++ devshellSkills.standardCommands
+          ++ devshellSkills.commands;
         };
       });
 
@@ -297,9 +312,10 @@
 
       formatter = forAllSystems (system: (treefmtFor system).config.build.wrapper);
 
-      # `formatting` and `aggregated-for` on every system; the
-      # darwinModules.background-items checks on Darwin only, since the
-      # command drives launchctl and osascript. `nix flake check` runs them.
+      # `formatting`, `aggregated-for` and the `nur-packages` command's
+      # checks on every system; the darwinModules.background-items checks on
+      # Darwin only, since that command drives launchctl and osascript.
+      # `nix flake check` runs them.
       checks = forAllSystems (
         system:
         let
@@ -309,6 +325,35 @@
         {
           formatting = (treefmtFor system).config.build.check self;
           aggregated-for = import ./tests/aggregated-for { inherit pkgs; };
+
+          nur-packages-shellcheck =
+            pkgs.runCommand "nur-packages-shellcheck" { nativeBuildInputs = [ pkgs.shellcheck ]; }
+              ''
+                cd ${./.}
+                shellcheck tools/nur-packages/nur-packages.sh tests/nur-packages/stubs/*
+                touch $out
+              '';
+
+          # The command, built, against a stub of nix.
+          nur-packages-unit =
+            pkgs.runCommand "nur-packages-unit"
+              {
+                nativeBuildInputs = [
+                  pkgs.bash
+                  pkgs.bats
+                  pkgs.coreutils
+                  pkgs.gnugrep
+                  pkgs.gnused
+                ];
+              }
+              ''
+                cp -r ${./.} src
+                chmod -R u+w src
+                cd src
+                patchShebangs tests/nur-packages
+                NP_SCRIPT=${lib.getExe (nurPackagesToolFor system)} bats tests/nur-packages/unit.bats
+                touch $out
+              '';
         }
         // lib.optionalAttrs (isDarwin system) {
           background-items = package;

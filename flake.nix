@@ -63,10 +63,9 @@
 
     # Source of `darwinModules.default` below. Not aggregated as a package
     # repo — it exposes `darwinModules` / `lib`, no `packages`. The dev-shell
-    # skill set no longer lives here: it has moved to the runtime
-    # `skills-devshell/` sub-flake (invoked by the dev shell via
-    # `agent-skill-flake.lib.devshellSkillsHook`), so the skill mesh is kept out
-    # of this root's lock.
+    # skill set lives in the runtime `skills-devshell/` sub-flake (invoked by
+    # the dev shell via `agent-skill-flake.lib.devshellSkillsHook`), which
+    # keeps the skill mesh out of this root's lock.
     agent-skill-flake = {
       url = "github:nhooey/agent-skill-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -124,12 +123,6 @@
       inputs.devshell.follows = "devshell";
       # Follow skillspkgs's builder lib onto the root's so the two share one
       # agent-skill-flake node instead of locking a second builder subtree.
-      # This was previously avoided because skillspkgs pinned an older,
-      # incompatible builder rev whose strict package-key namespace check
-      # rejected its vendored aggregate "all" skill — but skillspkgs has since
-      # adopted the `agent-skill-flake` name, and that check was fixed upstream
-      # (discard store-path context from discovered skill names), so the shared
-      # rev now builds the aggregated `packages.<system>` output cleanly.
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
   };
@@ -143,8 +136,8 @@
       # Everything else in `inputs` is treated as an aggregated repo.
       # `devshell` hosts the dev shell; `agent-skill-flake` is the builder
       # library (it supplies the `darwinModules` hook and the dev shell's
-      # `devshellSkillsHook` wiring). The dev-shell skill sources are no longer
-      # listed here: they live in the runtime `skills-devshell/` sub-flake.
+      # `devshellSkillsHook` wiring). The dev-shell skill sources live in the
+      # runtime `skills-devshell/` sub-flake, not here.
       infrastructureInputs = [
         "self"
         "nixpkgs"

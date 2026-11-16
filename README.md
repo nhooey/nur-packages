@@ -66,3 +66,9 @@ header comment there for the recipe. Last-write-wins on name collisions.
 
 `nix flake check` runs the `background-items` checks (module evaluation,
 shellcheck, and a bats suite against stubbed `launchctl`/`osascript`) on Darwin.
+
+## Development
+
+`nix develop` enters the dev shell; `menu` lists its commands. `nur-packages
+list` and `nur-packages build <package>...` list and build this flake's
+packages, `check` runs `nix flake check`, and `fmt` formats the tree.

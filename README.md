@@ -7,7 +7,8 @@ to buildable / cacheable derivations for CI, and per-package sources live under
 `pkgs/<category>/<name>/`.
 
 This flake also acts as an **aggregator**: each input listed in `flake.nix` (other
-than the infrastructure inputs `nixpkgs` and `gradle2nix`) contributes its
+than the infrastructure inputs `nixpkgs`, `systems`, `flake-parts`,
+`treefmt-nix`, `devshell`, `gradle2nix` and `agent-skill-flake`) contributes its
 `packages.<system>` and `legacyPackages.<system>` outputs to this flake's, so
 every downstream package is reachable through one URL.
 
@@ -17,7 +18,7 @@ every downstream package is reachable through one URL.
 
 ```sh
 nix run github:nhooey/nur-packages#xtdb
-nix build github:nhooey/nur-packages#skill-git
+nix build github:nhooey/nur-packages#agent-skill-nhooey-git-hygiene-branch-naming
 ```
 
 `nix flake show github:nhooey/nur-packages` lists everything currently exposed.
@@ -45,7 +46,9 @@ in your `nixpkgs` config.
 
 | Input          | Source                                                                                 |
 |----------------|----------------------------------------------------------------------------------------|
-| `gradle2nix`   | [`nhooey/gradle2nix`](https://github.com/nhooey/gradle2nix) (fork)                     |
+| `claude-in-nix-devshell` | [`nhooey/claude-in-nix-devshell`](https://github.com/nhooey/claude-in-nix-devshell) |
+| `cljfmt`       | [`nhooey/nix-cljfmt`](https://github.com/nhooey/nix-cljfmt)                            |
+| `jellyfin-settings` | [`nhooey/jellyfin-settings`](https://github.com/nhooey/jellyfin-settings) (also re-exports its Home Manager module as `homeModules.jellyfin-settings`) |
 | `nix-devshell-cached-exports` | [`nhooey/nix-devshell-cached-exports`](https://github.com/nhooey/nix-devshell-cached-exports) |
 | `nix-jetbrains-project-setup` | [`nhooey/nix-jetbrains-project-setup`](https://github.com/nhooey/nix-jetbrains-project-setup) (also re-exports its Home Manager module as `homeModules.nix-jetbrains-project-setup`) |
 | `skillspkgs`   | [`nhooey/skillspkgs`](https://github.com/nhooey/skillspkgs) (re-aggregates nix-gstack, git-skills, nix-skills, and third-party skill wrappers) |
@@ -63,3 +66,9 @@ header comment there for the recipe. Last-write-wins on name collisions.
 
 `nix flake check` runs the `background-items` checks (module evaluation,
 shellcheck, and a bats suite against stubbed `launchctl`/`osascript`) on Darwin.
+
+## Development
+
+`nix develop` enters the dev shell; `menu` lists its commands. `nur-packages
+list` and `nur-packages build <package>...` list and build this flake's
+packages, `check` runs `nix flake check`, and `fmt` formats the tree.

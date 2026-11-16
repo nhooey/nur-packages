@@ -233,12 +233,42 @@ bi() { "$script" --config "$config" "$@"; }
   [ "$status" -ne 0 ]
 }
 
-@test "launcher waits for the store, then execs the job's command in its own process" {
+@test "install-launchers: refuses a symlinked folder, leaving its target alone" {
+  target=$BATS_TEST_TMPDIR/elsewhere
+  mkdir -p "$target"
+  ln -s "$target" "$BATS_TEST_TMPDIR/link"
   src=$here/../../modules/background-items/launcher.sh
-  grep -qxF '/bin/wait4path /nix/store' "$src"
-  [ "$(tail -n 1 "$src")" = 'exec "$@"' ]
-  if [ -x /bin/wait4path ]; then
-    run /bin/sh "$src" /bin/sh -c 'echo "$0:$1"' a b
-    [ "$output" = "a:b" ]
-  fi
+  run "$script" install-launchers --dir "$BATS_TEST_TMPDIR/link" --source "$src" -- "Nix GC"
+  [ "$status" -eq 1 ]
+  [[ $output == *"is a symlink; not installing launchers"* ]]
+  [ -z "$(ls -A "$target")" ]
+}
+
+@test "install-launchers: a manifest entry that is not a plain name is never removed" {
+  dir=$BATS_TEST_TMPDIR/libexec/nix-launchd
+  src=$here/../../modules/background-items/launcher.sh
+  mkdir -p "$dir" "$BATS_TEST_TMPDIR/libexec/keep"
+  touch "$BATS_TEST_TMPDIR/libexec/keep/file" "$dir/.hidden"
+  printf '%s\n' "../keep/file" ".hidden" "" >"$dir/.managed-by-background-items"
+  run "$script" install-launchers --dir "$dir" --source "$src" -- "Nix GC"
+  [ "$status" -eq 0 ]
+  [ -e "$BATS_TEST_TMPDIR/libexec/keep/file" ]
+  [ -e "$dir/.hidden" ]
+  [ "$(cat "$dir/.managed-by-background-items")" = "Nix GC" ]
+}
+
+# The launcher calls /bin/wait4path by absolute path, as launchd gives it no
+# PATH; the test runs a copy with that one path pointed at the stub.
+@test "launcher waits for the store, then execs the job's command in its own process" {
+  launcher=$BATS_TEST_TMPDIR/launcher
+  sed "s|^/bin/wait4path |$here/stubs/wait4path |" \
+    "$here/../../modules/background-items/launcher.sh" >"$launcher"
+  [ "$(grep -c "^$here/stubs/wait4path /nix/store\$" "$launcher")" -eq 1 ]
+
+  # The command logs after wait4path, gets its arguments intact, and runs as
+  # the launcher's own process (same PID), so launchd's signals reach it.
+  /bin/sh "$launcher" /bin/sh -c 'echo "command $$ [$0] [$1]" >>"$STUB_LOG"' "a b" "c" &
+  pid=$!
+  wait "$pid"
+  [ "$(cat "$STUB_LOG")" = "wait4path /nix/store"$'\n'"command $pid [a b] [c]" ]
 }

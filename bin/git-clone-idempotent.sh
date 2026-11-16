@@ -19,14 +19,14 @@ if [ -d "$DEST_DIR/.git" ]; then
     # Check if the ref is a branch or a tag
     REMOTE_BRANCH="origin/$REF"
     if git rev-parse --verify "$REMOTE_BRANCH" >/dev/null 2>&1; then
-        echo "Resetting to remote branch: $REMOTE_BRANCH"
-        git reset --hard "$REMOTE_BRANCH"
+      echo "Resetting to remote branch: $REMOTE_BRANCH"
+      git reset --hard "$REMOTE_BRANCH"
     elif git rev-parse --verify "refs/tags/$REF" >/dev/null 2>&1; then
-        echo "Resetting to tag: $REF"
-        git reset --hard "$REF"
+      echo "Resetting to tag: $REF"
+      git reset --hard "$REF"
     else
-        echo "Error: '$REF' is not a known remote branch or tag."
-        exit 1
+      echo "Error: '$REF' is not a known remote branch or tag."
+      exit 1
     fi
     git checkout "$REF"
     git clean -dfx

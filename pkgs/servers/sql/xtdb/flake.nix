@@ -16,13 +16,14 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , flake-utils
-    , flake-parts
-    , devshell
-    , gradle2nix
-    , ...
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      flake-parts,
+      devshell,
+      gradle2nix,
+      ...
     }@inputs:
 
     inputs.flake-parts.lib.mkFlake { inherit inputs; } rec {
@@ -35,10 +36,11 @@
       ];
 
       perSystem =
-        { pkgs
-        , system
-        , config
-        , ...
+        {
+          pkgs,
+          system,
+          config,
+          ...
         }:
         let
           gradlePhaseFlags = {
@@ -70,8 +72,8 @@
               default = {
                 motd =
                   "{202}🔨 Welcome to devshell{reset}"
-                  + (if !debugMode then "" else "\n{34}🐞 Debug Mode is enabled{reset}\n") +
-                  "$(type -p menu &>/dev/null && menu)";
+                  + (if !debugMode then "" else "\n{34}🐞 Debug Mode is enabled{reset}\n")
+                  + "$(type -p menu &>/dev/null && menu)";
 
                 packages = [
                   pkgs.jdk21
@@ -100,9 +102,11 @@
                       name = "build";
                       category = "flake";
                       help = "Build the Nix flake";
-                      command = wrapCommand ''
-                        nix build
-                      '' + (if debugMode then " --print-build-logs --show-trace" else "");
+                      command =
+                        wrapCommand ''
+                          nix build
+                        ''
+                        + (if debugMode then " --print-build-logs --show-trace" else "");
                     }
                     {
                       name = "clone";
@@ -128,17 +132,22 @@
                         let
                           gradleTasksAll = builtins.concatLists (builtins.attrValues gradlePhaseFlags);
                           gradleOptionsTask = (map (task: "--task \"${task}\"") gradleTasksAll);
-                          gradleOptionsDebug = if debugMode then ["--dump-events" "--log debug"] else [];
+                          gradleOptionsDebug =
+                            if debugMode then
+                              [
+                                "--dump-events"
+                                "--log debug"
+                              ]
+                            else
+                              [ ];
                           gradleOptions = builtins.concatStringsSep " " (gradleOptionsDebug ++ gradleOptionsTask);
                         in
-                        wrapCommand (
-                          ''
-                            pushd "${xtdbGit.dir}"
-                            nix run ${gradle2nixUrl}#gradle2nix -- ${gradleOptions}
-                            popd
-                            cp "${xtdbGit.dir}/gradle.lock" "$PRJ_ROOT/"
-                          ''
-                        );
+                        wrapCommand (''
+                          pushd "${xtdbGit.dir}"
+                          nix run ${gradle2nixUrl}#gradle2nix -- ${gradleOptions}
+                          popd
+                          cp "${xtdbGit.dir}/gradle.lock" "$PRJ_ROOT/"
+                        '');
                     }
                     {
                       name = "gradle-show-tasks";
@@ -162,4 +171,3 @@
         };
     };
 }
-

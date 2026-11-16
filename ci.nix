@@ -53,8 +53,7 @@ let
   outputsOf = p: map (o: p.${o}) p.outputs;
 
   nurAttrs = import ./default.nix (
-    { inherit pkgs; }
-    // (if buildGradlePackage != null then { inherit buildGradlePackage; } else { })
+    { inherit pkgs; } // (if buildGradlePackage != null then { inherit buildGradlePackage; } else { })
   );
 
   nurPkgs = flattenPkgs (

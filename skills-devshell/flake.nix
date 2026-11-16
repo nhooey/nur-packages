@@ -1,5 +1,5 @@
 {
-  description = "nur-packages dev-shell skill set — an isolated sub-flake invoked at RUNTIME by the root devShell, never a root input. The skill sources (git-skills's git/GitHub pack, skillspkgs' authoring combination, and the nix-bump skill from nix-skills) live only in THIS flake's lock, so the root nur-packages stays free of the skill mesh and transitive consumers never drag it in.";
+  description = "nur-packages dev-shell skill set — an isolated sub-flake invoked at RUNTIME by the root devShell, never a root input. The skill sources live only in THIS flake's lock, so the root nur-packages stays free of the skill mesh and transitive consumers never drag it in.";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -14,34 +14,46 @@
 
     # Every input below this divider is a skill source feeding the dev shell.
     #
-    # They follow this flake's `nixpkgs` but NOT the builder lib: the root pins
-    # a newer owner-namespacing `agent-skill-flake`/`agent-skill-flake`, and forcing
-    # the `authoring` combination's transitive sources onto it surfaces an
-    # ownerless aggregate-key the strict namespace check rejects. Letting each
-    # source keep its own (compatible) builder-lib rev matches how the inputs
-    # behaved when they were inlined in the root; `mkDevshellSkillsFlake` still
-    # runs from THIS flake's `agent-skill-flake.lib`, so the combiner is the
-    # pinned sub-flake rev.
+    # They follow this flake's `nixpkgs` but NOT the builder lib: forcing the
+    # `authoring` combination's transitive sources onto this flake's
+    # `agent-skill-flake` surfaces an ownerless aggregate-key the strict
+    # namespace check rejects. `mkDevshellSkillsFlake` still runs from THIS
+    # flake's `agent-skill-flake.lib`, so the combiner is the pinned rev.
 
-    # git-skills's git/GitHub skill pack.
+    # Running a prompt as a headless session in other checkouts, keeping the
+    # scratchpad tidy, and the cross-repository plan's graph.
+    coding-agent-skills = {
+      url = "github:nhooey/coding-agent-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # The git/GitHub skill pack.
     git-skills = {
       url = "github:nhooey/git-skills";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-skills: the nix-bump skill is cherry-picked below; the source is
-    # pulled whole and the subset is selected in the combination's `sources`
-    # entry.
+    # Nix flake conventions and the recursive input bump.
     nix-skills = {
       url = "github:nhooey/nix-skills";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Safe shell commands: named deletes, PIDs, no machine-wide changes.
+    shell-skills = {
+      url = "github:nhooey/shell-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # skillspkgs' curated `authoring` combination, surfaced through its own
-    # subdir flake (`mkCombination` keeps a combination re-composable).
+    # subdir flake (`mkCombination` keeps a combination re-composable). Its
+    # git-skills and nix-skills follow the ones above, so one rev of each
+    # lands in the shell.
     skillspkgs-combinations = {
       url = "github:nhooey/skillspkgs?dir=sources/combinations";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.git-skills.follows = "git-skills";
+      inputs.nix-skills.follows = "nix-skills";
     };
   };
 
@@ -49,9 +61,6 @@
     {
       nixpkgs,
       agent-skill-flake,
-      git-skills,
-      nix-skills,
-      skillspkgs-combinations,
       ...
     }@inputs:
     agent-skill-flake.lib.mkDevshellSkillsFlake {
@@ -59,11 +68,23 @@
       systems = import inputs.systems;
       name = "nur-packages-devshell";
       sources = [
-        { source = git-skills; }
-        { source = skillspkgs-combinations.combinations.authoring; }
+        { source = inputs.git-skills; }
+        { source = inputs.shell-skills; }
+        { source = inputs.skillspkgs-combinations.combinations.authoring; }
         {
-          source = nix-skills;
-          skills = [ "nix-flake-recursive-bump-input-versions" ];
+          source = inputs.nix-skills;
+          skills = [
+            "nix-flakes"
+            "nix-flake-recursive-bump-input-versions"
+          ];
+        }
+        {
+          source = inputs.coding-agent-skills;
+          skills = [
+            "coding-agent-headless-in-checkout"
+            "coding-agent-plans-as-graph"
+            "coding-agent-scratchpad-scripts"
+          ];
         }
       ];
     };

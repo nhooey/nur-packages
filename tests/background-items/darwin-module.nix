@@ -7,11 +7,19 @@
 # && exec <command>"`, its Label defaults to org.nixos.<name>, and
 # environment.<files>."<Label>.plist".text is
 # lib.generators.toPlist { escape = true; } of its serviceConfig.
-# `alice` is a placeholder user.
-{ pkgs, package }:
+# `alice` is a placeholder user. The activation scripts and the cleanup
+# job's command are run, with the package replaced by a recorder (`package`
+# below) that writes its arguments one per line, then `---`, to $BI_RECORD
+# and exits with $BI_EXIT.
+{ pkgs }:
 let
   inherit (pkgs) lib;
   inherit (lib) mkOption types;
+
+  package = pkgs.writeShellScriptBin "background-items" ''
+    { printf '%s\n' "$@"; echo ---; } >>"$BI_RECORD"
+    exit "''${BI_EXIT:-0}"
+  '';
 
   serviceConfig = types.submodule {
     freeformType = types.attrsOf types.anything;
@@ -245,9 +253,9 @@ let
   gcPlist = full.environment.launchDaemons."org.nixos.nix-gc.plist".text;
   prunePlist = full.environment.userLaunchAgents."org.nixos.demo-prune.plist".text;
   cleanup = full.launchd.daemons.background-items-cleanup;
-  extra = full.system.activationScripts.extraActivation.text;
-  post = full.system.activationScripts.postActivation.text;
-  exe = builtins.unsafeDiscardStringContext (lib.getExe package);
+  extra = pkgs.writeText "extra-activation" full.system.activationScripts.extraActivation.text;
+  post = pkgs.writeText "post-activation" full.system.activationScripts.postActivation.text;
+  etcConfig = pkgs.writeText "config.json" full.environment.etc."background-items/config.json".text;
 in
 # Off (the default), the module changes nothing.
 assert disabled.environment.etc == { };
@@ -277,11 +285,7 @@ assert
 assert (itemOf "com.example.wanted").state == "on";
 assert config.openAtLogin == [ "/Applications/Rectangle.app" ];
 
-# Activation: launchers before nix-darwin loads the plists, apply after.
-assert lib.hasInfix "install-launchers --dir /usr/local/libexec/nix-launchd" extra;
-assert lib.hasInfix "-- 'Demo Prune' 'Nix GC'" extra;
-assert lib.hasInfix "${exe} --config " (builtins.unsafeDiscardStringContext post);
-assert lib.hasSuffix " apply || echo \"background-items: apply failed\" >&2\n" post;
+assert full.environment.systemPackages == [ package ];
 
 # The WatchPaths job re-runs the absent cleanup when those folders change.
 assert
@@ -290,7 +294,6 @@ assert
     "/Library/LaunchAgents"
     "/Library/LaunchDaemons"
   ];
-assert lib.hasSuffix " cleanup" cleanup.command;
 assert onlyOnAndOff.launchd.daemons ? background-items-cleanup == false;
 
 # Launchers: the listed jobs run through them, with their own arguments after.
@@ -328,9 +331,45 @@ assert builtins.any (lib.hasInfix "org.nixos.darwin-store is written by the Nix 
   badMessages;
 assert builtins.any (lib.hasInfix "\"Nix/GC\" is not a valid file name") badMessages;
 assert builtins.any (lib.hasInfix "two jobs have the same name") badMessages;
-pkgs.writeText "background-items-darwin-module" (
-  builtins.toJSON {
-    inherit gcPlist prunePlist;
-    watch = cleanup.serviceConfig.WatchPaths;
+# Activation, run as nix-darwin runs it (bash, errexit): the launchers are
+# installed before nix-darwin loads the plists that run them, and apply runs
+# after. A failing command is reported without stopping activation.
+pkgs.runCommand "background-items-darwin-module"
+  {
+    nativeBuildInputs = [ pkgs.bash ];
+    passAsFile = [ "cleanupCommand" ];
+    cleanupCommand = cleanup.command;
   }
-)
+  ''
+    set -euo pipefail
+    export BI_RECORD=$TMPDIR/record
+    fail() { echo "FAIL: $*" >&2; exit 1; }
+    # expect LINE...: the recorded calls are exactly these lines.
+    expect() {
+      diff <(printf '%s\n' "$@") "$BI_RECORD" || fail "recorded arguments differ"
+      rm "$BI_RECORD"
+    }
+    recorded() { sed -n "$1p" "$BI_RECORD"; }
+
+    bash -e ${extra}
+    source=$(recorded 5)
+    cmp "$source" ${../../modules/background-items/launcher.sh} || fail "--source is not launcher.sh"
+    expect install-launchers --dir /usr/local/libexec/nix-launchd --source "$source" -- "Demo Prune" "Nix GC" ---
+
+    bash -e ${post}
+    configFile=$(recorded 2)
+    cmp "$configFile" ${etcConfig} || fail "--config differs from /etc/background-items/config.json"
+    expect --config "$configFile" apply ---
+
+    BI_EXIT=1 bash -e ${extra} 2>err || fail "a failing install-launchers stopped activation"
+    grep -qxF "background-items: installing launchers failed" err || fail "install-launchers failure not reported"
+    BI_EXIT=1 bash -e ${post} 2>err || fail "a failing apply stopped activation"
+    grep -qxF "background-items: apply failed" err || fail "apply failure not reported"
+    rm "$BI_RECORD"
+
+    # launchd runs a job's command through /bin/sh -c.
+    sh -c "$(cat "$cleanupCommandPath")"
+    expect --config "$configFile" cleanup ---
+
+    touch $out
+  ''

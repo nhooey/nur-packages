@@ -63,10 +63,9 @@
 
     # Source of `darwinModules.default` below. Not aggregated as a package
     # repo — it exposes `darwinModules` / `lib`, no `packages`. The dev-shell
-    # skill set no longer lives here: it has moved to the runtime
-    # `skills-devshell/` sub-flake (invoked by the dev shell via
-    # `agent-skill-flake.lib.devshellSkillsHook`), so the skill mesh is kept out
-    # of this root's lock.
+    # skill set lives in the runtime `skills-devshell/` sub-flake (invoked by
+    # the dev shell via `agent-skill-flake.lib.devshellSkillsHook`), which
+    # keeps the skill mesh out of this root's lock.
     agent-skill-flake = {
       url = "github:nhooey/agent-skill-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -124,18 +123,18 @@
       inputs.devshell.follows = "devshell";
       # Follow skillspkgs's builder lib onto the root's so the two share one
       # agent-skill-flake node instead of locking a second builder subtree.
-      # This was previously avoided because skillspkgs pinned an older,
-      # incompatible builder rev whose strict package-key namespace check
-      # rejected its vendored aggregate "all" skill — but skillspkgs has since
-      # adopted the `agent-skill-flake` name, and that check was fixed upstream
-      # (discard store-path context from discovered skill names), so the shared
-      # rev now builds the aggregated `packages.<system>` output cleanly.
       inputs.agent-skill-flake.follows = "agent-skill-flake";
     };
   };
 
   outputs =
-    { self, nixpkgs, gradle2nix, agent-skill-flake, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      gradle2nix,
+      agent-skill-flake,
+      ...
+    }@inputs:
     let
       lib = nixpkgs.lib;
 
@@ -143,8 +142,8 @@
       # Everything else in `inputs` is treated as an aggregated repo.
       # `devshell` hosts the dev shell; `agent-skill-flake` is the builder
       # library (it supplies the `darwinModules` hook and the dev shell's
-      # `devshellSkillsHook` wiring). The dev-shell skill sources are no longer
-      # listed here: they live in the runtime `skills-devshell/` sub-flake.
+      # `devshellSkillsHook` wiring). The dev-shell skill sources live in the
+      # runtime `skills-devshell/` sub-flake, not here.
       infrastructureInputs = [
         "self"
         "nixpkgs"
@@ -171,40 +170,13 @@
           buildGradlePackage = gradle2nix.builders.${system}.buildGradlePackage;
         };
 
-      # Meta-keys every flake conventionally exports as aliases (`default` is
-      # how `nix run github:owner/repo` resolves without `#name`). Aggregating
-      # would have every input's `default` shadow the previous — silently —
-      # so we strip them before merging. Add other meta-keys here (e.g. `all`)
-      # if they start colliding in practice.
-      aggregatorMetaKeys = [ "default" ];
-
-      stripAggregatorMeta = attrs: builtins.removeAttrs attrs aggregatorMetaKeys;
-
-      # Pulls one flake-output field (e.g. "packages") from every aggregated
-      # input for `system`, with `{ }` if that input doesn't expose the field
-      # or doesn't support that system. Plain `//` merge after stripping
-      # meta-keys; last input still wins on real-name collisions.
-      #
-      # Single-package flakes expose only `default`, so
-      # blind stripping would drop them entirely. When an input has *no*
-      # other named packages, promote its `default` to the input's name —
-      # `packages.<sys>.<input-name>`. Inputs that already expose proper
-      # names keep their `default` stripped to avoid noise aliases.
-      aggregatedFor =
-        field: system:
-        lib.foldl'
-          (acc: name:
-            let
-              attrs = aggregatedInputs.${name}.${field}.${system} or { };
-              named = stripAggregatorMeta attrs;
-              promoted =
-                if attrs ? default && named == { }
-                then { ${name} = attrs.default; }
-                else { };
-            in acc // promoted // named
-          )
-          { }
-          (builtins.attrNames aggregatedInputs);
+      # Every aggregated input's `field` for `system`, merged, with the
+      # `default` alias each flake exports stripped (or promoted to the
+      # input's name when it is the only one); see lib/aggregated-for.nix.
+      aggregatedFor = import ./lib/aggregated-for.nix {
+        inherit lib;
+        metaKeys = [ "default" ];
+      } aggregatedInputs;
 
       # Root-side wiring for the runtime `skills-devshell/` sub-flake. The skill
       # set itself (git/GitHub pack + skillspkgs' `authoring` combination + the
@@ -214,6 +186,34 @@
       # is the reconcile snippet; `devshellSkills.commands` are the repo-agnostic
       # `skills`-category dev-shell commands.
       devshellSkills = agent-skill-flake.lib.devshellSkillsHook { };
+
+      # One treefmt configuration behind both `nix fmt` (the dev shell's `fmt`
+      # command) and the `formatting` check.
+      treefmtFor =
+        system:
+        inputs.treefmt-nix.lib.evalModule (pkgsFor system) {
+          projectRootFile = "flake.nix";
+          programs = {
+            nixfmt.enable = true;
+            shfmt = {
+              enable = true;
+              indent_size = 2;
+            };
+          };
+          settings.formatter.shfmt.includes = [
+            "tests/background-items/stubs/*"
+            "tests/nur-packages/stubs/*"
+          ];
+          settings.global.excludes = [
+            ".agents/**"
+            ".claude/**"
+            "*.bats"
+          ];
+        };
+
+      # `nur-packages`, the dev shell's command for listing and building
+      # this flake's packages; see tools/nur-packages.
+      nurPackagesToolFor = system: (pkgsFor system).callPackage ./tools/nur-packages/package.nix { };
 
       # `background-items`, the command behind darwinModules.background-items,
       # exposed on Darwin so `nix run .#background-items -- --check` works
@@ -243,9 +243,12 @@
           # find a working `claude` without depending on the inherited
           # PATH. Runtime `CLAUDE_NIX_EXECUTABLE=…` still wins.
           homebrewClaude =
-            if system == "aarch64-darwin" then "/opt/homebrew/bin/claude"
-            else if system == "x86_64-darwin" then "/usr/local/bin/claude"
-            else null;
+            if system == "aarch64-darwin" then
+              "/opt/homebrew/bin/claude"
+            else if system == "x86_64-darwin" then
+              "/usr/local/bin/claude"
+            else
+              null;
         in
         base
         // lib.optionalAttrs (homebrewClaude != null && base ? claude-in-nix-devshell) {
@@ -270,15 +273,22 @@
             Run {bold}menu{reset} to list available commands.
           '';
           devshell.startup.install-skills.text = devshellSkills.startup;
-          commands = devshellSkills.standardCommands ++ devshellSkills.commands;
+          commands = [
+            {
+              category = "dev";
+              package = nurPackagesToolFor system;
+              help = "List (`list`) and build (`build <package>...`) this flake's packages";
+            }
+          ]
+          ++ devshellSkills.standardCommands
+          ++ devshellSkills.commands;
         };
       });
 
       # Home Manager modules re-exported from aggregated repos, so a
       # consumer of this flake needs no extra input to use them:
       #     imports = [ inputs.nur-packages.homeModules.nix-jetbrains-project-setup ];
-      homeModules.nix-jetbrains-project-setup =
-        inputs.nix-jetbrains-project-setup.homeModules.default;
+      homeModules.nix-jetbrains-project-setup = inputs.nix-jetbrains-project-setup.homeModules.default;
 
       # services.jellyfin-settings: declares Jellyfin's settings and applies
       # them through its REST API from a background job:
@@ -300,15 +310,52 @@
       #     services.background-items = { enable = true; items = { ... }; };
       darwinModules.background-items = ./modules/background-items;
 
-      # Checks for darwinModules.background-items (Darwin only: the command
-      # drives launchctl and osascript). `nix flake check` runs them.
-      checks = lib.genAttrs (builtins.filter isDarwin (builtins.attrNames gradle2nix.builders)) (
+      formatter = forAllSystems (system: (treefmtFor system).config.build.wrapper);
+
+      # `formatting`, `aggregated-for` and the `nur-packages` command's
+      # checks on every system; the darwinModules.background-items checks on
+      # Darwin only, since that command drives launchctl and osascript.
+      # `nix flake check` runs them.
+      checks = forAllSystems (
         system:
         let
           pkgs = pkgsFor system;
           package = self.packages.${system}.background-items;
         in
         {
+          formatting = (treefmtFor system).config.build.check self;
+          aggregated-for = import ./tests/aggregated-for { inherit pkgs; };
+
+          nur-packages-shellcheck =
+            pkgs.runCommand "nur-packages-shellcheck" { nativeBuildInputs = [ pkgs.shellcheck ]; }
+              ''
+                cd ${./.}
+                shellcheck tools/nur-packages/nur-packages.sh tests/nur-packages/stubs/*
+                touch $out
+              '';
+
+          # The command, built, against a stub of nix.
+          nur-packages-unit =
+            pkgs.runCommand "nur-packages-unit"
+              {
+                nativeBuildInputs = [
+                  pkgs.bash
+                  pkgs.bats
+                  pkgs.coreutils
+                  pkgs.gnugrep
+                  pkgs.gnused
+                ];
+              }
+              ''
+                cp -r ${./.} src
+                chmod -R u+w src
+                cd src
+                patchShebangs tests/nur-packages
+                NP_SCRIPT=${lib.getExe (nurPackagesToolFor system)} bats tests/nur-packages/unit.bats
+                touch $out
+              '';
+        }
+        // lib.optionalAttrs (isDarwin system) {
           background-items = package;
 
           background-items-shellcheck =
@@ -345,7 +392,7 @@
           # The module evaluated against stubs of the nix-darwin options it
           # reads and sets; see tests/background-items/darwin-module.nix.
           background-items-darwin-module = import ./tests/background-items/darwin-module.nix {
-            inherit pkgs package;
+            inherit pkgs;
           };
         }
       );
@@ -362,8 +409,8 @@
       # Consume with:
       #     imports = [ inputs.nur-packages.darwinModules.default ];
       #     environment.systemPackages = with inputs.nur-packages.packages.${pkgs.system}; [
-      #       agent-skill-git-branch-naming
-      #       agent-skill-nix-flakes
+      #       agent-skill-nhooey-git-hygiene-branch-naming
+      #       agent-skill-nhooey-nix-flakes
       #       # ...etc — listed explicitly, never auto-populated
       #     ];
       darwinModules.default = { lib, ... }: {

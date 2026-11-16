@@ -208,6 +208,27 @@
       # `skills`-category dev-shell commands.
       devshellSkills = agent-skill-flake.lib.devshellSkillsHook { };
 
+      # One treefmt configuration behind both `nix fmt` (the dev shell's `fmt`
+      # command) and the `formatting` check.
+      treefmtFor =
+        system:
+        inputs.treefmt-nix.lib.evalModule (pkgsFor system) {
+          projectRootFile = "flake.nix";
+          programs = {
+            nixfmt.enable = true;
+            shfmt = {
+              enable = true;
+              indent_size = 2;
+            };
+          };
+          settings.formatter.shfmt.includes = [ "tests/background-items/stubs/*" ];
+          settings.global.excludes = [
+            ".agents/**"
+            ".claude/**"
+            "*.bats"
+          ];
+        };
+
       # `background-items`, the command behind darwinModules.background-items,
       # exposed on Darwin so `nix run .#background-items -- --check` works
       # without the module.
@@ -293,15 +314,21 @@
       #     services.background-items = { enable = true; items = { ... }; };
       darwinModules.background-items = ./modules/background-items;
 
-      # Checks for darwinModules.background-items (Darwin only: the command
-      # drives launchctl and osascript). `nix flake check` runs them.
-      checks = lib.genAttrs (builtins.filter isDarwin (builtins.attrNames gradle2nix.builders)) (
+      formatter = forAllSystems (system: (treefmtFor system).config.build.wrapper);
+
+      # `formatting` on every system; the darwinModules.background-items
+      # checks on Darwin only, since the command drives launchctl and
+      # osascript. `nix flake check` runs them.
+      checks = forAllSystems (
         system:
         let
           pkgs = pkgsFor system;
           package = self.packages.${system}.background-items;
         in
         {
+          formatting = (treefmtFor system).config.build.check self;
+        }
+        // lib.optionalAttrs (isDarwin system) {
           background-items = package;
 
           background-items-shellcheck =

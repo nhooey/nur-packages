@@ -1,6 +1,6 @@
 # nur-packages
 
-A personal NUR repository and package aggregator. `default.nix` exposes the NUR-style attrset, `ci.nix` filters it for CI, and package sources live under `pkgs/<category>/<name>/`. `flake.nix` also re-exports the packages of the repositories it takes as inputs, and the Home Manager and nix-darwin modules under `modules/`.
+A personal NUR repository and package aggregator. `default.nix` exposes the NUR-style attrset, `ci.nix` filters it for CI, and package sources live under `pkgs/<category>/<name>/`. `flake.nix` also re-exports the packages and the Home Manager and nix-darwin modules of the repositories it takes as inputs, and exports the `background-items` nix-darwin module under `modules/`.
 
 ## Build and test
 

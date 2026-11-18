@@ -319,16 +319,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1794863664,
-        "narHash": "sha256-ztk0+76ga1H+Wp8J55nXd+QX13W6WbbMzKaB40J6dls=",
+        "lastModified": 1794983814,
+        "narHash": "sha256-loNECIB1rRqib2hgpKL4ZX3+D2+QLxDcQJkf6r3MfQo=",
         "owner": "nhooey",
         "repo": "coding-agent-skills",
-        "rev": "7fddfc2d33021e48ddb1ea8f7bacd858db8704ad",
+        "rev": "e3db745605ba77ecefc23ede3982ed4bf7563fe8",
         "type": "github"
       },
       "original": {
         "owner": "nhooey",
         "repo": "coding-agent-skills",
+        "type": "github"
+      }
+    },
+    "cursor-plugins-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794713777,
+        "narHash": "sha256-fXXJRZnQZlTfOemfJgC0zSMxsfcvxRhGo21T09/6xic=",
+        "owner": "cursor",
+        "repo": "plugins",
+        "rev": "bf0c7cd80abdbf7fe47b634978a7d1b4071f71a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cursor",
+        "repo": "plugins",
         "type": "github"
       }
     },
@@ -1214,6 +1230,7 @@
         "clojure-shadow-cljs-skill-src": "clojure-shadow-cljs-skill-src",
         "clojure-skills-src": "clojure-skills-src",
         "coding-agent-skills": "coding-agent-skills",
+        "cursor-plugins-src": "cursor-plugins-src",
         "data-skills": "data-skills",
         "daymade-skills-src": "daymade-skills-src",
         "devshell": [
@@ -1245,14 +1262,15 @@
           "treefmt-nix"
         ],
         "writing-skills": "writing-skills",
-        "xtdb-skills": "xtdb-skills"
+        "xtdb-skills": "xtdb-skills",
+        "younes-io-agent-skills-src": "younes-io-agent-skills-src"
       },
       "locked": {
-        "lastModified": 1794864103,
-        "narHash": "sha256-2ZtaOVJAXhtD9kespjkQfdyLBfq99oJKui1bEywRDQs=",
+        "lastModified": 1794987059,
+        "narHash": "sha256-Z4VvbwFtDbkcXy+sJLFHbkUU+rsT+8XOLHPE7ilTkLY=",
         "owner": "nhooey",
         "repo": "skillspkgs",
-        "rev": "cae7e97c6497180a3e0343d34f33171fea8f04d8",
+        "rev": "ef90acb41cfa09a719c8af03536c2414f7eb72e0",
         "type": "github"
       },
       "original": {
@@ -1544,6 +1562,22 @@
       "original": {
         "owner": "nhooey",
         "repo": "xtdb-skills",
+        "type": "github"
+      }
+    },
+    "younes-io-agent-skills-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783783323,
+        "narHash": "sha256-chCu/JmgzW5Y6UBfAPy8zolL9Rp3zATLEZ3lZ/zPP0U=",
+        "owner": "younes-io",
+        "repo": "agent-skills",
+        "rev": "928ac54d1dc16b3f55965fae640905f7f06a93a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "younes-io",
+        "repo": "agent-skills",
         "type": "github"
       }
     }
